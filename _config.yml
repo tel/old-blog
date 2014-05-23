@@ -1,0 +1,28 @@
+
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
+
+# Basics
+pygments:         true
+safe:             true
+lsi:              false
+permalink:        pretty
+  
+# Setup
+title:            Confluence
+# tagline:          '$'
+# description:      '$'
+url:              http://tel.github.io
+paginate:         10
+
+author:
+  name:           'Joseph Abrahamson'
+  url:            https://twitter.com/sdbo
+
+github:
+  repo:           https://github.com/tel/tel.github.io
+
+
+exclude:
+  - vendor
