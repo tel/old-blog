@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Confluence</title>
+ <link href="http://tel.github.io/atom.xml" rel="self"/>
+ <link href="http://tel.github.io/"/>
+ <updated>2014-05-23T01:46:20-04:00</updated>
+ <id>http://tel.github.io</id>
+ <author>
+   <name>Joseph Abrahamson</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>A Game of Kyles</title>
+   <link href="http://tel.github.io/2014/06/23/a-game-of-kyles/"/>
+   <updated>2014-06-23T00:00:00-04:00</updated>
+   <id>http://tel.github.io/2014/06/23/a-game-of-kyles</id>
+   <content type="html">&lt;p&gt;Here&amp;#39;s a nim-alike game. Given a row of tokens you and I alternate
+taking either one or a pair of touching tokens. The last person to
+take a token wins. For example, if I begin, my turns marked by an
+arrow from the left, the game of 5 tokens might proceed.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;me -&amp;gt; XXXXX
+      XX XX &amp;lt;- you
+   -&amp;gt; X  XX
+      X  X  &amp;lt;-
+   -&amp;gt; X
+            &amp;lt;- (I win)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If we call this game &lt;code&gt;5&lt;/code&gt;, for 5 tokens all together, we might call the
+game begun on the second line &lt;code&gt;[2, 2]&lt;/code&gt;, for two games of 2 played
+together. It&amp;#39;s clear that by the rules one move may not affect two
+simultaneous games simultaneously, though the existence of other games
+may affect your strategy.&lt;/p&gt;
+
+&lt;p&gt;We&amp;#39;d like to know whether or not a given game is winnable. Since the
+two sides are symmetric, we&amp;#39;ll just write &lt;code&gt;win B&lt;/code&gt; if the board &lt;code&gt;B&lt;/code&gt; is
+winnable by the first player. We&amp;#39;ll also write &lt;code&gt;loss B&lt;/code&gt; if &lt;code&gt;not (win
+B)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;As in any alternating game like this, the tit-for-tat strategy
+executed by the second player is a guaranteed loss for the first.
+Formally, let&amp;#39;s call a board symmetric if we can pair off the
+simultaneous games: &lt;code&gt;[2,2]&lt;/code&gt; is symmetric while &lt;code&gt;[2,3,2]&lt;/code&gt; is not. We
+immediately have that &lt;code&gt;symmetric B |- loss B&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;As a corollary, any board which is one move removed from symmetric is
+a win—the first player makes a move resulting in a symmetric board and
+then plays tit-for-tat from then on to win. An important example of
+such a board is the contiguous board, &lt;code&gt;|- win [n]&lt;/code&gt;. Thus our starting
+example of the game &lt;code&gt;5&lt;/code&gt; being a win is now immediate.&lt;/p&gt;
+
+&lt;p&gt;If we have a symmetric board &lt;code&gt;B&lt;/code&gt; and another symmetric board &lt;code&gt;C&lt;/code&gt;, then
+the combined board &lt;code&gt;B || C&lt;/code&gt; is still symmetric. Likewise, if we have a
+symmetric-once-removed board &lt;code&gt;D&lt;/code&gt; then &lt;code&gt;B || D&lt;/code&gt; is still
+symmetric-once-removed. Thus we can see immediately that &lt;code&gt;[2,3,2]&lt;/code&gt; is
+the combination of the symmetric board &lt;code&gt;[2,2]&lt;/code&gt; and the contiguous
+board &lt;code&gt;[3]&lt;/code&gt;. Thus &lt;code&gt;[2,3,2]&lt;/code&gt; is still symmetric-once-removed and thus
+we have &lt;code&gt;win [2,3,2]&lt;/code&gt;.&lt;/p&gt;
+
+&lt;!-- Even more powerfully, if we have a board which can be decomposed as `B --&gt;
+
+&lt;!-- || C` for a symmetric board `C` then `win (B || C)` iff `win B`. We --&gt;
+
+&lt;!-- can prove this by induction on the size of `C`. --&gt;
+
+&lt;!-- 1. If `C` is `[]` then we have `win B` iff `win B`. --&gt;
+
+&lt;!-- 2. Otherwise, we can choose our move as taking a token from either `B` --&gt;
+
+&lt;!--    or `C`. Let&#39;s first choose `C`. --&gt;
+
+&lt;!--    * Our opponent could respond using the tit-for-tat strategy. This --&gt;
+
+&lt;!--      gives us a new situation `B || C&#39;` where `C&#39;` is two tokens --&gt;
+
+&lt;!--      smaller than `C` but still symmetric. We apply the inductive --&gt;
+
+&lt;!--      hypothesis. --&gt;
+
+&lt;!--    * Our opponent could pick a token from `B`. --&gt;
+
+&lt;!--      * If `win B` holds then now we&#39;ve got the chance to play `B&#39; || --&gt;
+
+&lt;!--        C&#39;` where `loss B&#39;` holds and `C&#39;` is symmetric-once-removed. --&gt;
+
+&lt;!--        We choose to play tit-for-tat on `C&#39;` then our opponent holds --&gt;
+
+&lt;!--        `B&#39; || C&#39;&#39;` where `C&#39;&#39;` is symmetric and by the inductive --&gt;
+
+&lt;!--        hypothesis we&#39;ll have shown `win (B || C)`. --&gt;
+
+&lt;!--      * If `loss B` holds then now we&#39;ve got the chance to play `B&#39; || --&gt;
+
+&lt;!--        C&#39;` where `win B&#39;` holds and `C&#39;` is symmetric-once-removed. --&gt;
+
+&lt;!--        * If we play appropriately for `B&#39;` and the opponent sees `B&#39;&#39; --&gt;
+
+&lt;!--          || C&#39;` where `loss B&#39;&#39;` and `C&#39;` is symmetric-once-removed. If --&gt;
+
+&lt;!--          they play tit-for-tat on `C&#39;` then we&#39;ll have `B&#39;&#39; | C&#39;&#39;` and --&gt;
+
+&lt;!--          have a loss by the inductive hypothesis. --&gt;
+
+&lt;!--        * If we play tit-for-tat on `C&#39;` then the opponent sees `B&#39; || --&gt;
+
+&lt;!--          C&#39;&#39;` and wins by the inductive hypothesis. --&gt;
+
+&lt;!--        *  --&gt;
+</content>
+ </entry>
+ 
+
+</feed>
