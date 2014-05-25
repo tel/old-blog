@@ -1,12 +1,12 @@
 ---
 layout: page
-title: A Game of Kyles
+title: Memoizing Kayles
 ---
 
-Consider a two-player game called Kayles. The rules are that we have a
-line of tokens and take turns removing either a single token or two
-adjacent ones trying to be the person to remove the last token, the
-winner.
+[Consider a two-player game called Kayles](https://www.hackerrank.com/contests/lambda-calculi-may14/challenges/game-of-kyles).
+The rules are that we have a line of tokens and take turns removing
+either a single token or two adjacent ones trying to be the person to
+remove the last token, the winner.
 
 For instance, here is a game where the first player wins.
 
@@ -18,10 +18,16 @@ me -> XXXXX
    -> X
 ```
 
-This game is well-studied and solvable as an impartial summable game.
-While I know that now thanks to reading a bit of the marvelous book
-*Winning Ways for your Mathematical Plays* by Berlekamp, Conway, and
-Guy, originally I did not.
+> This game is well-studied and solvable as an impartial summable
+> game. While I know that now thanks to reading a bit of the marvelous
+> book *Winning Ways for your Mathematical Plays* by Berlekamp,
+> Conway, and Guy, originally I did not. If you want to solve Kayles
+> efficiently, study how to use the
+> [nimbers](http://math.ucsd.edu/~wgarner/research/pdf/brief_intro_cgt.pdf).
+> What follows is a brute force method that leads to an interesting
+> memoization trick.
+
+---
 
 Here's another equivalent game. Two players argue over stacks of
 tokens, on their turn splitting the stacks trying to be the one to
@@ -35,7 +41,7 @@ The number of possible moves is linear in the size of the stack *n*
 2. The size of the game tree is exponential and brute forcing the game
 tree will likely fail. We can exploit symmetry to help, though.
 
----
+## Symmetric games
 
 A game is symmetric if every stack has a sibling of identical size,
 thus *{2 2 4 4 4 4}* is symmetric. Symmetric games are lost by the
@@ -57,7 +63,7 @@ Kayles—they're all sums of singleton games. This suggests the, perhaps
 obvious, point that winning in Kayles happens in the interaction of
 the stacks. If they didn't interact then every game would be trivial.
 
----
+## Equivalences modulo symmetries
 
 To regroup: we're playing the game Kayles which consists of singleton
 games corresponding to natural numbers, sizes of stacks of tokens, and
@@ -78,7 +84,7 @@ holds if there exists an *m* in *moves(G)* such that *loss mG*.
 Symmetrically, this gives us that *loss G* holds iff all *m* in
 *moves(G)* have *win mG*.
 
----
+### Symmetry elimination (a laborious proof)
 
 It'd be nice to be able to decompose games into simpler equivalent
 games. We'll talk about this tacitly, though if you're being technical
@@ -130,7 +136,7 @@ implies *win G*. QED.
 And armed with this lemma, if we can find a decomposition of *G* into
 *G' + H* for symmetric *H* then we have *G ~ G'*.
 
----
+## Better game representations
 
 Right now we regard a game *G* as a sum of singleton games where a
 particular singleton game might occur many times, however any even
@@ -147,4 +153,56 @@ games to the new representation with the mapping
 We can also say that *win* is a predicate of the type *win : 2^2^Nat*.
 
 A final representation of *win* is that of a predicate on binary
-strings, like *Bool\* -> Bool*.
+strings, like *[Bool] -> Bool*. This is particularly interesting from
+a computational point of view due to the idea of lazy trie
+memoization. In particular, we'd like to convert function spaces like
+`B^A` to lazy data structures `A :> B` such that those two spaces are
+isomorphic (at least so long as `A` and `B` are finite).
+
+## Winning as binary search
+
+The standard source on this is Ralf Hinze's
+[*Memo Functions, Polytypically!*](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.43.3272).
+Briefly, we consider a recursive definition of `A :> B` over generic
+ADTs. We can then define something like `[Bool] :> Bool` in steps:
+
+    T = [Bool] :> Bool
+      = (1 + Bool * [Bool]) :> Bool
+      = (1 :> Bool) * (Bool * [Bool] :> Bool)
+      = Bool * (Bool :> [Bool] :> Bool)
+      = Bool * ([Bool] :> Bool) * ([Bool] :> Bool)
+    T = Bool * T * T
+
+which is clearly the type of infinite binary trees over `Bool`. This
+leads to an elegant memoized implementation of "`win` as binary
+search". In fact, it's almost trivial to write in Haskell and quite
+elegant, noting the recursive call to the memoized `win` in the
+unmemoized `win'`
+
+```haskell
+type Board = [Bool]
+
+data Trie = Trie !Bool Trie Trie
+
+moves :: Board -> [Board]
+
+win :: Board -> Bool
+win = (untrie . trie) win' where
+  win' :: Board -> Bool
+  win' [] = False
+  win' b  = (all (not . win) . moves) b
+
+untrie :: Trie -> (Board -> Bool)
+untrie (Trie h _ _) []        = h
+untrie (Trie _ t _) (True :n) = untrie t n
+untrie (Trie _ _ f) (False:n) = untrie f n
+
+trie :: (Board -> Bool) -> Trie
+trie f = go [] where
+  go b = Trie (f b)
+              (go (True  : b))
+              (go (False : b))
+```
+
+The only remaining tough part is defining an efficient `moves`
+function that enumerates
