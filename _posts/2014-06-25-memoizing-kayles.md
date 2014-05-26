@@ -84,7 +84,7 @@ $$\text{win}$$ and $$\text{loss}$$. We have, by definition,
 $$\text{loss}\ \{\}$$. We also have that $$\text{win}\ G$$ holds iff
 $$\exists m \in \text{moves}(G)$$ such that $$\text{loss}\ mG$$.
 Symmetrically, this gives us that $$\text{loss}\ G$$ holds iff
-$$\forall m \in \text{moves}(G)$$ have $$\text{win}\ mG$$.
+$$\forall m \in \text{moves}(G)$$ we have $$\text{win}\ mG$$.
 
 ### Symmetry elimination (a mildly laborious proof)
 
