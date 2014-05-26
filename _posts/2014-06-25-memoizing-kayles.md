@@ -159,21 +159,21 @@ $$
 \end{align*}
 $$
 
-We can also say that $$win$$ is a predicate of the type $$win :
-2^{2^{\mathbb{N}}}$$.
+We can also say that $$\text{win}$$ is a predicate of the type
+$$\text{win} : 2^{2^{\mathbb{N}}}$$.
 
-A final representation of $$win$$ is that of a predicate on binary
-strings, like $$2^\star \to 2$$. This is particularly interesting from
-a computational point of view due to the idea of lazy trie
-memoization. In particular, we'd like to convert function spaces like
-$$B^A$$ to lazy data structures $$A \rhd B$$ such that those two
+A final representation of $$\text{win}$$ is that of a predicate on
+binary strings, like $$2^\star \to 2$$. This is particularly
+interesting from a computational point of view due to the idea of lazy
+trie memoization. In particular, we'd like to convert function spaces
+like $$B^A$$ to lazy data structures $$A \rhd B$$ such that those two
 spaces are isomorphic (at least so long as $$A$$ and $$B$$ are
 finite).
 
 ## Winning as binary search
 
 The standard source on this is Ralf Hinze's
-[*Memo Functions, Polytypically!*](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.43.3272).
+[*Memo Functions, Polytypically!*](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.43.3272) 
 Briefly, we consider a recursive definition of $$A \rhd B$$ over
 generic ADTs. We can then define something like $$2^\star \rhd 2$$ in
 steps:
@@ -190,9 +190,9 @@ $$
 $$
 
 which is clearly the type of infinite binary trees over $$2$$. This
-leads to an elegant memoized implementation of "$$win$$ as binary
-search". In fact, it's almost trivial to write in Haskell and quite
-elegant, noting the recursive call to the memoized `win` in the
+leads to an elegant memoized implementation of "$$\text{win}$$ as
+binary search". In fact, it's almost trivial to write in Haskell and
+quite elegant, noting the recursive call to the memoized `win` in the
 unmemoized `win'`
 
 ~~~
