@@ -230,7 +230,7 @@ This makes the `trie`/`untrie` code less obvious, but still not
 terrifically complex.
 
 And what's the end result? Well, this code must *really* be compiled
-using `-O2`. Without `-02`, computing the game `[1,16]` tried my
+using `-O2`. Without `-O2`, computing the game `[1,16]` tried my
 patience, but with `-O2` this computes the game `[1,60]` in 10 seconds
 on my computer. It's still nothing write home
 about—[using efficient nimber mathematics reduces the runtime to milliseconds for nearly any game]({{site.baseurl}}public/code/NimberKayles.hs)—but
