@@ -1,10 +1,10 @@
 
 # Dependencies
 markdown:         kramdown
-# highlighter:      pygments
+highlighter:      pygments
 
 # Basics
-# pygments:         true
+pygments:         true
 safe:             true
 lsi:              false
 permalink:        pretty
