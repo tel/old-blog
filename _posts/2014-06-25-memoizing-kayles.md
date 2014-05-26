@@ -35,7 +35,7 @@ remove the final token. On each players turn they (1) pick one stack,
 (2) remove either 1 or 2 tokens, and then (3) have the option of
 partitioning the remainder into two stacks each of 0 or more tokens.
 
-The number of possible moves is linear in the size of the stack *n*
+The number of possible moves is linear in the size of the stack $$n$$
 (it's the number of 2-partitions of $$(n-1)$$ and $$(n-2)$$, i.e.
 $$\lfloor (n-1)/2 \rfloor + \lfloor (n-2)/2 \rfloor + 2$$) and each
 move reduces $$n$$ by at most $$2$$. The size of the game tree is
