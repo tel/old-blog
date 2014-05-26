@@ -106,40 +106,59 @@ all of $$G$$'s stacks.
 
 So, we'll prove that $$\text{symmetric}\ H$$ implies $$G \cong G + H$$
 by induction. The induction is on $$|G + H| = n$$ and gives us the
-induction hypothesis that for all $$\text{symmetic}\ H'$$ and all $$G'$$ such
-that $$|G' + H'| < n$$ we have $$G' \cong G' + H'$$. So now given
-$$G$$ and $$\text{symmetric}\ H$$ such that $$|G + H| = n$$ and $$|H|
-= m$$ we prove that $$G \cong G + H$$ in two parts.
+induction hypothesis that for all $$\text{symmetic}\ H'$$ and all
+$$G'$$ such that $$|G' + H'| < n$$ we have $$G' \cong G' + H'$$. So
+now given $$G$$ and $$\text{symmetric}\ H$$ such that $$|G + H| = n$$
+and $$|H| = m$$ we prove that $$G \cong G + H$$ by proving both
+directions hold.
+
+First, as a mechanical point, consider a move $$m \in \text{moves}(K +
+L)$$ for and $$K$$ and $$L$$. By the rules of Kayles, this move may
+only interact with either $$K$$ or $$LL$$ and thus we know that either
+
+$$
+\begin{align*}
+    m(K + L) &= m_1K + L && \text{for some $m_1 \in \text{moves}(K)$}\\
+    &&& \text{or...} \\
+    &= K + m_2L && \text{for some $m_2 \in \text{moves}(L)$}
+\end{align*}
+$$
+
+On the flip side, we know that for any move $$m \in \text{moves}(K)$$
+there exists a move $$m_K \in \text{moves}(K + L)$$ such that
+$$m_K(K + L) = mK + L$$ and visa versa. From now on, we drop the
+distinction between the individual and combined moves allowing us to
+write things like $$m(K + L) = mK + L$$ if $$m \in \text{moves}(K)$$.
+We'll also elide saying what set of moves a particular move $$m$$
+arose from—if you see the phrase $$m(K + L)$$ you can assume $$m$$
+comes from $$\text{moves}(K + L)$$.
 
 We'll begin by proving that $$\text{win}\ G$$ implies $$\text{win}\
-(G + H)$$. All we have to do is find a move $$m \in \text{moves}\ (G +
-H)$$ such that $$\text{loss}\ m(G + H)$$ holds, but $$\text{win}\ G$$
-implies there's a move $$m \in \text{moves}(G)$$ such that
-$$\text{loss}\ mG$$ holds. If we apply this move $$m(G + H) = mG + H$$
-and we can use the induction hypothesis to see that $$\text{loss}\
-mG$$ implies $$\text{loss}\ (mG + H)$$.
+(G + H)$$. All we have to do is find a move $$m$$ such that
+$$\text{loss}\ m(G + H)$$ holds, but $$\text{win}\ G$$ implies there's
+a move $$m'$$ with $$\text{loss}\ m'G$$. If we apply $$m'(G + H) =
+m'G + H$$ we can use the induction hypothesis to see that
+$$\text{loss}\ m'G$$ implies $$\text{loss}\ (m'G + H)$$ which is what
+we needed.
 
 Now we prove that $$\text{win}\ (G + H)$$ implies $$\text{win}\ G$$.
-We use $$\text{win}\ (G + H)$$ to find a move $$m \in \text{moves}(G +
-H)$$ such that $$\text{loss}\ m(G + H)$$. Since moves can correspond
-to only one stack and stacks can be in only one game, there are two
-possibilities: either $$m$$ applies to $$G$$ or $$m$$ applies to
-$$H$$.
+As $$\text{win}\ (G + H)$$ entails there's a move $$m$$ with
+$$\text{loss}\ m(G + H)$$. We consider whether $$m$$ is in $$G$$ or
+$$H$$ separately.
 
-In the first case, $$m(G + H) = mG + H$$ which the induction
-hypothesis tell us is a loss iff $$mG$$ is, thus $$\text{loss}\ mG$$
-holds and so does $$\text{win}\ G$$.
+$$\text{If: } (m(G + H) = mG + H)$$. We use the IH to have
+$$\text{loss}\ mG + H$$ implies $$\text{loss}\ mG$$ and then the
+existence of $$m$$ proves $$\text{win}\ G$$.
 
-In the second case, $$m(G + H) = G + mH$$ and since $$\text{loss}\
-(G + mH)$$ holds we know that all $$n \in \text{moves}(G + mH)$$ have
-$$\text{win}\ n(G + mH)$$. Since $$H$$ is symmetric, one of those
-moves is $$m'$$, the immitation move of $$(m, H)$$, so $$n(G + mH) =
-G + nmH$$ and the induction hypothesis says $$G + nmH$$ is equivalent
-to $$G$$, so $$\text{win}\ (G + nmH)$$ implies $$\text{win}\ G$$.
-$$\blacksquare$$
+$$\text{If: } (m(G + H) = G + mH)$$. Here, $$\text{loss}\ (G + mH)$$
+gives us that for all moves $$m'$$ we have $$\text{win}\ m'(G + mH)$$.
+Since $$H$$ is symmetric, we also have $$\bar{m}$$, the immitation
+move of $$(m, H)$$. If we instantiate the prior using $$m' \mapto
+\bar{m}$$ then we have $$\bar{m}(G + mH) = G + \bar{m}mH$$ as winning,
+which by the induction hypothesis proves $$\text{win}\ G$.
 
-And armed with this lemma, if we can find a decomposition of $$G$$
-into $$G' + H$$ for symmetric $$H$$ then we have $$G \cong G'$$.
+Finally, as a corollary, if we can find a decomposition of $$G$$ into
+$$G' + H$$ for symmetric $$H$$ then we have $$G \cong G'$$.
 
 ## Better game representations
 
