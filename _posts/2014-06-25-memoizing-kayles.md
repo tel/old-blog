@@ -106,7 +106,7 @@ all of $$G$$'s stacks.
 
 So, we'll prove that $$\text{symmetric}\ H$$ implies $$G \cong G + H$$
 by induction. The induction is on $$|G + H| = n$$ and gives us the
-induction hypothesis that for all $$symmetic\ H'$$ and all $$G'$$ such
+induction hypothesis that for all $$\text{symmetic}\ H'$$ and all $$G'$$ such
 that $$|G' + H'| < n$$ we have $$G' \cong G' + H'$$. So now given
 $$G$$ and $$\text{symmetric}\ H$$ such that $$|G + H| = n$$ and $$|H|
 = m$$ we prove that $$G \cong G + H$$ in two parts.
