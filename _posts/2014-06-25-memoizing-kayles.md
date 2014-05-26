@@ -79,12 +79,12 @@ $$\text{loss}\ G = \neg \text{win}\ G$$. We also talk about the
 possible moves from some game and write that for any $$m \in
 \text{moves}(G)$$ that $$mG$$ is $$G$$ after $$m$$ has been performed.
 
-With these mechanics, we can give an inductive definition to $$win$$
-and $$loss$$. We have, by definition, $$\text{loss}\ \{\}$$. We also
-have that $$\text{win}\ G$$ holds if there exists an $$m \in
-\text{moves}(G)$$ such that $$\text{loss}\ mG$$. Symmetrically, this
-gives us that $$\text{loss}\ G$$ holds iff all $$m \in
-\text{moves}(G)$$ have $$\text{win}\ mG$$.
+With these mechanics, we can give an inductive definition to
+$$\text{win}$$ and $$\text{loss}$$. We have, by definition,
+$$\text{loss}\ \{\}$$. We also have that $$\text{win}\ G$$ holds if
+there exists an $$m \in \text{moves}(G)$$ such that $$\text{loss}\
+mG$$. Symmetrically, this gives us that $$\text{loss}\ G$$ holds iff
+all $$m \in \text{moves}(G)$$ have $$\text{win}\ mG$$.
 
 ### Symmetry elimination (a mildly laborious proof)
 
