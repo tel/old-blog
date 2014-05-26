@@ -74,16 +74,17 @@ tokens. A game that can be decomposed as $$G + H + H$$ is called
 symmetric.
 
 We'd like to say whether the first player can win the game, $$G$$.
-We'll write that as $$win\ G$$, otherwise we'll write $$loss\ G = \neg
-win\ G$$. We also talk about the possible moves from some game and
-write that for any $$m \in moves(G)$$ that $$mG$$ is $$G$$ after $$m$$
-has been performed.
+We'll write that as $$\text{win}\ G$$, otherwise we'll write
+$$\text{loss}\ G = \neg \text{win}\ G$$. We also talk about the
+possible moves from some game and write that for any $$m \in
+\text{moves}(G)$$ that $$mG$$ is $$G$$ after $$m$$ has been performed.
 
 With these mechanics, we can give an inductive definition to $$win$$
-and $$loss$$. We have, by definition, $$loss\ {}$$. We also have that
-$$win\ G$$ holds if there exists an $$m \in moves(G)$$ such that
-$$loss\ mG$$. Symmetrically, this gives us that $$loss\ G$$ holds iff
-all $$m \in moves(G)$$ have $$win\ mG$$.
+and $$loss$$. We have, by definition, $$\text{loss}\ {}$$. We also
+have that $$\text{win}\ G$$ holds if there exists an $$m \in
+\text{moves}(G)$$ such that $$\text{loss}\ mG$$. Symmetrically, this
+gives us that $$\text{loss}\ G$$ holds iff all $$m \in
+\text{moves}(G)$$ have $$\text{win}\ mG$$.
 
 ### Symmetry elimination (a mildly laborious proof)
 
@@ -91,7 +92,7 @@ It'd be nice to be able to decompose games into simpler equivalent
 games. We'll talk about this tacitly, though if you're being technical
 we might talk about equivalence classes of games under the predicate
 $$win$$. We say $$G$$ is equivalent to $$H$$, or $$G \cong H$$ where
-$$win\ G$$ iff $$win\ H$$.
+$$\text{win}\ G$$ iff $$\text{win}\ H$$.
 
 Since symmetric games evaporate down to the empty game $${}$$ and
 adding the empty game to any other game is an identity, we might prove
@@ -103,36 +104,39 @@ There's a mild proof of this involving induction on the size of games.
 The size of a game $$G$$, called $$|G|$$, is the number of tokens in
 all of $$G$$'s stacks.
 
-So, we'll prove that $$symmetric\ H$$ implies $$G \cong G + H$$ by
-induction. The induction is on $$|G + H| = n$$ and gives us the
+So, we'll prove that $$\text{symmetric}\ H$$ implies $$G \cong G + H$$
+by induction. The induction is on $$|G + H| = n$$ and gives us the
 induction hypothesis that for all $$symmetic\ H'$$ and all $$G'$$ such
 that $$|G' + H'| < n$$ we have $$G' \cong G' + H'$$. So now given
-$$G$$ and $$symmetric\ H$$ such that $$|G + H| = n$$ and $$|H| = m$$
-we prove that $$G \cong G + H$$ in two parts.
+$$G$$ and $$\text{symmetric}\ H$$ such that $$|G + H| = n$$ and $$|H|
+= m$$ we prove that $$G \cong G + H$$ in two parts.
 
-We'll begin by proving that $$win\ G$$ implies $$win\ (G + H)$$. All
-we have to do is find a move $$m \in moves\ (G + H)$$ such that
-$$lose\ m(G + H)$$ holds, but $$win\ G$$ implies there's a move $$m
-\in moves(G)$$ such that $$lose\ mG$$ holds. If we apply this move
-$$m(G + H) = mG + H$$ and we can use the induction hypothesis to see
-that $$lose\ mG$$ implies $$lose\ (mG + H)$$.
+We'll begin by proving that $$\text{win}\ G$$ implies $$\text{win}\
+(G + H)$$. All we have to do is find a move $$m \in \text{moves}\ (G +
+H)$$ such that $$\text{loss}\ m(G + H)$$ holds, but $$\text{win}\ G$$
+implies there's a move $$m \in \text{moves}(G)$$ such that
+$$\text{loss}\ mG$$ holds. If we apply this move $$m(G + H) = mG + H$$
+and we can use the induction hypothesis to see that $$\text{loss}\
+mG$$ implies $$\text{loss}\ (mG + H)$$.
 
-Now we prove that $$win\ (G + H)$$ implies $$win\ G$$. We use $$win\
-(G + H)$$ to find a move $$m \in moves(G + H)$$ such that $$lose\
-m(G + H)$$. Since moves can correspond to only one stack and stacks
-can be in only one game, there are two possibilities: either $$m$$
-applies to $$G$$ or $$m$$ applies to $$H$$.
+Now we prove that $$\text{win}\ (G + H)$$ implies $$\text{win}\ G$$.
+We use $$\text{win}\ (G + H)$$ to find a move $$m \in \text{moves}(G +
+H)$$ such that $$\text{loss}\ m(G + H)$$. Since moves can correspond
+to only one stack and stacks can be in only one game, there are two
+possibilities: either $$m$$ applies to $$G$$ or $$m$$ applies to
+$$H$$.
 
 In the first case, $$m(G + H) = mG + H$$ which the induction
-hypothesis tell us is a loss iff $$mG$$ is, thus $$loss\ mG$$ holds
-and so does $$win\ G$$.
+hypothesis tell us is a loss iff $$mG$$ is, thus $$\text{loss}\ mG$$
+holds and so does $$\text{win}\ G$$.
 
-In the second case, $$m(G + H) = G + mH$$ and since $$loss\ (G + mH)$$
-holds we know that all $$n \in moves(G + mH)$$ have $$win\ n(G +
-mH)$$. Since $$H$$ is symmetric, one of those moves is $$m'$$, the
-immitation move of $$(m, H)$$, so $$n(G + mH) = G + nmH$$ and the
-induction hypothesis says $$G + nmH$$ is equivalent to $$G$$, so
-$$win\ (G + nmH)$$ implies $$win\ G$$. $$\blacksquare$$
+In the second case, $$m(G + H) = G + mH$$ and since $$\text{loss}\
+(G + mH)$$ holds we know that all $$n \in \text{moves}(G + mH)$$ have
+$$\text{win}\ n(G + mH)$$. Since $$H$$ is symmetric, one of those
+moves is $$m'$$, the immitation move of $$(m, H)$$, so $$n(G + mH) =
+G + nmH$$ and the induction hypothesis says $$G + nmH$$ is equivalent
+to $$G$$, so $$\text{win}\ (G + nmH)$$ implies $$\text{win}\ G$$.
+$$\blacksquare$$
 
 And armed with this lemma, if we can find a decomposition of $$G$$
 into $$G' + H$$ for symmetric $$H$$ then we have $$G \cong G'$$.
@@ -151,11 +155,12 @@ convert games to the new representation with the mapping
 
 $$
 \begin{align*}
-    G \mapsto \{ n \mid \text{$n$ $\in$ $Nat$}, \text{count($n$, $G$) is odd} \}
+    G \mapsto \{ n \mid \text{$n$ $\in$ $\mathbb{N}$}, \text{count($n$, $G$) is odd} \}
 \end{align*}
 $$
 
-We can also say that $$win$$ is a predicate of the type $$win : 2^{2^{Nat}}$$.
+We can also say that $$win$$ is a predicate of the type $$win :
+2^{2^{\mathbb{N}}}$$.
 
 A final representation of $$win$$ is that of a predicate on binary
 strings, like $$2^\star \to 2$$. This is particularly interesting from
