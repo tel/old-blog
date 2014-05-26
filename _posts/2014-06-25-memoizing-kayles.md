@@ -70,7 +70,7 @@ To regroup: we're playing the game Kayles which consists of singleton
 games corresponding to natural numbers, sizes of stacks of tokens, and
 their sums. Each player may, on their turn, pick a stack and reduce it
 by either 1 or 2 tokens then split it into two substacks of 0 or more
-tokens. A game that can be decomposed as $$G + H + H$$ is called
+tokens. A game that can be decomposed as $$G = H + H$$ is called
 symmetric.
 
 We'd like to say whether the first player can win the game, $$G$$.
