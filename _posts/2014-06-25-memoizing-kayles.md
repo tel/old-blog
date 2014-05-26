@@ -86,7 +86,7 @@ $$\exists m \in \text{moves}(G)$$ such that $$\text{loss}\ mG$$.
 Symmetrically, this gives us that $$\text{loss}\ G$$ holds iff
 $$\forall m \in \text{moves}(G)$$ we have $$\text{win}\ mG$$.
 
-### Symmetry elimination (a mildly laborious proof)
+### Symmetry elimination (and a mildly laborious proof)
 
 It'd be nice to be able to decompose games into simpler equivalent
 games. We'll talk about this tacitly, though if you're being technical
@@ -146,16 +146,16 @@ As $$\text{win}\ (G + H)$$ entails there's a move $$m$$ with
 $$\text{loss}\ m(G + H)$$. We consider whether $$m$$ is in $$G$$ or
 $$H$$ separately.
 
-$$\text{If: } (m(G + H) = mG + H)$$. We use the IH to have
-$$\text{loss}\ mG + H$$ implies $$\text{loss}\ mG$$ and then the
-existence of $$m$$ proves $$\text{win}\ G$$.
+$$[m(G + H) = mG + H]$$ We use the IH to have $$\text{loss}\ mG + H$$
+implies $$\text{loss}\ mG$$ and then the existence of $$m$$ proves
+$$\text{win}\ G$$.
 
-$$\text{If: } (m(G + H) = G + mH)$$. Here, $$\text{loss}\ (G + mH)$$
-gives us that for all moves $$m'$$ we have $$\text{win}\ m'(G + mH)$$.
-Since $$H$$ is symmetric, we also have $$\bar{m}$$, the immitation
-move of $$(m, H)$$. If we instantiate the prior using $$m' \mapto
-\bar{m}$$ then we have $$\bar{m}(G + mH) = G + \bar{m}mH$$ as winning,
-which by the induction hypothesis proves $$\text{win}\ G$.
+$$[m(G + H) = G + mH]$$ Here, $$\text{loss}\ (G + mH)$$ gives us that
+for all moves $$m'$$ we have $$\text{win}\ m'(G + mH)$$. Since $$H$$
+is symmetric, we also have $$\bar{m}$$, the immitation move of $$(m,
+H)$$. If we instantiate the prior using $$m' \mapsto \bar{m}$$ then we
+have $$\bar{m}(G + mH) = G + \bar{m}mH$$ as winning, which by the
+induction hypothesis proves $$\text{win}\ G$$.
 
 Finally, as a corollary, if we can find a decomposition of $$G$$ into
 $$G' + H$$ for symmetric $$H$$ then we have $$G \cong G'$$.
