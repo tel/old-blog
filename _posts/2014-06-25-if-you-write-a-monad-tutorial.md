@@ -3,6 +3,8 @@ layout: page
 title: If you write a monad tutorial...
 ---
 
+> A tutorial to monad tutorials.
+
 *DRAFT*
 
 Monads tutorials are a pack of lies. They form a tiny nucleus within
@@ -301,20 +303,260 @@ have operations which embody the monad pattern.
 
 ## Getting to semantics
 
-- "the programmable semicolons stickler"
-- "monads as semantics islands"
-- "a glimpse of 'why do we care'"
-- "the barrier of starting to see PL as formal languages"
-- "the monad laws, tightness, and the-most-simple-thing"
+All of the methods of "getting monads" up to this point were highly
+practical. These kinds of desires stem from wanting to exploit the
+power of new techniques often described as monadic.
+
+But there's another side to monads as well—they form powerful analytic
+tools. It's not uncommon to see them used in this fashion. Common
+examples include the "programmable semicolons" notion, comparative
+power analysis between monadic and applicative code, or recognition
+that certain algorithms are "essentially monads" of various flavors
+such as parser combinators.
+
+There's a practical edge to this as well. Learning to really
+understand the monad pattern—especially how it can be extended and
+decomposed—can make you a more efficient, confident coder. To return
+to the parser combinators example, there's something really efficient
+about being able to say that `Parser`s producing values of type `a`
+are "just" `StateT String List a` (what's the problem?)
+
+### Semantic islands
+
+This effect of monads comes from what I like to call their nature as
+"semantic islands". This is a possible translation of a statement like
+"reading from and writing to files lives in the `IO` monad"—you might
+say, "reading from and writing to files is constrained to live in
+semantic islands of kind `IO`".
+
+What do I mean by semantic island? Monads, especially when used in a
+type strict language like Haskell or Scala, are infectuous
+computations. Once you've begun to use values "inside" a monad you
+start to spend more time "lifting" non-monadic computations up into
+your monad than you do taking things out.
+
+To use `Maybe` as an example, once you've begun to work with code that
+might fail any new operations performed on results from that code will
+be "infected" by the notion of failure as well. For instance, if you
+have a `Maybe Integer` then when you lift an operation like `timesTwo`
+to operate on that `Maybe` value you receive another `Maybe` value as
+a result. Your new computation was infected by the fact that it may
+potentially fail.
+
+The only way to "escape" the `Maybe` monad is to explicitly provide a
+way of handling the failure circumstance. Most likely, this would be a
+default value and so we have functions like
+
+~~~ haskell
+def :: a -> Maybe a -> a
+def x maybeA = case maybeA of
+  Nothing -> x
+  Just a  -> a
+~~~
+
+which act as rescue planes landing on our desert `Maybe` island,
+explicitly taking people back into the larger world.
+
+This might at this point feel like a stretched metaphor, but it plays
+out in code written in a heavily monadic style. You end up
+constructing specific islands to your task and writing algorithms
+which are natural in that place: on `Maybe` island, tasks may fail, on
+`List` island, tasks are non-deterministic. Then, we explicitly build
+bridges between these islands such as
+
+~~~ haskell
+firstResult :: List a -> Maybe a
+~~~
+
+which takes a non-determistic task from `List` island to a task which
+merely may fail living on `Maybe` island.
+
+As a final stretch of this metaphor, it might be worth considering the
+Haskell notion of the `IO` island. This is where the runtime, where
+the "real world" can be approached and thus it's required that your
+program eventually builds a bridge to there. This can be seen as just
+an artifact of the runtime: Haskell executable programs are expected
+to have an entry point that looks like
+
+~~~ haskell
+-- Get to IO-island with no particular value whatsoever
+main :: IO ()
+~~~
+
+and the runtime system does nothing more than fly the rescue plane
+from `IO`-island back to the real world.
+
+### Nobody cares about "semantic islands"
+
+Many monad tutorials target the metaphor I just laid down above, these
+"islands". As a result, many people feel like "getting" that metaphor
+is the same as "getting monads".
+
+That's a plausible goal to have, but a strange one. The metaphor I
+outlined above is just a (subpar) description of what monads feel
+like. Understanding it will help you to have a conversation with me
+and maybe even to understand some of the conversations of others
+involving monads, but it's hardly a pre-requisite.
+
+The same thing goes for monad metaphors like spacesuits and burritos
+and factory floors covered in conveyor belts.
+
+The fact of metaphors like this is that if you already understand the
+concept then they are colorful ways of talking about it. If you don't
+already understand the concept then hearing an artistic depiction of
+part of it won't help you much. This is the genesis of the so-called
+"Crockford's Law"
+
+> Once you get monads, you're no longer capable of explaining them.
+
+More directly, the problem is that being able to understand and
+generate metaphors like these is just one not-terrifically-useful mode
+of "getting monads", but it's still somehow pleasurable in the same
+way that reading a novel about love is. If you love someone then a
+great artist can touch you with their words, but reading is hardly a
+suitable substitute.
+
+### Monads are never the key
+
+Now I'm going to claim that the idea of "semantic islands" is an
+interesting one worth studying. The reason is not "monads" at all, but
+instead that "getting" semantic islands will sharpen your sensitivity
+to the behavior of formal languages—any and all programming languages
+included.
+
+In particular, we'd like to become sensitive to the notion of what
+even the simplest, most ignorable components of a language's syntax
+might *really mean*. Through this process, we'd like to challenge our
+mental models of the specification of programs. For instance, let me
+introduce the simple language Sum. It consists of a number of
+statements, each of which a number. Statements may be separated by
+linebreaks or semicolons. The meaning of a Sum program is the sum of
+the numbers represented in each statement. The program
+
+~~~
+1;
+2;
+3;
+~~~
+
+"means" `6`. If you spend enough time thinking about what the nature
+of semantics of formal languages is then you might uncover the answers
+to silly sounding questions like "what does 'means' mean?". There's
+vast richness here and if you're, say, a DSL engineer then you may
+benefit a lot from studying it.
+
+It also so happens that imperative languages with a certain type of
+variable binding follow the monad pattern. In fact, you might say that
+the monad pattern is the simplest, most obvious way of having an
+imperative language with variable binding. It thus forms a very good
+starting point to build your own langauge or analyze someone else's.
+
+### Using semantic islands as a tool
+
+The final reason why semantic islands might be interesting is that
+you're using a language which has a lot of them. In particular, it's
+likely a language which "has monads" in either the weak or strong
+sense outlined above and so you see the artifacts of these semantic
+islands when reading other people's code.
+
+This is a double-edged sword for these languages, especially in
+languages which have monads in the strong sense of strong typing and
+higher-order abstraction. In this case, you will see various semantic
+islands appearing with almost all distinguishing marks elided and
+under the careful watch of a compiler which assumes that those
+distinctions are just obvious to you.
+
+When that's true it's a wonderful place to work. When it's false, you
+may be in for a nightmare. In both cases, the effect is only partly a
+matter of monads and mostly a matter of the powerful tools of
+abstraction being employed. If you understand *those mechanisms* well
+and you understand the underlying type then you will be able to slowly
+tackle that code without "getting monads" at all.
+
+Ultimately, understanding the monad pattern is a shortcut to using the
+higher-order abstraction techniques of your language. It can also be a
+shortcut to implementing new imperative-language-with-variable-binding
+DSLs if that's what your goal is. In both cases, the shortcut is best
+employed once you know well the long route.
+
+And, truly, the "power of monads" in this scenario comes from a deep
+understanding of the power of the abstraction methods which allow the
+language to "have monads" in the first place. For instance, in Haskell
+things like `Functor` and `Applicative`, `Monoid` and `Arrow`,
+`Semiring` and `VectorSpace` all exist at roughly the same level as
+`Monad`. Understanding any of these other patterns may be more
+valuable to you than `Monad`.
 
 ## Categorically getting monads
 
-- "the most abstract sense"
-- "the *meaning* of category theory"
-- "comparisons in mathematics"
-- "category theory for scientists"
-- "monads made difficult"
-- "just a monoid in the category of endofunctors"
-- "generalizations"
-  - "comonads, co- everything"
-  - "the typeclassopedia"
+There's at least one more, final notion of "getting monads", their
+existence as mathematical objects neatly embedded in the entire field
+of Category Theory.
+
+This is perhaps the least useful point-of-view as a programming
+tutorial, although many people who "really get monads" today also "get
+category theory" so it's tempting to study it. Further, people who get
+category theory may suggest that CT can be useful for expanding your
+sensitivity to patterns in programming.
+
+In my perspective, this is true. In a similar way, learning to fly a
+plane will increase your sensitivity to patterns in flying on a
+commercial airliner. You might even eventually benefit from being able
+to fly your own plane from place to place completely subverting the
+need for commercial airliner and opening up the opportunity to land at
+a small, rural airport much closer to your ultimate destination.
+
+Many people fly every day without this sensitivity, however.
+Similarly, many programmers will never learn CT to basically no ill
+effect.
+
+On the other hand, if you're already comfortable reading and grasping
+abstract mathematics then learning category theory might be a
+relatively fast way of tackling many of the other methods of "getting
+monads". It will at least supplement your understanding.
+
+Finally, this mode of "getting monads" enjoys two great benefits: it's
+wonderfully terse and highly accurate. No other method of "getting
+monads" comes even remotely close. If you "get monads" in many other
+senses of the phrase and can spend whatever it may take in time and
+sweat and blood to learn the background to understanding the CT
+definition then it will focus and compress your understanding of the
+pattern to a sharp point.
+
+Here are a few expressions of it:
+
+* If $$F \vdash G$$ are adjoint functors, then their closure, $$G
+  \circ F$$, is a monad.
+* A monad is a monoid in the category of endofunctors
+* A monad is a triple $$(T, \eta, \mu)$$ where $$T$$ is an
+  endofunctor, $$\eta$$ a natural transformation $$1 \to T$$ (where
+  $$1$$ is the identity functor), and $$\mu$$ a natural transformation
+  $$T \circ T \to T$$ such that
+  * $$\mu \circ T\mu = \mu \circ \mu T$$ as natural transformations
+    $$T \circ T \circ T -> T$$.
+  * $$\mu \circ T\eta = \mu \circ \eta T = 1$$ as natural
+    transformations $$T -> T$$.
+
+These are not meant to illuminate for anyone who isn't both already
+familiar with every word in these sentences and willing to study the
+short definition itself for possibly quite long period of time. Worse,
+every word in those sentences is a topic whose study is more than
+large enough to take longer than most senses of "getting monads"
+themselves.
+
+On the flip side, these wonderfully general definitions are powerful.
+For instance, we can trivially dualize the first two definitions in
+order to produce a new concept called a "comonad":
+
+* If $$F \vdash G$$ are adjoint functors then $$F \circ G$$ is a
+  comonad
+* A comonad is a comonoid in the category of endofunctors.
+
+We can also examine the third to build deep understandings of what it
+means to "follow the monad laws". We can leverage the concepts used in
+the definitions to analyze the monad pattern deeply. For instance, if
+we know about the notion of "free monoids", and indeed perhaps have
+already implemented them as standard `List` types, then we can build a
+valid notion of a "free monad"
+
+* The free monad is the free monoid in the category of endofunctors.
