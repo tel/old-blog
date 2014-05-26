@@ -1,10 +1,10 @@
 
 # Dependencies
-markdown:         redcarpet
-highlighter:      pygments
+markdown:         kramdown
+# highlighter:      pygments
 
 # Basics
-pygments:         true
+# pygments:         true
 safe:             true
 lsi:              false
 permalink:        pretty
