@@ -181,10 +181,10 @@ steps:
 $$
 \begin{align*}
     T =& 2^\star \rhd 2 \\
-      =& 1 + 2 \times 2^\star \rhd 2 \\
-      =& (1 \rhd 2) \times (2 \times 2^\star \rhd 2) \\
-      =& 2 \times (2 \rhd 2^\star \rhd 2) \\
-      =& 2 \times (2^\star \rhd 2) \times (2^\star \rhd 2) \\
+      =& 1 + 2 \times 2^\star \rhd 2 && \text{unfolding the list pattern functor}\\
+      =& (1 \rhd 2) \times (2 \times 2^\star \rhd 2) && \text{to continue "$A$ or $B$" we use "$f$ and $g$"} \\
+      =& 2 \times (2 \rhd 2^\star \rhd 2) && \text{constant functions are constants} \\
+      =& 2 \times (2^\star \rhd 2) \times (2^\star \rhd 2) && \text{booleans are sums} \\
     T =& 2 \times T \times T \\
 \end{align*}
 $$
@@ -230,8 +230,9 @@ This makes the `trie`/`untrie` code less obvious, but still not
 terrifically complex.
 
 And what's the end result? Well, this code must *really* be compiled
-using `-O2`. Without `-O2`, computing the game `[1,16]` tried my
-patience, but with `-O2` this computes the game `[1,60]` in 10 seconds
-on my computer. It's still nothing write home
+using `-O2` in order to get the effect of the memoization. Without
+`-O2`, computing the game `[1,16]` tried my patience despite the
+symmetry equivalences used, but with `-O2` this computes the game
+`[1,60]` in 10 seconds on my computer. It's still nothing write home
 about—[using efficient nimber mathematics reduces the runtime to milliseconds for nearly any game]({{site.baseurl}}public/code/NimberKayles.hs)—but
 still an interesting way to optimize a game tree search.
