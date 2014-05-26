@@ -39,8 +39,8 @@ The number of possible moves is linear in the size of the stack $$n$$
 (it's the number of 2-partitions of $$(n-1)$$ and $$(n-2)$$, i.e.
 $$\lfloor (n-1)/2 \rfloor + \lfloor (n-2)/2 \rfloor + 2$$) and each
 move reduces $$n$$ by at most $$2$$. The size of the game tree is
-exponential and brute forcing the game tree will likely fail. We can
-exploit symmetry to help, though.
+exponential and brute forcing the game tree will likely fail for even
+tiny games. We can exploit symmetry to help, though.
 
 ## Symmetric games
 
