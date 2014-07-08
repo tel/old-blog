@@ -5,7 +5,6 @@ highlighter:      pygments
 
 # Basics
 pygments:         true
-safe:             true
 lsi:              false
 permalink:        pretty
   
