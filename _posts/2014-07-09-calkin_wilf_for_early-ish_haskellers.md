@@ -568,8 +568,8 @@ allRationals = go (1, 1) where
 {: .language-haskell}
 
 we end up with the algorithm stated at the very beginning of this
-whole article module a little stylistic detail about unnecessary
-tupling. 
+whole article modulo a little stylistic detail about unnecessary
+tupling.
 
 Which is kind of remarkable if you think about it.
 
