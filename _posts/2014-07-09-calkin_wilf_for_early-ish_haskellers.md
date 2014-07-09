@@ -10,8 +10,8 @@ title: Calkin-Wilf for Early(-ish) Haskellers
 
 The
 [Calkin-Wilf enumeration of the rationals](http://en.wikipedia.org/wiki/Calkin%E2%80%93Wilf_tree)
-is a beautiful algorithm and a stunning lazy, functional
-implementation of it is described in a
+is a beautiful algorithm and a lazy, functional implementation of it
+is described in a
 [Functional Pearl by Gibbons, Lester, and Bird, *Enumerating the Rationals*](http://www.cs.ox.ac.uk/jeremy.gibbons/publications/rationals.pdf).
 You might not believe it on first glance, but the algorithm described
 therein is actually more or less a Haskell one-liner which could be
