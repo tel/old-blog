@@ -247,8 +247,24 @@ interleave (x:xs) (y:ys) = x : y : interleave xs ys
 It's probably worth spending a moment here to note how `interleave`'s
 definition take advantage of pattern matching to expose all of the
 possible combinations of inputs. It's usually easy to review a pattern
-match and ensure there are no missing cases, although the compiler
-can't help you much if you do forget one.
+match and ensure there are no missing cases. It's easy enough that
+oftentimes the compiler will even warn you if you make a mistake!
+
+~~~
+interleave :: [a] -> [a] -> [a]
+interleave []     ys     = ys
+interleave xs     []     = xs
+
+CalkinWilf.hs:9:1: Warning:
+    Pattern match(es) are non-exhaustive
+    In an equation for `interleave':
+        Patterns not matched: (_ : _) (_ : _)
+~~~
+{: .language-haskell}
+
+But be aware that you can't always rely on this. A warning is evidence
+your pattern matches are incomplete, but a lack of warnings is not
+evidence your program is safe. Anyway!
 
 From here, breadth first traversal is pretty easy. We decompose a node
 by viewing its value follows by the `interleave` of the breadth-first
