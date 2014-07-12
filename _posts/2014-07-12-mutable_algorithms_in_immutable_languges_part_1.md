@@ -18,7 +18,7 @@ and the flow of data in the algorithm itself. It can be really
 enlightening.
 
 But for those times when you just want an algorithm without all the
-enlightenment, well, this can put a damper on your day.
+enlightenment this can put a damper on your day.
 
 Worst of all, some algorithms have no known immutable cousin. One of
 my favorite algorithms, Union/Find, which lets you compute connected
