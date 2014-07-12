@@ -43,17 +43,25 @@ node a = do
 
 -- performs path compression
 find :: UF r a => Node r -> r (Node r)
-find (Node r) = do
-  p <- findRec r
-  unless (r == p) $ alter (\n -> n { parent = Just p }) r
+find n@(Node r) = do
+  Node p <- findRec n
+
+  -- PATH COMPRESSION
+  -- If we began at the top we don't want to rewrite the parent
+  -- but if we're didn't then we cache the root
+  unless (r == p) $ alter (\m -> m { parent = Just p }) r
+
   return (Node p)
+
   where
-    findRec :: UF r a => Ref r -> r (Ref r)
-    findRec r = do
+    -- | Recursively jump up `parent` links until we're
+    --   at a root node
+    findRec :: UF r a => Node r -> r (Node r)
+    findRec (Node r) = do
       n <- deref r
       case parent n of
-        Nothing -> return r
-        Just p  -> findRec p
+        Nothing -> return (Node r)
+        Just p  -> find (Node p)
 
 link :: UF r a => Node r -> Node r -> r ()
 link n1 n2 = do
