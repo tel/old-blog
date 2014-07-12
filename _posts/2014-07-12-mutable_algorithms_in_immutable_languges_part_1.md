@@ -3,6 +3,8 @@ layout: post
 title: Mutable Algorithms in Immutable Languages, Part 1
 ---
 
+[*All code for this post is available in the blog repository on Github.*](https://github.com/tel/tel.github.io/tree/master/public/code/MutableImmutable/Part1)
+
 One of the big challenges you might face when learning a language like
 Haskell which favors immutability or purity is that suddenly all of
 the algorithms you once kept at your side have... well, by-and-large
