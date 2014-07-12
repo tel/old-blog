@@ -3,7 +3,9 @@ layout: post
 title: Mutable Algorithms in Immutable Languages, Part 2
 ---
 
-*Or: a small love letter to phantom type parameters.*
+*Or: a small love letter to phantom type parameters.* *See also
+ [part 1](http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/).
+ All of the code in this post [is available in the blog repository on Github](https://github.com/tel/tel.github.io/tree/master/public/code/MutableImmutable/Part2).*
 
 Last time we saw a way to implement Union/Find, an algorithm which
 depends critically on *observable* mutable memory, within a particular
