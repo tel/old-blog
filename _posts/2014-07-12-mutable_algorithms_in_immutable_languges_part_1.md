@@ -88,7 +88,8 @@ alter f r = do
 ~~~
 {: .language-haskell}
 
-Note the signature: `alter` works for *any* `Mem` monad.
+Note the signature: `alter` works for *any* `Mem` monad and we can see
+that directly in the types.
 
 ## Union/Find
 
