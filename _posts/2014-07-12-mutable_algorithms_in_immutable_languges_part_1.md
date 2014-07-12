@@ -255,8 +255,14 @@ And it's a wrap! Here's Union/Find in Haskell.
 Sort of. Actually we haven't really done anything. This whole exercise
 has been predicated upon an unproven assertion.
 
-We still have to find a model of mutable memory which can implement
-the `Mem` interface.
+*We still have to find a model of mutable memory which can implement
+the `Mem` interface.*
 
-But that will have to come a little later. Even if this algorithm
-isn't yet done, part 1 of this series is!
+But that will have to come a little later. It's slightly trickier than
+it looks. For anyone eager to jump ahead, try implementing it using
+`IO` and `State S` where `S` includes an `IntMap`. The simple version
+using an `IntMap` will have a subtle bug.
+
+But that's all to come!
+
+
