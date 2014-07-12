@@ -265,6 +265,4 @@ it looks. For anyone eager to jump ahead, try implementing it using
 using an `IntMap` will have a subtle API bug which will allow bad
 state to seep in.
 
-But that's all to come!
-
-
+Until next time!
