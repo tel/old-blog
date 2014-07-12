@@ -22,4 +22,3 @@ instance Mem (UfIO v) where
   ref   a = UfIO (UfIORef <$> newIORef a)
   deref r = UfIO (readIORef $ getUfIORef r)
   set r v = UfIO (writeIORef (getUfIORef r) v)
-
