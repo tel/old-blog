@@ -8,7 +8,7 @@ title: Mutable Algorithms in Immutable Languages, Part 2
 Last time we saw a way to implement Union/Find, an algorithm which
 depends critically on *observable* mutable memory, within a particular
 abstract monad called `Mem`. Monads implementing `Mem` model mutable
-memory (*ed.* say *that* 10 times fast) and we saw that's sufficient
+memory (say *that* 10 times fast) and we saw that's sufficient
 to recover Union/Find.
 
 But we didn't actually see any implementations of `Mem`. So maybe
