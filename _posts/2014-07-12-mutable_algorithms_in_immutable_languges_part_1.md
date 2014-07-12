@@ -106,7 +106,7 @@ retrieving references for each node we assert.
 --   `a` in the monad `r`
 type UF r a
 
--- | This is a mutable reference to a node in our Union/Find graph.
+-- | This is a mutable reference to a node in a Union/Find graph
 newtype Node r
 
 node :: UF r a => a                -> r (Node r)
