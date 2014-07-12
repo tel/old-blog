@@ -3,9 +3,11 @@ layout: post
 title: Mutable Algorithms in Immutable Languages, Part 2
 ---
 
-*Or: a small love letter to phantom type parameters.* *See also
- [part 1](http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/).
- All of the code in this post [is available in the blog repository on Github](https://github.com/tel/tel.github.io/tree/master/public/code/MutableImmutable/Part2).*
+*See also [part 1][part 1]. All of the code in this post
+ [is available in the blog repository on Github][repo].*
+
+[part 1]:http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/
+[repo]:https://github.com/tel/tel.github.io/tree/master/public/code/MutableImmutable/Part2/
 
 Last time we saw a way to implement Union/Find, an algorithm which
 depends critically on *observable* mutable memory, within a particular
@@ -37,7 +39,9 @@ part 1.
 
 ### Diving in
 
-*The code for this section is available [here](https://github.com/tel/tel.github.io/blob/master/public/code/MutableImmutable/Part2/UnionFind/IO.hs).*
+*The code for this section is available [here][code-p1].*
+
+[code-p1]:https://github.com/tel/tel.github.io/blob/master/public/code/MutableImmutable/Part2/UnionFind/IO.hs
 
 So, we could do exactly what was just suggested and implement `IO`
 into `Mem` (almost) directly. We'll need a `newtype` wrapper around
@@ -142,7 +146,9 @@ about them is a critical trick.
 
 ## Recovering purity
 
-*The code for this section is available [here](https://github.com/tel/tel.github.io/blob/master/public/code/MutableImmutable/Part2/UnionFind/IntMap.hs).*
+*The code for this section is available [here][code-p2].*
+
+[code-p2]:https://github.com/tel/tel.github.io/blob/master/public/code/MutableImmutable/Part2/UnionFind/IntMap.hs
 
 Whew! With all that `IO` out of the way we can get back to solving
 real fake problems like how to *emulate* mutable memory.
@@ -152,19 +158,22 @@ objects of type `Val r` and produce references, `Ref r`, to them which
 can be read from or written to. Without beating around the bush too
 much, this behavior is very similar to that of storing and accessing
 values from a finite `Map`. Better, if we just let our `Ref`s be
-integer identifiers we can use the efficient [`Data.IntMap.IntMap`](http://hackage.haskell.org/package/containers-0.5.5.1/docs/Data-IntMap.html)
-from [the `containers` package](http://hackage.haskell.org/package/containers)
+integer identifiers we can use the efficient [`Data.IntMap.IntMap`]
+from [the `containers` package]
+
+[`Data.IntMap.IntMap`]:http://hackage.haskell.org/package/containers-0.5.5.1/docs/Data-IntMap.html
+[the `containers` package]:http://hackage.haskell.org/package/containers
 
 (There's a question as to whether or not we should use the *lazy* form
 of IntMap, but I'm going to ignore it.)
 
-If we wrap one of those maps up into
-[a `State` monad](http://hackage.haskell.org/package/mtl-2.2.1/docs/Control-Monad-State.html)
-then monadic operations which edit the finite map by using integer
-references is basically what `Mem` asks for. Better yet, we can just
-"snapshot" our memory at any point (using
-[`get`](http://hackage.haskell.org/package/mtl-2.2.1/docs/Control-Monad-State-Strict.html#v:get))
-to escape back into purity.
+If we wrap one of those maps up into [a `State` monad] then monadic
+operations which edit the finite map by using integer references is
+basically what `Mem` asks for. Better yet, we can just "snapshot" our
+memory at any point (using [`get`]) to escape back into purity.
+
+[a `State` monad]:http://hackage.haskell.org/package/mtl-2.2.1/docs/Control-Monad-State.html
+[`get`]:http://hackage.haskell.org/package/mtl-2.2.1/docs/Control-Monad-State-Strict.html#v:get
 
 Sounds perfect. Let's build it!
 
@@ -367,8 +376,8 @@ In some languages you might just have to shrug your shoulders and
 write a note in the documentation.
 
 > Never run a Union/Find computation which returns a `Node` as those
-> nodes will no longer be meaningful and may interact poorly with
-> other Union/Find computations.
+> nodes will no longer be meaningful and can be used to violate
+> preconditions in other Union/Find computations.
 
 But we're fighting this whole problem in order to preserve the
 strength of the type sytem. Can we make the type system pay its dues?
