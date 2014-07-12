@@ -30,9 +30,8 @@ runUfIntMap :: UfIntMap v a -> a
 runUfIntMap = flip evalState uf0 . unUfIntMap where
 
 instance Mem (UfIntMap v) where
-  newtype Ref (UfIntMap v) =
-    UfIntMapRef { getId :: Int } deriving ( Eq )
-  type Val (UfIntMap v) = Node_ (UfIntMap v) v
+  newtype Ref (UfIntMap v) = UfIntMapRef { getId :: Int } deriving ( Eq )
+  type    Val (UfIntMap v) = Node_ (UfIntMap v) v
 
   ref v = UfIntMap $ do
     c <- gets count
@@ -46,3 +45,11 @@ instance Mem (UfIntMap v) where
 
   set r v = UfIntMap $ do
     modify (\s -> s { mem = IM.insert (getId r) v (mem s) })
+
+exPure :: Bool
+exPure = runUfIntMap computation where
+  computation = do
+    n1 <- node 1
+    n2 <- node 2
+    link n1 n2
+    connected n1 n2

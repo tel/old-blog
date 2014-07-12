@@ -1,41 +1,0 @@
-
-./AbstractUnionFind/Internal.hs,446
-module AbstractUnionFind.Internal AbstractUnionFind.Internal3,4
-data Node_ Node_8,9
-  Node_ Node_9,10
-  Node_ { parent parent9,10
-        , rank rank10,11
-        , value value11,12
-newtype Node Node14,15
-newtype Node r = Node Node14,15
-type UF UF16,17
-type UF r r16,17
-node node18,19
-node node19,20
-find find24,25
-find find25,26
-link link45,46
-link link46,47
-connected connected60,61
-connected connected61,62
-
-./AbstractUnionFind.hs,48
-module AbstractUnionFind AbstractUnionFind1,2
-
-./Mem.hs,232
-class (Eq (Ref r), Monad r) => Mem Mem5,6
-class (Eq (Ref r), Monad r) => Mem Mem5,6
-  data family family6,7
-  type family family7,8
-  ref ref9,10
-  deref deref10,11
-  set set11,12
-alter alter13,14
-alter alter14,15
-
-./UnionFind/IO.hs,139
-module UnionFind.IO UnionFind.IO3,4
-newtype UfIO UfIO12,13
-  UfIO UfIO13,14
-  UfIO { runUfIO runUfIO13,14
-instance instance16,17
