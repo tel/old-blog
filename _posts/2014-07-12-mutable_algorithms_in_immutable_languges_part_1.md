@@ -179,6 +179,16 @@ Here, `parent` points at `Just` the parent `Node_` or `Nothing` if
 we're considering a root `Node_`; `rank` stores the "rank" heuristic
 of a `Node_`; and `value` is just the stored value.
 
+Then, having gotten `Node_` we can figure out what `UF` must mean. It
+constrains `r` and `a` such that (1) `r` instantiates `Mem` and (2)
+`Val r` is of the form `Node_ r a`. (*ed.* It's perhaps unfortunate to
+use mechanics like associated types and `(~)` type equivalence
+constraints, but syntax aside they provide exactly the right meaning
+to describe `Mem`.
+[Here's a lightning-fast intro to the syntax](http://nattermorphisms.blogspot.com/2008/10/2-minute-intro-to-associated-types-type.html)
+and
+[here's a more leisurely example of using associated types](https://www.fpcomplete.com/school/to-infinity-and-beyond/pick-of-the-week/type-families-and-pokemon).)
+
 At this point we've almost got a complete picture of the algorithm! We
 introduce new (rank-0) `Node`s by making new roots in our Union/Find
 forest being careful to hide the implementation using the `Node`
