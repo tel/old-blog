@@ -43,13 +43,13 @@ node a = do
 
 -- performs path compression
 find :: UF r a => Node r -> r (Node r)
-find n@(Node r) = do
-  Node p <- findRec n
+find (Node r) = do
+  Node p <- findRec (Node r)
 
   -- PATH COMPRESSION
   -- If we began at the top we don't want to rewrite the parent
   -- but if we're didn't then we cache the root
-  unless (r == p) $ alter (\m -> m { parent = Just p }) r
+  unless (r == p) $ alter (\n -> n { parent = Just p }) r
 
   return (Node p)
 
