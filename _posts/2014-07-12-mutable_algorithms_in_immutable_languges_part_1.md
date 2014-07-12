@@ -261,7 +261,8 @@ the `Mem` interface.*
 But that will have to come a little later. It's slightly trickier than
 it looks. For anyone eager to jump ahead, try implementing it using
 `IO` and `State S` where `S` includes an `IntMap`. The simple version
-using an `IntMap` will have a subtle bug.
+using an `IntMap` will have a subtle API bug which will allow bad
+state to seep in.
 
 But that's all to come!
 
