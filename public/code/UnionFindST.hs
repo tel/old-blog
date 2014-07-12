@@ -162,3 +162,11 @@ instance Mem (UfIM v) where
 
   set r v = UfIM $ do
     modify (\s -> s { mem = IM.insert (getUfIMRef r) v (mem s) })
+
+bug :: Node_ (UfIM ()) ()
+bug =
+  let
+    Node r = runUfIM (node ())
+    v = runUfIM (deref r)
+  in
+   v
