@@ -7,6 +7,7 @@ module UnionFindST where
 
 import           Control.Applicative
 import           Control.Monad
+import           Control.Monad.State
 import           Data.IORef
 import           Data.IntMap.Lazy (IntMap)
 import qualified Data.IntMap.Lazy as IM
@@ -109,29 +110,6 @@ instance Mem (UfIO v) where
   set r v = UfIO (writeIORef (getUfIORef r) v)
 
 --------------------------------------------------------------------------------
-
-newtype State s a = State { runState :: s -> (s, a) }
-
-instance Functor (State s) where
-  fmap f (State g) = State $ \s -> let (s', a) = g s in (s', f a)
-
-instance Applicative (State s) where
-  pure = return
-  (<*>) = ap
-
-instance Monad (State s) where
-  return a = State $ \s -> (s, a)
-  State g >>= f = State $ \s ->
-    let (s', a) = g s in runState (f a) s'
-
-modify :: (s -> s) -> State s ()
-modify f = State $ \s -> (f s, ())
-
-gets :: (s -> a) -> State s a
-gets f = State (\s -> (s, f s))
-
-put :: s -> State s ()
-put s = State (\_ -> (s, ()))
 
 data UfState v =
   UfState { count :: Int
