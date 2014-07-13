@@ -277,3 +277,13 @@ using an `IntMap` will have a subtle API bug which will allow bad
 state to seep in.
 
 Until next time!
+
+## Commentary
+
+There was some great commentary both on
+[Hacker News](https://news.ycombinator.com/item?id=8024268) and
+[/r/haskell](http://www.reddit.com/r/haskell/comments/2ahorr/mutable_algorithms_in_immutable_languages_part_1/). Thanks to everyone who participated!
+
+## Other posts in this series
+
+* [Part 2](http://tel.github.io/2014/07/13/mutable_algorithms_in_immutable_languages_part_2/)
