@@ -498,6 +498,11 @@ trickery.
 
 Until then---thanks for reading!
 
+## Commentary
+
+There's some interesting commentary on
+[Hacker News](https://news.ycombinator.com/item?id=8038381).
+
 {% include series/mutable-immutable.md %}
 
 ## Footnotes
