@@ -287,3 +287,4 @@ There was some great commentary both on
 ## Other posts in this series
 
 * [Part 2](http://tel.github.io/2014/07/13/mutable_algorithms_in_immutable_languages_part_2/)
+* [Part 3](http://tel.github.io/2014/07/15/mutable_algorithms_in_immutable_languages_part_3/)
