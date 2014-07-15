@@ -14,24 +14,24 @@ import           Data.IntMap.Lazy (IntMap)
 import qualified Data.IntMap.Lazy as IM
 import           Mem
 
-data Uf v =
+data Uf s v =
   Uf { count :: Int
-     , mem   :: IntMap (Node_ (UfIntMap v) v)
+     , mem   :: IntMap (Node_ (UfIntMap s v) v)
      }
 
-uf0 :: Uf v
+uf0 :: Uf s v
 uf0 = Uf { count = 0, mem = IM.empty }
 
-newtype UfIntMap v a =
-  UfIntMap { unUfIntMap :: State (Uf v) a }
+newtype UfIntMap s v a =
+  UfIntMap { unUfIntMap :: State (Uf s v) a }
   deriving ( Functor, Applicative, Monad )
 
-runUfIntMap :: UfIntMap v a -> a
+runUfIntMap :: UfIntMap s v a -> a
 runUfIntMap = flip evalState uf0 . unUfIntMap where
 
-instance Mem (UfIntMap v) where
-  newtype Ref (UfIntMap v) = UfIntMapRef { getId :: Int } deriving ( Eq )
-  type    Val (UfIntMap v) = Node_ (UfIntMap v) v
+instance Mem (UfIntMap s v) where
+  newtype Ref (UfIntMap s v) = UfIntMapRef { getId :: Int } deriving ( Eq )
+  type    Val (UfIntMap s v) = Node_ (UfIntMap s v) v
 
   ref v = UfIntMap $ do
     c <- gets count
