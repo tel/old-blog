@@ -1,3 +1,4 @@
+{-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE TypeFamilies               #-}
 
@@ -26,7 +27,7 @@ newtype UfIntMap s v a =
   UfIntMap { unUfIntMap :: State (Uf s v) a }
   deriving ( Functor, Applicative, Monad )
 
-runUfIntMap :: UfIntMap s v a -> a
+runUfIntMap :: (forall s. UfIntMap s v a) -> a
 runUfIntMap comp = evalState (unUfIntMap comp) uf0
 
 instance Mem (UfIntMap s v) where
@@ -48,6 +49,7 @@ instance Mem (UfIntMap s v) where
 
 exPure :: Bool
 exPure = runUfIntMap computation where
+  computation :: UF r Int => r Bool
   computation = do
     n1 <- node 1
     n2 <- node 2
