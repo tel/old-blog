@@ -8,6 +8,10 @@ title: Mutable Algorithms in Immutable Languages, Part 3
 *See also [part 1][part 1] and [part 2][part 2]. All of the code in
  this post [is available in the blog repository on Github][repo].*
 
+[repo]:https://github.com/tel/tel.github.io/tree/master/public/code/MutableImmutable/Part3
+[part 1]:http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/
+[part 2]:http://tel.github.io/2014/07/13/mutable_algorithms_in_immutable_languages_part_2/
+
 In [part 1][part 1] we demonstrated that we can write algorithms which
 require mutable references by embedding them in an abstract monad,
 which I called `Mem`, that is adequate to describe a sequential
@@ -34,8 +38,6 @@ Haskell's type system, but also to explore what it demonstrates, to
 determine what exactly mutable algorithms demand from a language, and,
 finally, to show how my fancily-typed solution and its cousin,
 Haskell's `ST` monad, provide an adequate foundation for mutation.
-
-* http://galois.squarespace.com/storage/files/downloads/publications-jl/lazy-functional-state-threads.pdf
 
 ## The unstable state of things
 
@@ -93,6 +95,10 @@ notions of "undefined behavior". If it's okay by you, I'll go
 implement my Union/Find in C, thankyouverymuch.
 
 ## Eliminating bad computations
+
+*The code for this section is available [here][int-map-fixed].*
+
+[int-map-fixed]:https://github.com/tel/tel.github.io/blob/master/public/code/MutableImmutable/Part3/UnionFind/IntMap.hs
 
 We'd like to eliminate the ability to write invalid computations of
 the forms explored above *statically*. In other words, we need to find
@@ -369,8 +375,108 @@ exPure = runUfIntMap computation where
 True
 ~~~
 
+## A perfect environment for pure, mutable code
+
+Whew, that was a bit dense. Let's recap.
+
+We built a monadic interface modeling mutable memory and built mutable
+algorithms atop it. We implemented that interface with a pure model
+that allowed us to get the result of a mutable algorithm in a pure
+fashion, but unfortunately it had a bug. We added a new type feature
+built from phantom "state thread" variables and a higher-rank
+universal quantification (scary sounding, isn't it?) which eliminated
+buggy programs.
+
+So this is all great except that IntMap performance will still suffer
+an $$O(\log(n))$$ slowdown across the board.
+
+What I'd like to show now is that this model, `Mem` with phantom
+variables to do region control, is sufficient to embed a much more
+powerful, *magically fast* mutable memory regime. In Haskell this is
+called the `ST` monad for the "state thread monad".
+
+### Implementing Union/Find in `ST`
+
+The `ST` monad is modeled similarly to `IO`, but shares the state
+thread phantom parameter `s` we developed for `IntMap`. In particular,
+it feels like `IO` because it, behind the scenes, uses your computer's
+real mutable memory to implement references but it is constrained like
+`IntMap` because that lets us make the same kinds of purity
+guarantees.
+
+So we'll begin with the `IO` implementation from [part 2][part 2]. I
+guess there was a reason for doing that after all.
+
+~~~
+newtype UfST s v a =
+  UfST { unUfST :: ST s a }
+  deriving ( Functor, Applicative, Monad )
+
+runUfST :: (forall s. UfST s v a) -> a
+runUfST comp = runST (unUfST comp)
+
+instance Mem (UfST s v) where
+  newtype Ref (UfST s v) = UfSTRef { getUfSTRef :: STRef s (Val (UfST s v)) } deriving ( Eq )
+  type    Val (UfST s v) = Node_ (UfST s v) v
+
+  ref   a = UfST (UfSTRef <$> newSTRef a)
+  deref r = UfST (readSTRef $ getUfSTRef r)
+  set r v = UfST (writeSTRef (getUfSTRef r) v)
+~~~
+{: .language-haskell}
+
+This is almost a drop-in replacement where we've `s/IO/ST/`. The only
+additional parts are the phantom `s` variables and the higher rank
+`runUfST` function. You can confirm that it'll perfectly execute the
+standard proper example:
+
+~~~
+exPure = runUfST c where
+  c :: UF r () => r Bool
+  c = do
+    n1 <- node ()
+    n2 <- node ()
+    link n1 n2
+    connected n1 n2
+~~~
+{: .language-haskell}
+
+while forbidding the standard buggy examples from before. It'll also
+be easy to confirm that as we increase the number of nodes in our
+Union/Find the `IntMap` version will suffer the characteristic search
+tree $$O(\log(n))$$ slowdown while the `ST` version will not.
+
+With all of these great properties, I'll jump to the conclusion and go
+ahead and give a big thumbs-up to `ST`: **if you want to write mutable
+algorithms in an immutable language then you should almost certainly
+use `ST`.** If your language cannot support the type-safety of `ST`
+then you should document to ensure that your users maintain these
+invariants themselves.
+
+`ST` is safe, pure, and fast. It's like having your cake and eating it
+too. Further, it's use and semantics aren't so tough. At this point
+you can probably successfully read the paper which originally
+introduced `ST`,
+[*Lazy Functional State Threads* by Launchbury and Peyton Jones][launchbury-jones].
+
+[launchbury-jones]:http://galois.squarespace.com/storage/files/downloads/publications-jl/lazy-functional-state-threads.pdf
+
+If all you wanted to know was an answer to the eponymous problem then
+stop right now. We're done here.
+
+But if you're interested in hearing a little more then I think I'll
+write a little *prologue* to this 3-part series which will be
+dedicated to learning a bit more about what makes `ST` as safe as I
+claim it is, what differentiates mutable and immutable
+languages/algorithms/references/types, and finally a hint as to when
+you might prefer to suffer that $$O(\log(n))$$ slowdown to use the
+`IntMap`-backed model instead.
+
 ## Other posts in this series
 
 * [Part 1](http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/)
+* [Part 2](http://tel.github.io/2014/07/13/mutable_algorithms_in_immutable_languages_part_2/)
+
+## Footnotes
 
 [^uhoh]:I lied a bit here, actually. If you've been following along carefully you'll see that I changed the implementation of `runUfIntMap` *slightly* too. In fact, its new implementation, by most reasonably accounts, ought to be identical to the original one. Unfortunately, it's not, due to how inference on `RankNTypes` is less powerful than you might think it would be. So let this be a mild warning to you, intrepid higher-rank type explorer: *if reasonable, point-free higher rank programs are getting rejected... reintroduce their points*.
