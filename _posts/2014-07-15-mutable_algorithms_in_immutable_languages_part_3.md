@@ -498,10 +498,11 @@ trickery.
 
 Until then---thanks for reading!
 
-## Other posts in this series
+## "Mutable Algorithms in Immutable Languages"
 
 * [Part 1](http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/)
 * [Part 2](http://tel.github.io/2014/07/13/mutable_algorithms_in_immutable_languages_part_2/)
+* [Part 3](http://tel.github.io/2014/07/15/mutable_algorithms_in_immutable_languages_part_3/)
 
 ## Footnotes
 

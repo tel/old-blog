@@ -384,7 +384,12 @@ strength of the type sytem. Can we make the type system pay its dues?
 
 Turns out that, yes, we can. And will.
 
-## Other posts in this series
+## Commentary
+
+There was some interesting commentary at [Lobsters](https://lobste.rs/s/5gskfz/mutable_algorithms_in_immutable_languages_part_2).
+
+## "Mutable Algorithms in Immutable Languages"
 
 * [Part 1](http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/)
+* [Part 2](http://tel.github.io/2014/07/13/mutable_algorithms_in_immutable_languages_part_2/)
 * [Part 3](http://tel.github.io/2014/07/15/mutable_algorithms_in_immutable_languages_part_3/)
