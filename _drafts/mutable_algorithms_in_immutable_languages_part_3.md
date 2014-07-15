@@ -377,6 +377,10 @@ True
 
 ## A perfect environment for pure, mutable code
 
+*The code for this section is available [here][st-finally].*
+
+[st-finally]:https://github.com/tel/tel.github.io/blob/master/public/code/MutableImmutable/Part3/UnionFind/ST.hs
+
 Whew, that was a bit dense. Let's recap.
 
 We built a monadic interface modeling mutable memory and built mutable
@@ -461,16 +465,38 @@ introduced `ST`,
 
 [launchbury-jones]:http://galois.squarespace.com/storage/files/downloads/publications-jl/lazy-functional-state-threads.pdf
 
-If all you wanted to know was an answer to the eponymous problem then
-stop right now. We're done here.
+## We've arrived!
 
-But if you're interested in hearing a little more then I think I'll
-write a little *prologue* to this 3-part series which will be
-dedicated to learning a bit more about what makes `ST` as safe as I
-claim it is, what differentiates mutable and immutable
-languages/algorithms/references/types, and finally a hint as to when
-you might prefer to suffer that $$O(\log(n))$$ slowdown to use the
-`IntMap`-backed model instead.
+So now we've explored the notion of implementing models of mutable
+memory in pure languages pretty near completely from formulation to
+efficient, fast library code which will solve all of your problems.
+Hopefully this walkthrough has both galvanized your interest in the
+problem and provided a roadmap to comfort using the `ST` monad in
+Haskell, or its equivalent wherever else it lives.
+
+And so if all you wanted to know was an answer to the eponymous
+problem then stop right now. We're done here. Thanks for coming along
+for the ride. I hope you enjoyed it.
+
+But I also hope that this entire series has galvanized an interest in
+what exactly makes mutable language models work. As is often the case
+when working in pure functional programming models you might find
+yourself appreciating distinctions and questioning assumptions about
+the mutable models you're familiar with.
+
+So for my final trick, I plan to write a *epilogue* which explores
+some of the differences between mutability and immutability as
+explored here. The goal will be to talk a bit about how mutability was
+represented in an immutable world (much like you often hear how to
+implement *immutability in a mutable world* in libraries like
+[Mori](http://swannodette.github.io/mori/) or with algorithms like
+[Hash-Array Mapped Tries](http://en.wikipedia.org/wiki/Hash_array_mapped_trie)).
+Also I hope to provide a small answer as to what kind of tradeoffs
+would inspire someone to pick the slower `IntMap`-backed memory model
+over the faster `ST` monad since they both require the same type
+trickery.
+
+Until then---thanks for reading!
 
 ## Other posts in this series
 
