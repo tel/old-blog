@@ -27,7 +27,7 @@ newtype UfIntMap s v a =
   deriving ( Functor, Applicative, Monad )
 
 runUfIntMap :: UfIntMap s v a -> a
-runUfIntMap = flip evalState uf0 . unUfIntMap where
+runUfIntMap comp = evalState (unUfIntMap comp) uf0
 
 instance Mem (UfIntMap s v) where
   newtype Ref (UfIntMap s v) = UfIntMapRef { getId :: Int } deriving ( Eq )
