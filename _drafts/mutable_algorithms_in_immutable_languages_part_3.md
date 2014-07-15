@@ -397,7 +397,7 @@ an $$O(\log(n))$$ slowdown across the board.
 What I'd like to show now is that this model, `Mem` with phantom
 variables to do region control, is sufficient to embed a much more
 powerful, *magically fast* mutable memory regime. In Haskell this is
-called the `ST` monad for the "state thread monad".
+called the `ST` monad for the "state thread monad"[^finally].
 
 ### Implementing Union/Find in `ST`
 
@@ -460,8 +460,8 @@ invariants themselves.
 `ST` is safe, pure, and fast. It's like having your cake and eating it
 too. Further, it's use and semantics aren't so tough. At this point
 you can probably successfully read the paper which originally
-introduced `ST`,
-[*Lazy Functional State Threads* by Launchbury and Peyton Jones][launchbury-jones].
+introduced `ST`, [*Lazy Functional State Threads*][launchbury-jones]
+by John Launchbury and Simon Peyton Jones[^recommended].
 
 [launchbury-jones]:http://galois.squarespace.com/storage/files/downloads/publications-jl/lazy-functional-state-threads.pdf
 
@@ -505,4 +505,8 @@ Until then---thanks for reading!
 
 ## Footnotes
 
-[^uhoh]:I lied a bit here, actually. If you've been following along carefully you'll see that I changed the implementation of `runUfIntMap` *slightly* too. In fact, its new implementation, by most reasonably accounts, ought to be identical to the original one. Unfortunately, it's not, due to how inference on `RankNTypes` is less powerful than you might think it would be. So let this be a mild warning to you, intrepid higher-rank type explorer: *if reasonable, point-free higher rank programs are getting rejected... reintroduce their points*.
+[^uhoh]:I lied a bit here, actually. If you've been following along carefully you'll see that I changed the implementation of `runUfIntMap` *slightly* too. In fact, its new implementation, by most reasonably accounts, ought to be identical to the original one. Unfortunately, it's not, due to how inference on `RankNTypes` is less powerful than you might think it would be. So let this be a mild warning to you, intrepid higher-rank type explorer: *if reasonable, point-free higher rank programs are getting rejected... reintroduce their points. You probably confused the poor, poor inferencer.*
+
+[^recommended]: I highly recommend you check it out, too! It's a highly readable paper where the beginning serves as yet another method of thinking about the same concepts I explored in this article series.
+
+[^finally]:For all those who have been just *dying* waiting on me to finally say those magic two letters... thanks for bearing with me!
