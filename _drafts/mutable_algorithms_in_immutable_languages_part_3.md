@@ -113,10 +113,264 @@ To do this, we'll add a new type variable to our `UfIntMap`
 implementation: a *phantom* type variable just like `v`.
 Traditionally, this is called `s` and it's almost an entirely trivial
 change. The updated code is below and [here's a diff][the-diff]
-showing the changed lines.
+showing the changed lines and emphasizing how trivial it is.
 
-[the-diff]:
+~~~
+data Uf s v =
+  Uf { count :: Int
+     , mem   :: IntMap (Node_ (UfIntMap s v) v)
+     }
+
+uf0 :: Uf s v
+uf0 = ...
+
+newtype UfIntMap s v a =
+  UfIntMap { unUfIntMap :: State (Uf s v) a }
+  deriving ( Functor, Applicative, Monad )
+
+runUfIntMap :: UfIntMap s v a -> a
+runUfIntMap = ...
+
+instance Mem (UfIntMap s v) where
+  newtype Ref (UfIntMap s v) = UfIntMapRef { getId :: Int } deriving ( Eq )
+  type    Val (UfIntMap s v) = Node_ (UfIntMap s v) v
+  ...
+~~~
+{: .language-haskell}
+
+[the-diff]:https://github.com/tel/tel.github.io/commit/5454c82aa12b1a6b8859f5bed4359175eb6cf664
+
+In particular, we don't have to change the implementations of `ref`,
+`deref`, or `set` at all. Even any properly running example programs
+will continue to work so long as we update their type annotations.
+
+~~~
+exPure :: Bool
+exPure = runUfIntMap computation where
+  computation = do
+    n1 <- node 1
+    n2 <- node 2
+    link n1 n2
+    connected n1 n2
+~~~
+{: .language-haskell}
+
+This is the beauty of phantom type information---it does nothing more
+than provide additional information about computations we're already
+able to do. The next step will be to refine what we consider *valid*
+programs to be using this information, but for now let's see what
+exactly we have wrought.
+
+### Computations of a variable, uh, stick together
+
+Let's consider the new types of things like `ref` and `deref` when
+they're specified to `UfIntMap`:
+
+~~~
+ref   :: Val (UfIntMap s v) -> UfIntMap s v (Ref (UfIntMap s v))
+deref :: Ref (UfIntMap s v) -> UfIntMap s v (Val (UfIntMap s v))
+set   :: Ref (UfIntMap s v) ->
+         Val (UfIntMap s v) ->
+         UfIntMap s v ()
+~~~
+{: .language-haskell}
+
+If you peer through some of the noise of expanding these definitions
+you might notice something important---the phantom variable `s` is
+*shared* from argument to result in every function. In other words,
+calling `deref` on a `Ref` which is stated to occur in some *stateful
+thread* named by `s` will return a `Val` in that *same* thread. There
+would be a possibility for the phantom variables to differ, but
+instead they are *unified* or *equivalated*.
+
+We can do the same analysis for some other glue functions like monadic
+`(>>=)`
+
+~~~
+(>>=) :: UfIntMap s v a -> (a -> UfIntMap s v b) -> UfIntMap s v b
+(>>)  :: UfIntMap s v a ->       UfIntMap s v b  -> UfIntMap s v b
+~~~
+{: .language-haskell}
+
+Again, the phantom variable seems to properly capture the notion that
+computations which get threaded together must now, forever, share the
+same `s`-variable. They must now, forever, live together in the same
+stateful thread.
+
+As a final example of this property, we can run a few experiments and
+try to trick the compiler. For instance, let's make a concrete
+`StateThread1` type and a function which `infects` computations with
+that concrete thread type.
+
+~~~
+data StateThread1
+
+infect1 :: UfIntMap StateThread1 Int ()
+infect1 = return ()
+
+exPure :: Bool
+exPure = runUfIntMap computation where
+  computation = do
+    n1 <- node 1
+    n2 <- node 2
+    link n1 n2
+    infect1            -- infected!
+    connected n1 n2
+~~~
+{: .language-haskell}
+
+This will run just fine
+
+~~~
+>>> exPure
+True
+~~~
+
+but if we do the same with a new, definitely different `StateThread2` type
+
+~~~
+data StateThread2
+
+infect2 :: UfIntMap StateThread2 Int ()
+infect2 = return ()
+
+exPure :: Bool
+exPure = runUfIntMap computation where
+  computation = do
+    n1 <- node 1
+    n2 <- node 2
+    link n1 n2
+    infect1
+    infect2
+    connected n1 n2
+~~~
+{: .language-haskell}
+
+Then we get an error describing the exact problem.
+
+~~~
+UnionFind/IntMap.hs:67:5: Couldn't match type ‘StateThread2’ with ‘StateThread1’ …
+    Expected type: UfIntMap StateThread1 Int ()
+      Actual type: UfIntMap StateThread2 Int ()
+    In a stmt of a 'do' block: infect2
+    In the expression:
+      do { n1 <- node 1;
+           n2 <- node 2;
+           link n1 n2;
+           infect1;
+           .... }
+~~~
+
+Perfect!
+
+### Refining the types of a program
+
+So far, while we've introduced these `s` variables and demonstrated
+that they have a "stickiness" property that appears to reflect their
+meaning as naming the "stateful thread" a computation lives within...
+well, they don't seem to do much.
+
+In particular, while we demand that sequencing unifies the stateful
+threads we still accept every bad program as we did before because, so
+long as we don't deliberately restrict the choice of that `s` variable
+such as demonstrated using `StateThread1` and `StateThread2` together,
+there's nothing that keeps Haskell from just unifying *every* `s`
+variable together and calling it a day.
+
+We need to find a way to tell Haskell that it is *not allowed* to
+unify state threads across `runUfIntMap` boundaries. In particular,
+we'd only like Haskell to accept as valid `UfIntMap` computations
+where every `s`-marked type is both created and eliminated within the
+same region. This is sufficient to disallow importing or exporting
+references.
+
+#### Universal Quantification
+
+I'll jump to the solution and then try to justify it. What we need to
+do is introduce what's known as a `RankNType` on the `runUfIntMap`
+function. Interestingly, this is a one-line change which affects only
+the type of `runUfIntMap` [^uhoh]
+
+~~~
+runUfIntMap :: (forall s. UfIntMap s v a) -> a
+runUfIntMap comp = evalState (unUfIntMap comp) uf0
+~~~
+{: .language-haskell}
+
+This one word change is all it takes to ensure that Haskell is extra
+picky about the kinds of `UfIntMap` computations which are *allowed*
+to be run. In particular, they must be entirely agnostic to the choice
+of `s` variable preventing two things.
+
+1. They can't depend upon outside types containing `s`-thread
+   variables as these might be maliciously *fixed* while `runUfIntMap`
+   only works for computations which are valid for *all* choices of
+   `s`
+2. They can't export types containing `s`-thread variables as then
+   they could unify with `s`-variables in other computations meaning
+   that the argument to `runUfIntMap` would no longer be truly
+   universal in choice of `s`.
+
+It's remarkable how this little change is *exactly* what we sought
+out. It's a firm denial of programs which abuse imports or exports of
+`s`-marked types. Our buggy programs from the previous post is
+thoroughly outlawed:
+
+~~~
+exportBug =
+  runUfIntMap $ do
+    node ()
+~~~
+{: .langauge-haskell}
+
+~~~
+UnionFind/IntMap.hs:61:5: Couldn't match type ‘a’ with ‘Node (UfIntMap s ())’ …
+      because type variable ‘s’ would escape its scope
+~~~
+
+~~~
+importBug :: Node (UfIntMap s ()) -> Bool
+importBug n1 =
+  runUfIntMap $ do
+    n2 <- node ()
+    t <- connected n1 n2
+    return t
+~~~
+{: .language-haskell}
+
+~~~
+UnionFind/IntMap.hs:64:20: Couldn't match type ‘s’ with ‘s1’ …
+      ‘s’ is a rigid type variable bound by
+          the type signature for importBug :: Node (UfIntMap s ()) -> Bool
+          at /Users/tel/blog/public/code/MutableImmutable/Part3/UnionFind/IntMap.hs:60:14
+      ‘s1’ is a rigid type variable bound by
+           a type expected by the context: UfIntMap s1 () Bool
+           at /Users/tel/blog/public/code/MutableImmutable/Part3/UnionFind/IntMap.hs:62:3
+    Expected type: Node (UfIntMap s1 ())
+      Actual type: Node (UfIntMap s ())
+~~~
+
+While our correct example still compiles, albeit needing a new type
+annotation
+
+~~~
+exPure = runUfIntMap computation where
+  computation :: UF r Int => r Bool
+  computation = do
+    n1 <- node 1
+    n2 <- node 2
+    link n1 n2
+    connected n1 n2
+~~~
+{: .language-haskell}
+
+~~~
+>>> exPure
+True
+~~~
 
 ## Other posts in this series
 
 * [Part 1](http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/)
+
+[^uhoh]:I lied a bit here, actually. If you've been following along carefully you'll see that I changed the implementation of `runUfIntMap` *slightly* too. In fact, its new implementation, by most reasonably accounts, ought to be identical to the original one. Unfortunately, it's not, due to how inference on `RankNTypes` is less powerful than you might think it would be. So let this be a mild warning to you, intrepid higher-rank type explorer: *if reasonable, point-free higher rank programs are getting rejected... reintroduce their points*.
