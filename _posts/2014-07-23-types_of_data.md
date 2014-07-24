@@ -212,7 +212,7 @@ Inr T
 it :: Unit + Unit
 ~~~
 
-We can even construct the left value of type `Unit + Void` using `Inl`[^showing-void]
+We can even construct the left-side value of type `Unit + Void` using `Inl`[^showing-void]
 
 ~~~
 >>> Inl T :: Unit + Void
@@ -222,10 +222,11 @@ it :: Unit + Void
 
 [^showing-void]: This code won't work by itself. The code which knows how to show `a + b` assumes we can show both `a` and `b`. So far we haven't explained how to show `Void` and we can't use `deriving Show`. Of course, "showing `Void`" doesn't make sense because there's never anything to show, so we just have to tell the compiler this fact: `instance Show Void where show _ = error "impossible!"`
 
-but not the right using `Inr` since it would demand we produce a value
-of type `Void` which is impossible. Further, we cannot construct any
-values of type `Void + Void` as both the left and right constructors
-are blocked: `Void + Void` is just as unobtainable as `Void` is.
+but we cannot produce the right-side value right using `Inr` since it
+would demand we produce a value of type `Void` which is impossible.
+Further, we cannot construct any values of type `Void + Void` as both
+the left and right constructors are blocked: `Void + Void` is just as
+unobtainable as `Void` is.
 
 Now that we've talked about the way we can consider the type `a + b`
 and the way we can construct it we must examine how we use values of
