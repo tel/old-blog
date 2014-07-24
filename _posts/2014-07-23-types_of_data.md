@@ -457,7 +457,7 @@ to completely formalize how products and sums eliminate one another.
 This is a bit less pretty to write down, but greatly emphasizes the
 duality between construction and use.
 
-## Aside: Explosions and *ex falso quodlibet*
+## Aside: Explosions, negations, and *ex falso quodlibet*
 
 Now that we have exponentials we can talk more concretely about what
 the meaning of `Void` is. As stated previously, if we have a value of
