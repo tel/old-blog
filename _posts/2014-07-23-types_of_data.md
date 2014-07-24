@@ -493,7 +493,7 @@ things, but sometimes we admit proofs without construction.
 One branch of logic, intuitionistic logic, tries to cope without the
 ability to prove without constrution. Thus, in intuitionistic logic
 the structure of data is better preserved... but one must also do
-without *ex falso quodlibet* which can be painful.
+without proof by contradiction which can be painful.
 
 ## Conclusion
 
