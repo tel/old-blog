@@ -488,7 +488,7 @@ assume not `a` and derive impossibility" or, formally
 If you try to construct a lambda term to represent this, you will
 fail. This drives a division between the notion of "proof" and the
 notion of "construction". Our data types talk about how to construct
-thimgs, but sometimes we admit proofs without construction.
+things, but sometimes we admit proofs without construction.
 
 One branch of logic, intuitionistic logic, tries to cope without the
 ability to prove without constrution. Thus, in intuitionistic logic
