@@ -21,7 +21,7 @@ why I refer to the subject of this article as "the types of data"
 instead of "one kind of data" or "data in Haskell". Something large
 lurks below the surface here.
 
-# The types of data
+## The types of data
 
 The types of data are $$1$$, $$0$$, $$\_ + \_$$, $$\_ \times \_$$, and
 $$\_ \rightarrow \_$$ where underscores denote "holes" so that $$1$$
@@ -45,7 +45,7 @@ dependent on other pieces of data. If a connective does not depend
 upon any other data then it is a constant. Let's talk about the
 constants first then the connectives.
 
-## Unit, the useless type
+### Unit, the useless type
 
 The type $$1$$ is called "unit". In default Haskell it's denoted by
 `()`. Unit is special because we can *construct* it without any
@@ -101,7 +101,7 @@ As a side note, notice that `Unit` has exactly one inhabitant, `T`
 
 [^totality]: In Haskell, honestly, this is untrue for technical reasons. This is a general theme, unfortunately, in that the types of data as I describe them are only "mostly" properly implemented in Haskell. Thus, representing them in Haskell is a matter of convenience alone. Their meaning and structure as described is the heart of the matter.
 
-## Void, the unobtainable
+### Void, the unobtainable
 
 The type $$0$$ is called "void". It does not exist in default Haskell
 but is available in the package
@@ -151,7 +151,7 @@ constant which cannot be constructed. It is infinitely useful.
 As a side note, notice that `Void` has exactly zero inhabitants. This
 is why it's called "0" and why it behaves like the number 0.
 
-## Aside: Whispers of duality
+### Aside: Whispers of duality
 
 After having now introduced $$1$$ and $$0$$ I can spend a moment
 talking about an important component of the nature of the types of
@@ -172,7 +172,7 @@ Duality is not universal---it may appear or it may not. That said,
 observations of duality tend to indicate the robustness and
 generalizability of a concept.
 
-## Sums, choices of construction
+### Sums, choices of construction
 
 The type *connective* $$\_ + \_$$ is called "sum". It exists by
 default in Haskell
@@ -253,7 +253,7 @@ equal to the number of inhabitants of `a` plus the number of
 inhabitants of `b`. This is why it's called "sum" and how it behaves
 like algebraic addition.
 
-## Products, collections of constructions
+### Products, collections of constructions
 
 The type connective $$\_ \times \_$$ is called "product" and has two
 holes. It exists by default in Haskell and is called
@@ -305,7 +305,7 @@ equal to the number of inhabitants of `a` times the number of
 inhabitants of `b`. This is why it's called "product" and how it
 behaves like algebraic multiplication.
 
-## Aside: Further duality
+### Aside: Further duality
 
 It should be clear by this point that products and sums dual along the
 construction v. use axis just like $$1$$ and $$0$$ were, but let's be
@@ -324,7 +324,7 @@ a property like "uses of products are sums of uses" and "uses of sums
 are products of uses" showing that the two types of data *fit*
 together very nicely.
 
-## Aside: Multi-way products and sums
+### Aside: Multi-way products and sums
 
 It might feel restrictive that products and sums as introduced only
 allow two "arguments" each. Of course, we can extend these notions by
@@ -350,7 +350,7 @@ experiment---there's no reason to force it if it feels uncomfortable.
 Instead, it mere is suggestive of the importance of `Unit` and `Void`.
 It's also suggestive of the power of construction v. use duality.
 
-## Exponentials, implications, hypotheticals, functions
+### Exponentials, implications, hypotheticals, functions
 
 The type connective $$\_ \rightarrow \_$$ is called "function space".
 It exists by default in Haskell, denoted as `a -> b`, and we won't
@@ -430,7 +430,7 @@ $$2^3 = 8$$ options.
 This is why $$a \rightarrow b$$ is sometimes called an "exponential"
 and is sometimes written $$b^a$$.
 
-## Aside: Formalizing *use* and *construction*
+### Aside: Formalizing *use* and *construction*
 
 Now that we have function spaces we can bring to fruition an idea from
 the previous aside. If we decide that our goal is to produce a value
@@ -458,7 +458,7 @@ to completely formalize how products and sums eliminate one another.
 This is a bit less pretty to write down, but emphasizes the duality
 between construction and use.
 
-## Aside: Explosions, negations, and *ex falso quodlibet*
+### Aside: Explosions, negations, and *ex falso quodlibet*
 
 Now that we have exponentials we can talk more concretely about what
 the meaning of `Void` is. As stated previously, if we have a value of
