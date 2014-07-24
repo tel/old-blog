@@ -524,6 +524,10 @@ meaning and a very powerful notion of *fit*.
 
 May they serve you well.
 
+## Discussion
+
+There has been some great discussion of this post which lead to a number of correcting on Reddit. In particular, please take a look at [`/r/haskell`](http://www.reddit.com/r/haskell/comments/2bj7it/let_me_tell_you_about_the_types_of_data/), [`/r/programming`](http://www.reddit.com/r/programming/comments/2bk1cd/let_me_tell_you_about_the_types_of_data/), and [`/r/compsci`](http://www.reddit.com/r/compsci/comments/2bkgic/let_me_tell_you_about_the_types_of_data_xpost/).
+
 ## Bibliography
 
 * Per Martin-Löf.
