@@ -10,8 +10,8 @@ about what I mean by *data*.
 Data is the building block of meaning and execution. It's complete
 description subsumes meaning through *type* and execution by the
 methods of producing and consuming data. To be clear, *data*, in the
-context of this article, is not ones and zeros of any form. Those are
-a *serialization* and will not be considered further.
+context of this article, is not binary bits of any form. Those are a
+*serialization* and will not be considered further.
 
 It's my hope that if you understand data then you will have a powerful
 tool for reasoning about the meaning and behavior of programs. It's
