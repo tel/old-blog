@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Mutable Algorithms in Immutable Languages, Part 3
+comments_enabled: true
 ---
 
 *Or: a love song to rank-2 types and phantom variables.*

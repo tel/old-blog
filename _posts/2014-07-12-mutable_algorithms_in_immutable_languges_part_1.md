@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Mutable Algorithms in Immutable Languages, Part 1
+comments_enabled: true
 ---
 
 *All code for this post  [is available in the blog repository on Github](https://github.com/tel/tel.github.io/tree/master/public/code/MutableImmutable/Part1).*

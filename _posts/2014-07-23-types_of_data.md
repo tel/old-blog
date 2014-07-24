@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Let me tell you about the types of data
+comments_enabled: true
 ---
 
 Let me tell you about the types of data. This may be a different

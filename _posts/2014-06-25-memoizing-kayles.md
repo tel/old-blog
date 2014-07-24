@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Memoizing Kayles
+comments_enabled: true
 ---
 
 [Consider a two-player game called Kayles](https://www.hackerrank.com/contests/lambda-calculi-may14/challenges/game-of-kyles).

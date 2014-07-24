@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Mutable Algorithms in Immutable Languages, Part 2
+comments_enabled: true
 ---
 
 *See also [part 1][part 1]. All of the code in this post

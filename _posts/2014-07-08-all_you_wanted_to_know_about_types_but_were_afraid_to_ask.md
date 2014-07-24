@@ -2,6 +2,7 @@
 layout: post
 title: "All you wanted to know about types but were afraid to ask"
 date: "2014-07-08 01:02:06"
+comments_enabled: true
 ---
 
 *Type systems are a hot topic in programming language debates. Often,

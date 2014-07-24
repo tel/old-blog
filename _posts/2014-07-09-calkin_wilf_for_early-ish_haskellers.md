@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Calkin-Wilf for Early(-ish) Haskellers
+comments_enabled: true
 ---
 
 *This post was inspired by
