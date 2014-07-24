@@ -7,7 +7,7 @@ Let me tell you about the types of data. This may be a different
 presentation of data than you are familiar with, so let me be clear
 about what I mean by *data*.
 
-Data is the building block of meaning and execution. It's complete
+Data is the building block of meaning and execution. Its complete
 description subsumes meaning through *type* and execution by the
 methods of producing and consuming data. To be clear, *data*, in the
 context of this article, is not binary bits of any form. Those are a
