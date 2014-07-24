@@ -193,11 +193,11 @@ data a + b = Inl a | Inr b deriving Show
 
 This syntax indicates that the type operator (i.e. type connective)
 named `(+)` has two holes named `a` and `b`. It can be construct in
-one of two ways: either using the name `Inl` (for "in-left") or the
-name `Inr`. In order to construct a value of `a + b` with `Inl` we
-must also have a value of type `a`. In order to construct a value of
-type `a + b` with `Inr` we must also have a value of type `b`. Again
-we use `deriving Show` for convenience.
+one of two ways: either using the name `Inl` (for "inject left") or
+the name `Inr` (for "inject right"). In order to construct a value of
+`a + b` with `Inl` we must also have a value of type `a`. In order to
+construct a value of type `a + b` with `Inr` we must also have a value
+of type `b`. Again we use `deriving Show` for convenience.
 
 So long as it is constructable can demonstrate `a + b` interactively,
 but we must decide upon what `a` and `b` will be. For instance, we can
