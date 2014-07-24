@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Let me tell you about the types of data
+title: The types of data
 comments_enabled: true
 ---
 
