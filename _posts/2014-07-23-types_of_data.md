@@ -21,7 +21,7 @@ why I refer to the subject of this article as "the types of data"
 instead of "one kind of data" or "data in Haskell". Something large
 lurks below the surface here.
 
-## The types of data
+---
 
 The types of data are $$1$$, $$0$$, $$\_ + \_$$, $$\_ \times \_$$, and
 $$\_ \rightarrow \_$$ where underscores denote "holes" so that $$1$$
