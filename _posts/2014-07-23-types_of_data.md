@@ -457,6 +457,44 @@ to completely formalize how products and sums eliminate one another.
 This is a bit less pretty to write down, but greatly emphasizes the
 duality between construction and use.
 
+## Aside: Explosions and *ex falso quodlibet*
+
+Now that we have exponentials we can talk more concretely about what
+the meaning of `Void` is. As stated previously, if we have a value of
+type void then we can produce anything at all. If we represent this
+mode of use in terms of a function space then it means that for any
+type `a` we might desire, we can automatically construct the function
+`Void -> a`. This family of functions, one for every type `a`, is
+sometimes known as the *principle of explosion* or by the Latin phrase
+"ex falso quodlibet", "from falsehood follows anything".
+
+Since it's impossible to produce a value of type `Void`, we know that
+for any type `a` at least one of the following is impossible to
+produce as well, values of the type `a` or values of the type `a ->
+Void`. If it were not the case, if we could construct both some `a`
+and the function `a -> Void` then we could combine them to produce a
+value of `Void`. So this must not be possible.
+
+This allows us to extend the "impossibility of `Void`" to any type we
+please. Construction of a function `a -> Void` implies that `a` is not
+constructable. This is effectively logical negation.
+
+Finally, given the notion of negation we might try to formalize proof
+by contradiction. This would read something like "to prove `a` we
+assume not `a` and derive impossibility" or, formally
+
+    ((a -> Void) -> Void) -> a
+
+If you try to construct a lambda term to represent this, you will
+fail. This drives a division between the notion of "proof" and the
+notion of "construction". Our data types talk about how to construct
+thimgs, but sometimes we admit proofs without construction.
+
+One branch of logic, intuitionistic logic, tries to cope without the
+ability to prove without constrution. Thus, in intuitionistic logic
+the structure of data is better preserved... but one must also do
+without *ex falso quodlibet* which can be painful.
+
 ## Conclusion
 
 We've now covered the types of data, $$1$$, $$0$$, $$\_ + \_$$, $$\_
