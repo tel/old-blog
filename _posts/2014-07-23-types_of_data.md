@@ -463,10 +463,13 @@ Now that we have exponentials we can talk more concretely about what
 the meaning of `Void` is. As stated previously, if we have a value of
 type void then we can produce anything at all. If we represent this
 mode of use in terms of a function space then it means that for any
-type `a` we might desire, we can automatically construct the function
-`Void -> a`. This family of functions, one for every type `a`, is
-sometimes known as the *principle of explosion* or by the Latin phrase
-"ex falso quodlibet", "from falsehood follows anything".
+type `a` we might desire, we can automatically
+construct[^constructing quodlibet] the function `Void -> a`. This
+family of functions, one for every type `a`, is sometimes known as the
+*principle of explosion* or by the Latin phrase "ex falso quodlibet",
+"from falsehood follows anything".
+
+[^constructing quodlibet]: I say "construct" because I mean that the nature of the types of data implies that *ex falso quodlibet* must be constructable. That said, actually constructing it in a language which implements these laws is a bit more tricky. Very formal languages like Agda and Idris provide special syntax to assert impossibility. Coq merely represents the law itself in its proof tactics system. In something like Haskell we have to resort to trickery, however, either using a "justifiable `error`" or an infinite loop ([check the source here](http://hackage.haskell.org/package/void-0.6.1/docs/Data-Void.html#v:absurd)).
 
 Since it's impossible to produce a value of type `Void`, we know that
 for any type `a` at least one of the following is impossible to
