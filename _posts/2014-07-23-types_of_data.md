@@ -415,7 +415,7 @@ As a side note, notice that the number of inhabitants of `a -> b` is
 equal to the number of inhabitants of `b` *raised to the power of* the
 number of inhabitants of `a`. This is probably the must unexpected
 counting argument thus encountered, but we can produce examples
-easily. For instance, let's call the type $$1 ++ 1$$ by the name $$2$$
+easily. For instance, let's call the type $$1 + 1$$ by the name $$2$$
 and $$1 + (1 + 1)$$ by the name $$3$$. Now, $$3 \rightarrow 2$$ is the
 type of ways of converting values of $$3$$ to values of $$2$$. In
 order to use $$3$$ we must decide, independently, what to do with its
