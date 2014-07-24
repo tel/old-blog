@@ -535,7 +535,7 @@ There has been some great discussion of this post which lead to a number of corr
 ## Bibliography
 
 * Per Martin-Löf.
-  [On the meannings of the logical constants and the justifications of the logical laws](http://www.ae-info.org/attach/User/Martin-L%C3%B6f_Per/OtherInformation/article.pdf). (1996)
+  [*On the meannings of the logical constants and the justifications of the logical laws*](http://www.ae-info.org/attach/User/Martin-L%C3%B6f_Per/OtherInformation/article.pdf). (1996)
 * Chris Taylor's [*The Algebra of Algebraic Data Types*](http://chris-taylor.github.io/blog/2013/02/10/the-algebra-of-algebraic-data-types/) ([Part 1](http://chris-taylor.github.io/blog/2013/02/10/the-algebra-of-algebraic-data-types/), [Part 2](http://chris-taylor.github.io/blog/2013/02/11/the-algebra-of-algebraic-data-types-part-ii/), and [Part 3](http://chris-taylor.github.io/blog/2013/02/13/the-algebra-of-algebraic-data-types-part-iii/))
 
 ## Footnotes
