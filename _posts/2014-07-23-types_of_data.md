@@ -288,15 +288,15 @@ these values. Assume I give you a value of type `a * b`. If you knew
 how to use values of type `a` then you could merely extract the `a`
 and use it. Likewise, if you knew how to use values of type `b` then
 you could extract it and use it. So we can conclude that in order to
-use a value of type `a * b` you must be able to use either `a` or
-`b`.[^contraction]
+use a value of type `a * b` you merely have to have a use for either
+`a` or `b`.[^contraction]
 
-[^contraction]: A wary reader might note that you could also get by if you knew how to use *both* `a` and `b` together while the way I worded it suggests that we only get to use one. My wording is designed to highlight the duality between sums and products, so it's slightly less powerful than this wary reader's mindset. In earnest, oftentimes you could choose to use both `a` and `b` together by simply using `a` and *then* using `b`, which requires that we can access `a * b` twice. Not all models are compatible with that idea, but it's pretty common to assume that it's OK.
+[^contraction]: A wary reader might note that you could also get by if you knew how to use *both* `a` and `b` together. This is certainly not eliminated as a possibility, but I'm wording it to be suggestive of duality.
 
 To summarize: the type $$a \times b$$, called `a * b` or the product
 of `a` and `b`, is a type built from the $$\times$$ connective and is
 constructed from a value of `a` and a value of `b` together. In order
-to use such a value you must have a way to either use `a` or use `b`.
+to use such a value you only need a way to either use `a` or use `b`.
 
 As a side note, notice that the number of inhabitants of `a * b` is
 equal to the number of inhabitants of `a` times the number of
@@ -434,10 +434,9 @@ Now that we have function spaces we can bring to fruition an idea from
 the previous aside. If we decide that our goal is to produce a value
 of some type `r` (for "result") then a function `a -> r` is a "use" of
 `a`. So, now, we can state that "a use of `a * b` is `(a -> r) + (b ->
-r)` and a use of `a + b` is `(a -> r) * (b -> r)`. This neatly
-formalizes the powerful fit between products and sums.[^euler]
+r)` and a use of `a + b` is `(a -> r) * (b -> r)`.[^adjunction]
 
-[^euler]: I think of it kind of as the Euler's identity of data: it uses all 3 common connectives together in a non-trivial way demonstrating the connection between construction and use. I think it's quite beautiful!
+[^adjunction]: Here we can be more clear and note that I only claimed that `(a -> r) + (b -> r)` is *a* use of `a * b`. We can generate *all* uses of `a * b` by noting the equivalence of `a * b -> r`, `a -> (b -> r)`, and `b -> (a -> r)`. This is called the curry [adjunction](http://en.wikipedia.org/wiki/Adjoint_functors) between products and exponentials.
 
 We could also do the opposite and fix a type `s` (for "source") which
 we think of as the heart of all values. Now we can say that a function
@@ -454,8 +453,8 @@ and
 ~~~
 
 to completely formalize how products and sums eliminate one another.
-This is a bit less pretty to write down, but greatly emphasizes the
-duality between construction and use.
+This is a bit less pretty to write down, but emphasizes the duality
+between construction and use.
 
 ## Aside: Explosions, negations, and *ex falso quodlibet*
 
