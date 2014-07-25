@@ -378,7 +378,7 @@ An interactive example would be `Unit -> Unit`, i.e. constructing
 Notably, we have to use `:t` to ask for the type of `(\x -> T)`
 because it is not possible to instantiate `Show` for function spaces.
 
-The Haskell syntax above uses `\\` to stand in for $$\lambda$$ since
+The Haskell syntax above uses `\` to stand in for $$\lambda$$ since
 they sort of look similar. We also must use the parentheses in order
 to have `(::)` denote the whole lambda expression.
 
