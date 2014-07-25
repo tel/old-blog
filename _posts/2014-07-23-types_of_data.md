@@ -307,9 +307,9 @@ behaves like algebraic multiplication.
 
 ### Aside: Further duality
 
-It should be clear by this point that products and sums dual along the
-construction v. use axis just like $$1$$ and $$0$$ were, but let's be
-explicit about it anyway.
+It should be clear by this point that products and sums are dual along
+the construction v. use axis just like $$1$$ and $$0$$ were, but let's
+be explicit about it anyway.
 
 * Sums are constructed from values of *either* their left type or
   their right and used when there is a use for *both* the left and the
