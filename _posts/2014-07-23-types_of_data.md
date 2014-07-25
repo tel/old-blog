@@ -307,9 +307,9 @@ behaves like algebraic multiplication.
 
 ### Aside: Further duality
 
-It should be clear by this point that products and sums dual along the
-construction v. use axis just like $$1$$ and $$0$$ were, but let's be
-explicit about it anyway.
+It should be clear by this point that products and sums are dual along
+the construction v. use axis just like $$1$$ and $$0$$ were, but let's
+be explicit about it anyway.
 
 * Sums are constructed from values of *either* their left type or
   their right and used when there is a use for *both* the left and the
@@ -378,7 +378,7 @@ An interactive example would be `Unit -> Unit`, i.e. constructing
 Notably, we have to use `:t` to ask for the type of `(\x -> T)`
 because it is not possible to instantiate `Show` for function spaces.
 
-The Haskell syntax above uses `\\` to stand in for $$\lambda$$ since
+The Haskell syntax above uses `\` to stand in for $$\lambda$$ since
 they sort of look similar. We also must use the parentheses in order
 to have `(::)` denote the whole lambda expression.
 
