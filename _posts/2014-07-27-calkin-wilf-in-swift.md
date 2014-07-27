@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Calkin-Wilf in Swift
+comments_enabled: true
 ---
 
 Previously [I wrote][0] at length about the
