@@ -103,8 +103,8 @@ func product<L,R,X>(p: Product<L, R>)(s: Sum<L -> X, R -> X>) -> X {
 
 Finally, by this point, it should be obvious that function spaces are
 just Swift functions. They're constructed using `func` or anonymous
-`{}` syntax and destructed by applying an argument using some
-parentheses.
+`{... in ...}` syntax and destructed by applying an argument using
+some parentheses.
 
 ## Conclusion
 
