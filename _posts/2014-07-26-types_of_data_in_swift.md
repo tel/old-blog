@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Types of Data (in Swift)
+title: The Types of Data (in Swift)
 comments_enabled: true
 ---
 
