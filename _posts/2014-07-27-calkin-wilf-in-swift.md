@@ -42,8 +42,8 @@ Calkin-Wilf tree. We can generate the Calkin-Wilf tree using recursion
 func calkin(n: Int, m: Int) -> Tree<(Int, Int)> {
     return Tree(
         val: (n, m),
-        left: { calkin(n, m) },
-        right: { calkin(n, n) }
+        left: { calkin(n+m, m) },
+        right: { calkin(n, n+m) }
     )
 }
 ~~~
