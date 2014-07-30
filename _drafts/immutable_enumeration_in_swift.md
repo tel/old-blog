@@ -221,3 +221,79 @@ func fold<S:Viewl, R>(zero: R, combine: (S.El, R) -> R)(subject: S) -> R {
 {: .langauge-swift}
 
 [^fold-as-scott]: For completion, it's worth noting that the Church encoding can be naturally, if verbosely, produced from the Scott encoding `func fold<S:Viewl, R>(z: R, f: (S.El, R) -> R)(subject: S) -> R { return scott(z, { (x, xs) in f(x, fold(z, f)(subject: xs)) })(subject: subject) }`
+
+## Handling infinite data types
+
+Now, finally, we can get to the real meat of this whole thing. I
+hinted above that not all implementors of `Viewl` are particularly
+obviously containers. One particularly important example is the
+potentially infinite `Stream`. In fact, `Stream`s are in some sense
+the canonical or universal implementors of `Viewl`.
+
+That's a little mystical, though. To be more clear, I mean to say that
+`Stream`s are literally nothing more than frozen `uncons`es. Check it
+out!
+
+~~~
+// (This doesn't actually compile yet)
+struct Stream<A>:Viewl {
+    typealias El = A
+    
+    let project: () -> (A, Stream<A>)?
+
+    func uncons() -> (A, Stream)? {
+        return project()
+    }
+}
+~~~
+{: .language-swift}
+
+In other words, a `Stream` is *completely defined* by the action of
+`uncons`. In this sense `Stream` is the universal implementor of it.
+
+Except, I lied quite a bit with this implementation, since we need to
+go through some indirection via `Ptr` again to avoid compiler bugs.
+Let's annoint this and make a real `Stream` implementation
+
+~~~
+struct Stream<A>:Viewl {
+
+    typealias El = A
+    
+    // Internal use only---use the initializer to write a more natural
+    // unfold which ignores the use of Ptr
+    let project: () -> (A, Ptr<Stream<A>>)?
+
+    // Convenience constructor! Makes it so that we don't have to use
+    // Ptr to construct Streams
+    init(p: () -> (A, Stream<A>)?) {
+        project = {
+            if let (a, s) = p() {
+                return (a, Ptr(s))
+            } else { return nil }
+        }
+    }
+    
+    // Just unwrap the Ptr!
+    func uncons() -> (El, Stream)? {
+        if let (x, a) = project() {
+            return (x, a.val)
+        } else { return nil }
+    }
+
+}
+~~~
+{: .language-swift}
+
+We can demonstrate the power of the *universal `Viewl`* by turning
+literally any other type which conforms to `Viewl` into a `Stream`
+
+~~~
+func leftStream<S:Viewl>(s: S) -> Stream<S.El> {
+    return fold(
+      Stream.empty(),
+      { (x,xs) in return Stream { return (x, xs) } }
+    )(subject: s)
+}
+~~~
+{: .language-swift}

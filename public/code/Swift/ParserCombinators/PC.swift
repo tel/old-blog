@@ -33,9 +33,9 @@ func leftArray<S:Viewl>(n: Int)(s: S) -> ([S.El], S) {
 }
 
 func leftStream<S:Viewl>(s: S) -> Stream<S.El> {
-    return scott(
+    return fold(
       Stream.empty(),
-      { (x,xs) in return Stream { return (x, leftStream(xs)) } }
+      { (x,xs) in return Stream { return (x, xs) } }
     )(subject: s)
 }
 
