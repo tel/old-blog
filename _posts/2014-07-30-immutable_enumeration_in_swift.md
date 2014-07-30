@@ -314,6 +314,9 @@ non-deterministic parser combinator library. But for now I'll just end
 with a few more examples of useful `Stream` methods implemented using
 `scott`.
 
+And as always, any and all comments and critiques are very welcome.
+I'm new to Swift, so I have a lot to learn.
+
 ~~~
 extension Stream {
     // Combining streams one after another. 
