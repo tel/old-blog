@@ -108,22 +108,33 @@ struct Stream<A>:Viewl {
         return Stream { return (a, Stream.empty()) }
     }
 
-    // Combining streams
-    func append(s: Stream<A>) -> Stream<A> {
-        return Stream { scott(s.uncons(), { (a, ss) in (a, ss.append(s)) })(subject: self) }
-    }
-    
-    func then<B>(f: A -> Stream<B>) -> Stream<B> {
-        return scott( Stream<B>.empty(), { (a, s) in f(a).append(s.then(f)) } )(subject: self)
+}
+
+extension Stream {
+    // Combining streams one after another. 
+    func append(s: Stream) -> Stream {
+        return Stream {
+            scott(s.uncons(), { (a, ss) in (a, ss.append(s)) })(subject: self)
+        }
     }
 
-    func take(n: Int) -> Stream<A> {
-        switch n {
-        case 0: return Stream.empty()
-        case _:
-            if let (a, s) = uncons() {
-                return Stream { return (a, s.take(n-1)) }
-            } else { return Stream.empty() }
+    // Extending streams element-by-element. (This is Scala's flatMap
+    // and Haskell's infamous (>>=))
+    func then<B>(f: El -> Stream<B>) -> Stream<B> {
+        return scott(
+            Stream<B>.empty(),
+            { (a, s) in f(a).append(s.then(f)) }
+        )(subject: self)
+    }
+
+    // Truncate a Stream to a certain length
+    func take(n: Int) -> Stream {
+        if n == 0 { return Stream.empty() }
+        else {
+            return scott(
+                Stream.empty(),
+                { (x, xs) in Stream { return (x, xs.take(n-1)) } }
+            )(subject: self)
         }
     }
 }

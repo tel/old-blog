@@ -4,6 +4,11 @@ title: Immutable Enumeration in Swift
 comments_enabled: true
 ---
 
+*Most of the code of this article
+ [is available here](https://github.com/tel/tel.github.io/blob/master/public/code/Swift/ParserCombinators/PC.swift).
+ Along with some extensions which I'll probably talk about in a later
+ post.*
+
 I'd like to study a very particularly nice Swift protocol: the *view
 from the left* which looks a bit like this
 
@@ -180,7 +185,7 @@ abstract that pattern. Indeed we can, in two ways.
 
 The first is perhaps the most obvious way we could abstract this
 encoding, although it has a slightly unobvious type and a highly
-unobvious common name
+unobvious common name[^obvious]
 
 ~~~
 func scott<S:Viewl, R>(zero: R, combine: (S.El, S) -> R)(subject: S) -> R {
@@ -192,6 +197,8 @@ func scott<S:Viewl, R>(zero: R, combine: (S.El, S) -> R)(subject: S) -> R {
 }
 ~~~
 {: .langauge-swift} 
+
+[^obvious]: What is obvious about the Scott encoding, at least if you read the previous posts on The [Types of Data](http://tel.github.io/2014/07/23/types_of_data/) and [The Types of Data in Swift](http://tel.github.io/2014/07/26/types_of_data_in_swift/) is that if we see optional types as `A? ~ 1 + A` then we know we need to use this optional pair `1 + (A * S)` with a product of the uses: `1 + (A * S) -> R` is the same as `R * (A * S -> R)` which, combined with `uncons` produces `scott`.
 
 Again, ignoring the type and name, this function is nothing more than
 the exact template I wrote above but replacing the `...` bits with
@@ -297,3 +304,44 @@ func leftStream<S:Viewl>(s: S) -> Stream<S.El> {
 }
 ~~~
 {: .language-swift}
+
+Anyway, now that we can see how `Stream` and `uncons` are like two
+sides of the same coin I think I've covered most of what I wanted to
+get to.
+
+Next time I'll use `Stream`s and `Viewl` on `String`s to implement a
+non-deterministic parser combinator library. But for now I'll just end
+with a few more examples of useful `Stream` methods implemented using
+`scott`.
+
+~~~
+extension Stream {
+    // Combining streams one after another. 
+    func append(s: Stream) -> Stream {
+        return Stream {
+            scott(s.uncons(), { (a, ss) in (a, ss.append(s)) })(subject: self)
+        }
+    }
+
+    // Extending streams element-by-element. (This is Scala's flatMap
+    // and Haskell's infamous (>>=))
+    func then<B>(f: El -> Stream<B>) -> Stream<B> {
+        return scott(
+            Stream<B>.empty(),
+            { (a, s) in f(a).append(s.then(f)) }
+        )(subject: self)
+    }
+
+    // Truncate a Stream to a certain length
+    func take(n: Int) -> Stream {
+        if n == 0 { return Stream.empty() }
+        else {
+            return scott(
+                Stream.empty(),
+                { (x, xs) in Stream { return (x, xs.take(n-1)) } }
+            )(subject: self)
+        }
+    }
+}
+~~~
+{: .swift-language}
