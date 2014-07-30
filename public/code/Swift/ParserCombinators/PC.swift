@@ -1,6 +1,6 @@
 func id  <A>(a: A)      -> A { return a }
 func fix <A>(f: A -> A) -> A { return f(fix(f)) }
-func loop<A>()          -> A { return fix(id) }
+func loop<A>()          -> A { return loop() }
 
 protocol Viewl {
     typealias El
@@ -10,7 +10,17 @@ protocol Viewl {
 func head<X:Viewl>(x: X) -> X.El? { return x.uncons()?.0 }
 func tail<X:Viewl>(x: X) -> X?    { return x.uncons()?.1 }
 
-func leftArray<S:Viewl>(n: Int)(s: S) -> [S.El] {
+func scott<S:Viewl, R>(z: R, f: (S.El, S) -> R)(subject: S) -> R {
+    if let (x, xs) = subject.uncons() {
+        return f(x, xs)
+    } else { return z }
+}
+
+func fold<S:Viewl, R>(z: R, f: (S.El, R) -> R)(subject: S) -> R {
+    return scott(z, { (x, xs) in f(x, fold(z, f)(subject: xs)) })(subject: subject)
+}
+
+func leftArray<S:Viewl>(n: Int)(s: S) -> ([S.El], S) {
     var res:[S.El] = []
     var s_  = s
     for i in 0..<n {
@@ -19,23 +29,14 @@ func leftArray<S:Viewl>(n: Int)(s: S) -> [S.El] {
             s_  = ss
         } else { break }
     }
-    return res
+    return (res, s_)
 }
 
 func leftStream<S:Viewl>(s: S) -> Stream<S.El> {
-    if let (x, xs) = s.uncons() {
-        return Stream { return (x, leftStream(xs)) }
-    } else { return Stream.empty() }
-}
-
-// Convert a String into a Stream of characters
-func streamString(s: String) -> Stream<Character> {
-    // return Stream(project: { opt(second(streamString))(maybeA: s) })
-    return Stream {
-        if let (c, cs) = s.uncons() {
-            return (c, streamString(cs))
-        } else { return nil }
-    }
+    return scott(
+      Stream.empty(),
+      { (x,xs) in return Stream { return (x, leftStream(xs)) } }
+    )(subject: s)
 }
 
 extension String:Viewl {
@@ -52,7 +53,27 @@ extension Array:Viewl {
     }
 }
 
+extension Int:Viewl {
+    typealias El = Int
+    func uncons() -> (Int, Int)? {
+        return (self, self+1)
+    }
+}
+
 class Ptr<T> { let val: T; init(_ aVal:T) { val = aVal } }
+
+enum List<A>:Viewl {
+    case Empty
+    case Cons(A, Ptr<List<A>>)
+
+    typealias El = A
+    func uncons() -> (A, List<A>)? {
+        switch self {
+        case Empty: return nil
+        case Cons(let x, let xs): return (x, xs.val)
+        }
+    }
+}
 
 // Lazy, potentially-infinite Streams in Swift
 struct Stream<A>:Viewl {
@@ -79,16 +100,6 @@ struct Stream<A>:Viewl {
         } else { return nil }
     }
 
-    
-    // Transformed by folds
-    func scott<R>(z: R, f: (A, Stream<A>) -> R) -> R {
-        if let (a, s) = uncons() { return f(a, s) } else { return z }
-    }
-
-    func fold<R>(z: R, f: (A, R) -> R) -> R {
-        return scott(z, { (a, s) in f(a, s.fold(z, f)) })
-    }
-
 
     // Standard constructions
     static func empty() -> Stream<A> { return Stream { nil } }
@@ -99,11 +110,11 @@ struct Stream<A>:Viewl {
 
     // Combining streams
     func append(s: Stream<A>) -> Stream<A> {
-        return Stream { self.scott(s.uncons(), { (a, ss) in (a, ss.append(s)) }) }
+        return Stream { scott(s.uncons(), { (a, ss) in (a, ss.append(s)) })(subject: self) }
     }
     
     func then<B>(f: A -> Stream<B>) -> Stream<B> {
-        return scott( Stream<B>.empty(), { (a, s) in f(a).append(s.then(f)) } )
+        return scott( Stream<B>.empty(), { (a, s) in f(a).append(s.then(f)) } )(subject: self)
     }
 
     func take(n: Int) -> Stream<A> {
