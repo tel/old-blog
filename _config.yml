@@ -14,6 +14,7 @@ title:            tel.github.io
 # description:      '$'
 url:              http://tel.github.io
 paginate:         10
+baseurl:          /
 
 author:
   name:           'Joseph Abrahamson'
