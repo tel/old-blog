@@ -63,13 +63,15 @@ which can be constucted in exactly one way, by invoking `T`. This
 implies we can create `Unit` whenever we want by using `T`, which is
 just what we wanted. The `deriving Show` bit is unimportant, merely
 needed so that we can more conveniently interact with `Unit` using the
-interpreter.
+interpreter.[^plus-t]
 
 ~~~
 >>> T
 T
 it :: Unit
 ~~~
+
+[^plus-t]: In order to make the interpreter behave exactly the way it does in my example you need to enable automatic type printing. You can do that from within GHCi by typing `:set +t`.
 
 For those unfamiliar with Haskell's interactive prompt, GHCi, this
 indicates that when I typed `T` to construct a value (line 1), I get
@@ -185,12 +187,14 @@ could say *fully-saturated type* to indicate that all holes have been
 filled.
 
 In Haskell we indicate the use of holes via *type variables*. To
-demonstrate, here is a definition of $$\_ + \_$$ in Haskell
+demonstrate, here is a definition of $$\_ + \_$$ in Haskell[^type-operators]
 
 ~~~
 data a + b = Inl a | Inr b deriving Show
 ~~~
 {: .language-haskell}
+
+[^type-operators]: This definition requires the `TypeOperators` extension and GHC 7.8. Enable `TypeOperators` in GHCi by typing `:set -XTypeOperators`.
 
 This syntax indicates that the type operator (i.e. type connective)
 named `(+)` has two holes named `a` and `b`. It can be construct in
@@ -495,7 +499,7 @@ notion of "construction". Our data types talk about how to construct
 things, but sometimes we admit proofs without construction.
 
 One branch of logic, intuitionistic logic, tries to cope without the
-ability to prove without constrution. Thus, in intuitionistic logic
+ability to prove without construction. Thus, in intuitionistic logic
 the structure of data is better preserved... but one must also do
 without proof by contradiction which can be painful.
 
