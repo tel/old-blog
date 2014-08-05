@@ -4,10 +4,10 @@ title: Codata Diagonalization
 comments_enabled: true
 ---
 
-A [recent post by Dick Lipton][post] mentioned Gauss' uncertainty
-about Cantor's diagonalization proof as diagonalization involves
-assuming the existence of a very strange object---the set of all
-decimal expansions of real numbers, say---even if only to prove it
+A [recent post by Dr. Richard Lipton][post] mentioned Gauss'
+uncertainty about Cantor's diagonalization proof as diagonalization
+involves assuming the existence of a very strange object---the set of
+all decimal expansions of real numbers, say---even if only to prove it
 impossible to construct.
 
 [post]:http://rjlipton.wordpress.com/2014/08/03/diagonalization-without-sets/
