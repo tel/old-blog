@@ -69,7 +69,9 @@ clarify it and I'm about to spill a few more.
    convenient.
 
 4. Types often distinguish certain program utterances or fragments as
-   allowable while others are not. 
+   allowable while others are not. They perform this task by
+   enumerating the allowable ways to construct and
+   use[types-of-data][types-of-data] 
 
 4. All languages automatically admit the *vacuous* type analysis and
    are type-safe under it. This is the type system which merely
@@ -120,3 +122,5 @@ clarify it and I'm about to spill a few more.
 [^typeable]: Even if you have a type system which is by default erased it's sometimes possible to retain information from it for purposes of reflection at runtime. Haskell's `Typeable` mechanism does this. Notably, these mechanisms can be very dangerous. It's easy to break type safety if they're included.
 
 [^unsafe]: This is the legacy behind things like Haskell's `unsafeCoerce` which is, as it sounds, highly unsafe. To get access to this (sometimes useful) function you even need to import a special module nammed, apropriately, `Unsafe.Coerce`.
+
+[types-of-data]:http://tel.github.io/2014/07/23/types_of_data/
