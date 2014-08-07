@@ -469,14 +469,14 @@ the meaning of `Void` is. As stated previously, if we have a value of
 type void then we can produce anything at all. If we represent this
 mode of use in terms of a function space then it means that for any
 type `a` we might desire, we can automatically
-construct[^constructing quodlibet] the function `Void -> a`. This
-family of functions, one for every type `a`, is sometimes known as the
-*principle of explosion* or by the Latin phrase "ex falso quodlibet",
-"from falsehood follows anything".
+construct[^constructing-quodlibet] [^constructing-quodlibet-2] the
+function `Void -> a`. This family of functions, one for every type
+`a`, is sometimes known as the *principle of explosion* or by the
+Latin phrase "ex falso quodlibet", "from falsehood follows anything".
 
-[^constructing quodlibet]: I say "construct" because I mean that the nature of the types of data implies that *ex falso quodlibet* must be constructable. That said, actually constructing it in a language which implements these laws is a bit more tricky. Very formal languages like Agda and Idris provide special syntax to assert impossibility. Coq merely represents the law itself in its proof tactics system. In something like Haskell we have to resort to trickery, however, either using a "justifiable `error`" or an infinite loop ([check the source here](http://hackage.haskell.org/package/void-0.6.1/docs/Data-Void.html#v:absurd)).[^constructing quodlibet 2]
+[^constructing-quodlibet]: I say "construct" because I mean that the nature of the types of data implies that *ex falso quodlibet* must be constructable. That said, actually constructing it in a language which implements these laws is a bit more tricky. Very formal languages like Agda and Idris provide special syntax to assert impossibility. Coq merely represents the law itself in its proof tactics system. In something like Haskell we have to resort to trickery, however, either using a "justifiable `error`" or an infinite loop ([check the source here](http://hackage.haskell.org/package/void-0.6.1/docs/Data-Void.html#v:absurd)).
 
-[^constructing quodlibet 2]: This idea can also be used to implement `Void` in Haskell, though it requires a new "type" of data and a type system extension called `RankNTypes`. Anyway, if we think of `Void` as being able to be transformed into another type `a` for any choice of `a` we can... just define `Void` that way: `data Void = Void { absurd :: forall a . a }` which auto-generates the function `absurd :: Void -> a` just like we like (hat tip to [/u/cameleon](http://www.reddit.com/r/haskell/comments/2bj7it/let_me_tell_you_about_the_types_of_data/cjjrzkz?context=3)).
+[^constructing-quodlibet-2]: This idea can also be used to implement `Void` in Haskell, though it requires a new "type" of data and a type system extension called `RankNTypes`. Anyway, if we think of `Void` as being able to be transformed into another type `a` for any choice of `a` we can... just define `Void` that way: `data Void = Void { absurd :: forall a . a }` which auto-generates the function `absurd :: Void -> a` just like we like (hat tip to [/u/cameleon](http://www.reddit.com/r/haskell/comments/2bj7it/let_me_tell_you_about_the_types_of_data/cjjrzkz?context=3)).
 
 Since it's impossible to produce a value of type `Void`, we know that
 for any type `a` at least one of the following is impossible to
