@@ -10,13 +10,23 @@ given language is more likely to reject "bad" programs of some notion
 or another.
 
 Unfortunately, "type safety" as a term is fairly overloaded and
-confusing. Many words[words][words] have been spilled trying to
-clarify it and I'm about to spill a few more.
+confusing. Many [words][words] have been spilled trying to clarify it
+and I'm about to spill a few more.
 
+The following six points I think cover a few common misconceptions and
+terminological differences which will help focus and improve
+discussions. *Ultimately* I want to emphasize that the best debates
+about types should discuss how different forms of type systems afford
+better use through greater richness, how they hold more meaning and
+provide [a better UX][ux].
+
+[ux]:https://lobste.rs/s/h9vu5h/what_to_know_before_debating_type_systems/comments/oinwwc#c_oinwwc
 [words]:http://tel.github.io/2014/07/08/all_you_wanted_to_know_about_types_but_were_afraid_to_ask/
 
-1. "Type safety" is both a loose marketing term and a *very tight*
-   formal term. The two uses are related but hardly identical.
+---
+
+1. **"Type safety" is both a loose marketing term and a *very tight*
+   formal term. The two uses are related but hardly identical.**
 
    As a marketing term it tends to refer to the property of a language
    where type information reduces the likelihood of writing "unsafe"
@@ -26,19 +36,21 @@ clarify it and I'm about to spill a few more.
    and more.
 
    As a technical term, which will be the only sense I continue to
-   consider, *type safety* is a property of a language *and* a
-   specification or sense of the language. It ensures that the
-   *static* semantics of the language are linked to the *dynamic*
-   semantics.
+   consider, *type safety* is a property of a language *in the
+   presence of* a specification or sense of the language. It ensures
+   that the *static* semantics of the language are linked to the
+   *dynamic* semantics.
 
-2. Type safety relates a choice of language to a choice of language
-   semantics. You cannot reasonably refer to the type safety of, say,
-   C, because you must also talk about *how you consider or analyze
-   C*. It is always possible to pick an analysis of a language which
-   gives it type safety---this is equivalent to analyzing a program by
-   running it! Therefore you probably want to seek out a *useful*
-   analysis where "useful" may mean some selection of: abstract,
-   high-level, decidable, easy to understand, built-in.
+2. **Type safety relates a given language to a *choice* of language
+   value semantics or analysis.**
+
+   You cannot reasonably refer to the type safety of, say, C, because
+   you must also talk about *how you consider or analyze C*. It is
+   always possible to pick an analysis of a language which gives it
+   type safety---this is equivalent to analyzing a program by running
+   it! Therefore you probably want to seek out a *useful* analysis
+   where "useful" may mean some selection of: abstract, high-level,
+   decidable, easy to understand, built-in.
 
    The last "useful" quality is particularly relevant from a language
    UX point of view. Some languages perform automatic typechecking---a
@@ -47,13 +59,23 @@ clarify it and I'm about to spill a few more.
    language as privileged since it's the one that the tools basically
    ensure nobody can avoid.
 
-3. Typing (in the sense of type safety) assumes that you want to
-   analyze the program *without* running it and thus distinguishes
+   Note that useful is often today a matter of personal choice. Some
+   small amount of research has been done to consider what kinds of
+   type systems may afford objective improvements in programming
+   metrics, but this research is often underpowered, flaws,
+   preliminary. So, instaad, we must often judge usefulness by
+   personal or team values alone and therefore lose the technical
+   properties of the debate.
+
+3. **Typing (in the sense of type safety) assumes that you want to
+   analyze the program *without* running it.** Thus distinguishes
    between *dynamic*, runtime information and *static*, compile-time
-   information. This cleanly separates notions of static types and
-   dynamic types (sometimes known as "tags" or "classes" to prevent
-   confusion). Since we're assuming this distinction is important,
-   from now on I'll always refer to statics when talking about types.
+   information.
+
+   This cleanly separates notions of static types and dynamic types
+   (sometimes known as "tags" or "classes" to prevent confusion).
+   Since we're assuming this distinction is important, from now on
+   I'll always refer to statics when talking about types.
 
    Ultimately, we can understand type safety as saying not much more
    than *the dynamics of your language respect the statics of your
@@ -68,31 +90,51 @@ clarify it and I'm about to spill a few more.
    introduction of type safe analyses which are popular, simple, and
    convenient.
 
-4. Types often distinguish certain program utterances or fragments as
-   allowable while others are not. They perform this task by
-   enumerating the allowable ways to construct and
-   use[types-of-data][types-of-data] 
+4. **Types often distinguish certain program utterances or fragments
+   as allowable while others are not.**
 
-4. All languages automatically admit the *vacuous* type analysis and
-   are type-safe under it. This is the type system which merely
-   forgets about all typing distinctions by unifying all differences
-   in data and execution under a giant "everything"
-   [sum type](http://tel.github.io/2014/07/23/types_of_data/) type.
+   They perform this task by enumerating the allowable ways to
+   construct and use[types-of-data][types-of-data] and introducing a
+   mechanism for how the *type language* describes each of those
+   operations. In other words, they create a justification for each
+   well-typed program to exist and then outlaw the rest.
 
-   As an analysis we can consider the usefulness of this vacuous type
-   system. It is good for being type safe and simple, but bad in that
-   it tells nothing useful about the language statically and
-   eliminates invalid fragments whatsoever. As an analysis, its
-   purpose is mostly didactic---it emphasizes that all languages can
-   be statically typed and that the mere notion of "having static
-   types" is essentially useless.
+   These justifications concern only the construction of valid
+   language *syntax*. Then, type safety ensures that runtime dynamics
+   respect these justifications in two ways: (1) no dynamic "step"
+   will change the type of a program, i.e. `Int` does not suddenly
+   become `Char` without justification and (2) any program which has a
+   justified type has dynamics which are well-defined including
+   runtime error behavior.
 
-5. Some languages are amenable to expressive static types. This means
-   that they have a rich static structure which allows for the
-   elimination of many invalid programs at compile time. Achieving
-   this often requires picking a particular static analysis as
-   privileged and thus these languages usually come with an ecosystem
-   of tools which emphasize the privileged nature of that type system.
+   These rules are together called "preservation" and "progress".
+   Notably, they leave a lot of room for the language to define what
+   it means to justify a change in types (automatic upcasting, for
+   instance, is interesting) or well-define program dynamics.
+
+   An important example of this is that any language admits the
+   *vacuous* type system by having a single type which justifies all
+   language syntax and a dynamics where runtime *type mismatch errors*
+   are thrown whenever operations are considered non-sensible.
+   Oftentimes, dynamic languages are analyzed using this *unityped*
+   system, though it's possible that even dynamic languages take
+   advantage of some weak form of static typing if their compiler does
+   static specialization.
+
+   The vacuous type system is simple, but completely useless. Having
+   only a single type, its type language lacks all expressiveness and
+   thus provides little insight, analyzability, or use. It's a useful
+   example however since it explore how very little it can mean to
+   call a language "type safe".
+
+5. **Some languages are amenable to expressive static types.** This
+   means that they have a rich static structure which allows for the
+   elimination of many invalid programs at compile time.
+
+   Achieving this often requires picking a particular static analysis
+   as privileged and thus these languages usually come with an
+   ecosystem of tools which emphasize the privileged nature of that
+   type system.
 
    Another common inclusion is internalized types where type
    annotations and definitions appear as part of the language in order
@@ -101,13 +143,15 @@ clarify it and I'm about to spill a few more.
    not tags or classes) is that they are *erased* at runtime---at
    least by default[^typeable]. This means that there is no way for
    the program's behavior to change dynamically according to types.
-   Essentially, this outlaws reflection.
+   Essentially, this outlaws reflection and, in simple contexts, is
+   usually A Good Thing.
 
-6. Type safety need not be absolute in practical languages. Oftentimes
-   a majority of core primitives are amenable to some brand of static
-   analysis and that analysis is type safe with repect to them, but
-   then the language also includes a few "extra features" which have
-   exotic, potentially dangerous dynamics.
+6. **Type safety need not be absolute in practical languages.**
+
+   Oftentimes a majority of core primitives are amenable to some brand
+   of static analysis and that analysis is type safe with repect to
+   them, but then the language also includes a few "extra features"
+   which have exotic, potentially dangerous dynamics.
 
    This can be very useful for writing code which is---but cannot be
    statically proven to be---type safe. Common examples include
@@ -118,6 +162,13 @@ clarify it and I'm about to spill a few more.
    Massive effort is taken to ensure that these exotic dynamics are
    well protected and end users are encouraged to avoid them at all
    costs.[^unsafe]
+
+   When these mechanisms are truly unavoidable, they typically mean
+   that the burden of proving type safety, progress and preservation,
+   has shifted from the compiler to the programmer. Thus, they are
+   typically tools reserved for experts.
+
+## Footnotes
 
 [^typeable]: Even if you have a type system which is by default erased it's sometimes possible to retain information from it for purposes of reflection at runtime. Haskell's `Typeable` mechanism does this. Notably, these mechanisms can be very dangerous. It's easy to break type safety if they're included.
 
