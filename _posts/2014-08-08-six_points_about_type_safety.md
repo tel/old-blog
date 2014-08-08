@@ -25,8 +25,7 @@ provide [a better UX][ux].
 
 ---
 
-**"Type safety" is both a loose marketing term and a *very tight*
-formal term. The two uses are related but hardly identical.**
+### "Type safety" is both a loose marketing term and a *very tight* formal term. The two uses are related but hardly identical.
 
 As a marketing term it tends to refer to the property of a language
 where type information reduces the likelihood of writing "unsafe"
@@ -40,8 +39,7 @@ of* a specification or sense of the language. It ensures that the
 *static* semantics of the language are linked to the *dynamic*
 semantics.
 
-**Type safety relates a given language to a *choice* of language value
-semantics or analysis.**
+### Type safety relates a given language to a *choice* of language value semantics or analysis.
 
 You cannot reasonably refer to the type safety of, say, C, because you
 must also talk about *how you consider or analyze C*[^harper]. It is
@@ -65,9 +63,10 @@ this research is often underpowered, flaws, preliminary. So, instaad,
 we must often judge usefulness by personal or team values alone and
 therefore lose the technical properties of the debate.
 
-**Typing (in the sense of type safety) assumes that you want to
-analyze the program *without* running it.** Thus distinguishes between
-*dynamic*, runtime information and *static*, compile-time information.
+### Typing (in the sense of type safety) assumes that you want to analyze the program *without* running it.
+
+Thus it distinguishes between *dynamic*, runtime information and
+*static*, compile-time information.
 
 This cleanly separates notions of static types and dynamic types
 (sometimes known as "tags" or "classes" to prevent confusion). Since
@@ -86,8 +85,7 @@ convenience.
 One good property of a language is its amenability to the introduction
 of type safe analyses which are popular, simple, and convenient.
 
-**Types often distinguish certain program utterances or fragments as
-allowable while others are not.**
+### Types often distinguish certain program utterances or fragments as allowable while others are not.
 
 They perform this task by enumerating the allowable ways to construct
 and use[types-of-data][types-of-data] and introducing a mechanism for
@@ -121,8 +119,9 @@ provides little insight, analyzability, or use. It's a useful example
 however since it explore how very little it can mean to call a
 language "type safe".
 
-**Some languages are amenable to expressive static types.** This means
-that they have a rich static structure which allows for the
+### Some languages are amenable to expressive static types.
+
+This means that they have a rich static structure which allows for the
 elimination of many invalid programs at compile time.
 
 Achieving this often requires picking a particular static analysis as
@@ -138,7 +137,7 @@ default[^typeable]. This means that there is no way for the program's
 behavior to change dynamically according to types. Essentially, this
 outlaws reflection and, in simple contexts, is usually A Good Thing.
 
-**Type safety need not be absolute in practical languages.**
+### Type safety need not be absolute in practical languages.
 
 Oftentimes a majority of core primitives are amenable to some brand of
 static analysis and that analysis is type safe with repect to them,
