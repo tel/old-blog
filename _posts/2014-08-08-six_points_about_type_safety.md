@@ -59,7 +59,7 @@ can avoid.
 Note that useful is often today a matter of personal choice. Some
 small amount of research has been done to consider what kinds of type
 systems may afford objective improvements in programming metrics, but
-this research is often underpowered, flaws, preliminary. So, instead,
+this research is often underpowered, flawed, preliminary. So, instead,
 we must often judge usefulness by personal or team values alone and
 therefore lose the technical properties of the debate.
 
@@ -88,10 +88,12 @@ of type safe analyses which are popular, simple, and convenient.
 ### Types often distinguish certain program utterances or fragments as allowable while others are not.
 
 They perform this task by enumerating the allowable ways to construct
-and use[types-of-data][types-of-data] and introducing a mechanism for
+and use [types of data][types-of-data] and introducing a mechanism for
 how the *type language* describes each of those operations. In other
 words, they create a justification for each well-typed program to
 exist and then outlaw the rest.
+
+[types-of-data]:http://tel.github.io/2014/07/23/types_of_data/
 
 These justifications concern only the construction of valid language
 *syntax*. Then, type safety ensures that runtime dynamics respect
@@ -166,5 +168,3 @@ tools reserved for experts.
 [^typeable]: Even if you have a type system which is by default erased it's sometimes possible to retain information from it for purposes of reflection at runtime. Haskell's `Typeable` mechanism does this. Notably, these mechanisms *can* be very dangerous. It's easy to break type safety if they're included. `Typeable` has been fixed in Haskell, but it took some time before its safe semantics were well understood.
 
 [^unsafe]: This is the legacy behind things like Haskell's `unsafeCoerce` which is, as it sounds, highly unsafe. To get access to this (sometimes useful) function you even need to import a special module named, appropriately, `Unsafe.Coerce`.
-
-[types-of-data]:http://tel.github.io/2014/07/23/types_of_data/
