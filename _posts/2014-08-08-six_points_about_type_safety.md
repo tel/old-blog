@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Six Points About Type Safety
+title: Some Points About Type Safety
 comments_enabled: true
 ---
 
