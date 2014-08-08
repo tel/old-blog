@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: post
 title: Six Points About Type Safety
 comments_enabled: true
 ---
