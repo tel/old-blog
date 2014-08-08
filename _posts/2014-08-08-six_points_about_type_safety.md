@@ -45,12 +45,12 @@ provide [a better UX][ux].
    value semantics or analysis.**
 
    You cannot reasonably refer to the type safety of, say, C, because
-   you must also talk about *how you consider or analyze C*. It is
-   always possible to pick an analysis of a language which gives it
-   type safety---this is equivalent to analyzing a program by running
-   it! Therefore you probably want to seek out a *useful* analysis
-   where "useful" may mean some selection of: abstract, high-level,
-   decidable, easy to understand, built-in.
+   you must also talk about *how you consider or analyze C*[^harper].
+   It is always possible to pick an analysis of a language which gives
+   it type safety---this is equivalent to analyzing a program by
+   running it! Therefore you probably want to seek out a *useful*
+   analysis where "useful" may mean some selection of: abstract,
+   high-level, decidable, easy to understand, built-in.
 
    The last "useful" quality is particularly relevant from a language
    UX point of view. Some languages perform automatic typechecking---a
@@ -169,6 +169,8 @@ provide [a better UX][ux].
    typically tools reserved for experts.
 
 ## Footnotes
+
+[^harper]: Dr. Robert Harper describes such a type safe analysis of C [in a comment here](http://www.pl-enthusiast.net/2014/08/05/type-safety/#comment-500)
 
 [^typeable]: Even if you have a type system which is by default erased it's sometimes possible to retain information from it for purposes of reflection at runtime. Haskell's `Typeable` mechanism does this. Notably, these mechanisms can be very dangerous. It's easy to break type safety if they're included.
 
