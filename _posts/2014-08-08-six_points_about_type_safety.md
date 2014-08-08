@@ -39,7 +39,7 @@ of* a specification or sense of the language. It ensures that the
 *static* semantics of the language are linked to the *dynamic*
 semantics.
 
-### Type safety relates a given language to a *choice* of language value semantics or analysis.
+### Type safety relates a given language to a *choice* of value semantics or analysis.
 
 You cannot reasonably refer to the type safety of, say, C, because you
 must also talk about *how you consider or analyze C*[^harper]. It is
