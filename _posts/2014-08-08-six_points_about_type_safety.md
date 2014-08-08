@@ -50,7 +50,7 @@ Therefore you probably want to seek out a *useful* analysis where
 easy to understand, built-in.
 
 The last "useful" quality is particularly relevant from a language UX
-point of view. Some languages perform automatic typechecking---a mere
+point of view. Some languages perform automatic type-checking---a mere
 form of analysis---and may refuse to compile if that checking fails.
 This, in practice, *selects* a particular analysis of the language as
 privileged since it's the one that the tools basically ensure nobody
@@ -59,7 +59,7 @@ can avoid.
 Note that useful is often today a matter of personal choice. Some
 small amount of research has been done to consider what kinds of type
 systems may afford objective improvements in programming metrics, but
-this research is often underpowered, flaws, preliminary. So, instaad,
+this research is often underpowered, flaws, preliminary. So, instead,
 we must often judge usefulness by personal or team values alone and
 therefore lose the technical properties of the debate.
 
@@ -140,7 +140,7 @@ outlaws reflection and, in simple contexts, is usually A Good Thing.
 ### Type safety need not be absolute in practical languages.
 
 Oftentimes a majority of core primitives are amenable to some brand of
-static analysis and that analysis is type safe with repect to them,
+static analysis and that analysis is type safe with respect to them,
 but then the language also includes a few "extra features" which have
 exotic, potentially dangerous dynamics.
 
@@ -165,6 +165,6 @@ tools reserved for experts.
 
 [^typeable]: Even if you have a type system which is by default erased it's sometimes possible to retain information from it for purposes of reflection at runtime. Haskell's `Typeable` mechanism does this. Notably, these mechanisms *can* be very dangerous. It's easy to break type safety if they're included. `Typeable` has been fixed in Haskell, but it took some time before its safe semantics were well understood.
 
-[^unsafe]: This is the legacy behind things like Haskell's `unsafeCoerce` which is, as it sounds, highly unsafe. To get access to this (sometimes useful) function you even need to import a special module nammed, apropriately, `Unsafe.Coerce`.
+[^unsafe]: This is the legacy behind things like Haskell's `unsafeCoerce` which is, as it sounds, highly unsafe. To get access to this (sometimes useful) function you even need to import a special module named, appropriately, `Unsafe.Coerce`.
 
 [types-of-data]:http://tel.github.io/2014/07/23/types_of_data/
