@@ -164,7 +164,7 @@ tools reserved for experts.
 
 [^harper]: Dr. Robert Harper describes such a type safe analysis of C [in a comment here](http://www.pl-enthusiast.net/2014/08/05/type-safety/#comment-500)
 
-[^typeable]: Even if you have a type system which is by default erased it's sometimes possible to retain information from it for purposes of reflection at runtime. Haskell's `Typeable` mechanism does this. Notably, these mechanisms can be very dangerous. It's easy to break type safety if they're included.
+[^typeable]: Even if you have a type system which is by default erased it's sometimes possible to retain information from it for purposes of reflection at runtime. Haskell's `Typeable` mechanism does this. Notably, these mechanisms *can* be very dangerous. It's easy to break type safety if they're included. `Typeable` has been fixed in Haskell, but it took some time before its safe semantics were well-understood.
 
 [^unsafe]: This is the legacy behind things like Haskell's `unsafeCoerce` which is, as it sounds, highly unsafe. To get access to this (sometimes useful) function you even need to import a special module nammed, apropriately, `Unsafe.Coerce`.
 
