@@ -4,6 +4,10 @@ title: Typing Transducers
 comments_enabled: true
 ---
 
+*The code relating to this post is available [here][here].*
+
+[here]:https://github.com/tel/tel.github.io/blob/master/public/code/scratch/transducers.hs
+
 There's been a little flurry of activity around analyzing Clojure's
 upcoming *transducers* using Haskell types. Right now a top contender
 looks a bit like this
