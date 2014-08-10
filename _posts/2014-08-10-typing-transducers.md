@@ -128,8 +128,8 @@ functions like `(&&&) :: (b ~> c) -> (b ~> c') -> (b ~> (c, c'))`
 
 ## Flat mapping
 
-Now, in most expositions of transducers around right now the `flatMap`
-function is also given as an example transducer:
+Now, in most expositions of transducers around right now the
+`tflatMap` function is also given as an example transducer:
 
 ~~~
 tflatMap :: (a -> [b]) -> (a ~> b)
@@ -156,7 +156,7 @@ power? Did we learn anything new?
 
 Well, before we go too far we should take the relatively large grain
 of salt that we're *assuming* that `a ~> b` is a faithful
-representation of Clojure's tranducers---[Rich Hickey has claimed that
+representation of Clojure's transducers---[Rich Hickey has claimed that
 it is not quite so][rich].
 
 But if we can swallow that then we can see that transducers are
