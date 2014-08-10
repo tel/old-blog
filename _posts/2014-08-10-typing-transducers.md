@@ -221,7 +221,8 @@ Haskell cannot have local mutable state like that (unless we embed the
 whole computation in a monad).
 
 However, if we beef up what `Transducer`s are then we *can* get a pure
-`take`. I'll explore that a bit in a later post.
+`take`. I'll [explore that a bit][explore] in a later post.
 
+[explore]:https://github.com/tel/tel.github.io/blob/master/public/code/scratch/transducers2.hs
 
 # Footnotes
