@@ -133,7 +133,7 @@ Now, in most expositions of transducers around right now the
 
 ~~~
 tflatMap :: (a -> [b]) -> (a ~> b)
-tflatMap f = Transducer $ \brr a r -> foldr (f a) brr r
+tflatMap f = Transducer $ \brr a r -> foldr brr r (f a)
 ~~~
 {: .language-haskell}
 
