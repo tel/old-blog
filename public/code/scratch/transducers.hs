@@ -12,23 +12,25 @@ import           Control.Category
 import           Control.Monad
 import           Prelude          hiding (id, (.))
 
-newtype (~>) a b = T (forall r . (b -> r -> r) -> (a -> r -> r))
+newtype (~>) a b = Transducer (forall r . (b -> r -> r) -> (a -> r -> r))
 
 instance Category (~>) where
-  id = T id
-  T g . T f = T (f . g)
+  id = Transducer id
+  Transducer g . Transducer f = Transducer (f . g)
 
 -- tmap f = cps (return . f)
 tmap :: (a -> b) -> (a ~> b)
-tmap f = T $ \brr a r -> brr (f a) r
+tmap f = Transducer $ \brr a r -> brr (f a) r
 
 -- tfilt p = cps (mfilter p . return)
 tfilt :: (a -> Bool) -> (a ~> a)
-tfilt p = T $ \brr a r -> if p a then brr a r else r
+tfilt p = Transducer $ \brr a r -> if p a then brr a r else r
 
 -- tseq t as = as >>= regular t
 tseq :: (a ~> b) -> [a] -> [b]
-tseq (T f) as = as >>= flip (f (:)) []
+tseq (Transducer f) = spin where
+  spin []     = []
+  spin (a:as) = f (:) a (spin as)
 
 -- The intuition here is that a transducer is a transformation between
 -- "reducers" which are styled as `(a -> r -> r)` and since `forall r
@@ -39,7 +41,7 @@ tseq (T f) as = as >>= flip (f (:)) []
 -- However, Paolo Capriotti [pointed out][0] that there's a *much* easier
 -- representation of `a ~> b`. Here's the derivation
 --
--- [0]: http://www.reddit.com/r/haskell/comments/2d5ael/monoidal_transducers_are_monoid_homomorphisms/cjm9ro5
+-- 
 --
 -- ~~~
 -- a ~> b
@@ -61,10 +63,10 @@ tseq (T f) as = as >>= flip (f (:)) []
 -- representations
 
 regular :: (a ~> b) -> (a -> [b])
-regular (T f) a = f (:) a []
+regular (Transducer f) a = f (:) a []
 
 cps :: (a -> [b]) -> (a ~> b)
-cps cont = T $ \brr a r -> foldr brr r (cont a)
+cps cont = Transducer $ \brr a r -> foldr brr r (cont a)
 
 -- This demonstrates that `Transducer`, as written above, is the
 -- Kleisli arrow on the list monad. "Obvious" implementations of
@@ -88,7 +90,7 @@ cps cont = T $ \brr a r -> foldr brr r (cont a)
 instance Arrow (~>) where
   arr   = tmap
   -- first = cps . runKleisli . first . Kleisli . regular
-  first (T t) = T $ \cdrr (b, d) -> t (\c -> cdrr (c, d)) b
+  first (Transducer t) = Transducer $ \cdrr (b, d) -> t (\c -> cdrr (c, d)) b
 
 -- ## So what have we learned?
 --
