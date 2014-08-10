@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Typing Transducers
+title: Typing Transducers (as Kleisli arrows)
 comments_enabled: true
 ---
 
