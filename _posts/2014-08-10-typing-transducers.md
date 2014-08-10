@@ -143,7 +143,7 @@ transducer generator": it's the *canonical* transducer generator and
 can be implemented quite nicely in terms of `regular`/`cps`:
 
 ~~~
-tflatMap = regular
+tflatMap = cps
 ~~~
 {: .language-haskell}
 
