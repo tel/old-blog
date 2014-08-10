@@ -70,7 +70,7 @@ before, but it basically expresses one of the ideas behind reducers:
 lists are isomorphic to their own folds. This is sometimes called a
 Church-encoding[^Boehm-Berarducci] or a continuation-passing style
 transform. Formally, it just says that `[x]` can be converted to and
-from a type `forall r . (a -> r -> r) -> r -> r`.
+from a type `forall r . (x -> r -> r) -> r -> r`.
 
 [^Boehm-Berarducci]: Or, really, [a Boehm-Berarducci encoding](http://okmij.org/ftp/tagless-final/course/Boehm-Berarducci.html)
 
