@@ -126,6 +126,27 @@ functions like `(&&&) :: (b ~> c) -> (b ~> c') -> (b ~> (c, c'))`
 ~~~
 {: .no-highlight}
 
+## Flat mapping
+
+Now, in most expositions of transducers around right now the `flatMap`
+function is also given as an example transducer:
+
+~~~
+tflatMap :: (a -> [b]) -> (a ~> b)
+tflatMap f = Transducer $ \brr a r -> foldr (f a) brr r
+~~~
+{: .language-haskell}
+
+I deliberately ignored it to begin with because, as it turns out,
+`tflatMap` deserves a more important title than merely "another
+transducer generator": it's the *canonical* transducer generator and
+can be implemented quite nicely in terms of `regular`/`cps`:
+
+~~~
+tflatMap = regular
+~~~
+{: .language-haskell}
+
 ## So what?
 
 At this point you may be thinking: *okay, great, the `Transducer` type
@@ -145,10 +166,11 @@ composition) while the "Kleisli" bit suggests that we're focused on
 the monadic structure of lists.
 
 Which is informative! Lists have rich monadic structure which allows
-them to embody non-deterministic search. We also pick up an `Arrow`
-instance which might be fun to encode into Clojure taking advantage of
-macros to produce some [`Arrow`-notation][arrow-notation]. This could
-be a very illuminating way to construct transducers!
+them to embody non-deterministic search[^non-det]. We also pick up an
+`Arrow` instance which might be fun to encode into Clojure taking
+advantage of macros to produce some
+[`Arrow`-notation][arrow-notation]. This could be a very illuminating
+way to construct transducers!
 
 It also suggests some relation to other analyses of transducers such
 as interpretation of transducers
@@ -159,6 +181,8 @@ as interpretation of transducers
 [arrow-notation]:http://www.haskell.org/arrows/syntax.html
 [lensy-traversal]:http://www.reddit.com/r/haskell/comments/2cv6l4/clojures_transducers_are_perverse_lenses/
 [monoid-homomorphisms]:http://oleksandrmanzyuk.wordpress.com/2014/08/09/transducers-are-monoid-homomorphisms/
+
+[^non-det]: Non-deterministic transducers ought to be easy to produce, but we don't much see that behavior with the `tmap` and `tfilt` examples. The reason is visible to us when we examine their "clever" definitions via the `cps` function: each of them begins with `return`, the "trivial" Kleisli list arrow which represents no non-determinism whatsoever! We ought to use `regular`, i.e. "flat map" to produce more interesting non-deterministic computations.
 
 ## What's missing?
 

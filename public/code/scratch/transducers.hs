@@ -26,6 +26,9 @@ tmap f = Transducer $ \brr a r -> brr (f a) r
 tfilt :: (a -> Bool) -> (a ~> a)
 tfilt p = Transducer $ \brr a r -> if p a then brr a r else r
 
+tflatMap :: (a -> [b]) -> (a ~> b)
+tflatMap f = Transducer $ \brr a r -> foldr (f a) brr r
+
 -- tseq t as = as >>= regular t
 tseq :: (a ~> b) -> [a] -> [b]
 tseq (Transducer f) = spin where
