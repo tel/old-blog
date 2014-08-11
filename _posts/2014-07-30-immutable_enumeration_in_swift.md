@@ -348,3 +348,5 @@ extension Stream {
 }
 ~~~
 {: .swift-language}
+
+# Footnotes
