@@ -98,8 +98,8 @@ cps cont = Transducer $ \brr a r -> foldr brr r (cont a)
 we can write some very natural definitions of `tmap`, `tfilt`, and `tseq`
 
 ~~~
-tmap f    = cps (fmap f    . return)
-tfilt p   = cps (mfilter p . return)
+tmap f    = cps (map f    . return)
+tfilt p   = cps (filter p . return)
 
 tseq t as = as >>= regular t
 ~~~
