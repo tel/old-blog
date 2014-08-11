@@ -9,6 +9,7 @@ module Transducers where
 import           Control.Applicative
 import           Control.Category
 import           Control.Comonad
+import qualified Data.Foldable       as F
 import           Data.List
 import           Data.Profunctor
 import           Data.Set            (Set)
@@ -143,11 +144,28 @@ newtype MealyM i o = MealyM (forall r. ((i -> r) -> (i -> o) -> r) -> r)
 data MooreF i o = MooreF o (i -> MooreF i o)
 data MealyF i o = MealyF (i -> (o, MealyF i o))
 
-upN :: MooreN () Int
-upN = MooreN id (\i () -> i + 1) 0
+--------------------------------------------------------------------------------
 
-ana :: MooreF i o -> ((i -> r) -> o -> r) -> r
-ana (MooreF o im) z = 
+rmap :: (a -> b) -> Reducer a r -> Reducer b r
+rmap f (R s xf) = R s (xf . mapping f) where
+  mapping f f1 result input = f1 result (f input)
 
-upM :: MooreM () Int
-upM = MooreM (\z -> z undefined 0)
+rfilter :: (a -> Bool) -> Reducer a r -> Reducer a r
+rfilter p (R s xf) = R s (xf . filtering p) where
+  filtering pred f1 result input = if pred input then f1 result input else result
+
+rflatMap :: (a -> [b]) -> Reducer a r -> Reducer b r
+rflatMap t (R s xf) = R s (xf . mapcatting t) where
+  mapcatting f f1 result input = foldl' f1 result (f input)
+
+data Reducer a r where
+  R :: F.Foldable s => s x -> ((r -> a -> r) -> (r -> x -> r)) -> Reducer a r
+
+reducer :: F.Foldable s => s a -> Reducer a r
+reducer s = R s id
+
+reduce :: Reducer a r -> (r -> a -> r) -> r -> r
+reduce (R s xf) f x0 = F.foldl' (xf f) x0 s
+
+reduceList :: Reducer a ([a] -> [a]) -> [a]
+reduceList (R s xf) = F.foldl' (xf (\f a -> f . (a:))) id s []
