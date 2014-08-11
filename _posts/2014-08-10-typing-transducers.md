@@ -32,7 +32,7 @@ tmap :: (a -> b) -> (a ~> b)
 tmap f = Transducer $ \brr a r -> brr (f a) r
 
 tfilt :: (a -> Bool) -> (a ~> a)
-tfilt p = Transducer $ \brr a r -> if p a then brr a r else r
+tfilt p = Transducer $ \arr a r -> if p a then arr a r else r
 
 tseq :: (a ~> b) -> [a] -> [b]
 tseq (Transducer f) as = go as where
