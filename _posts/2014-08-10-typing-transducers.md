@@ -212,7 +212,10 @@ For those unfamiliar with Clojure, this code closes over one of
 Clojure's mutability constructs, an `atom`, to count how many elements
 have passed through. This lets the transducer maintain a little local
 state and is required to implement `take`. Sadly, `Transducer` is
-nowhere near strong enough to represent local state purely.
+nowhere near strong enough to represent local state
+purely[^taking-is-impossible].
+
+[^taking-is-impossible]: Confidence that this is true comes from analyzing transducers as monoid homomorphisms `Monoid m => (b -> m) -> (a -> m)` as described in [this post][monoid-homomorphisms]. Since `take` isn't a monoid homomorphism, it cannot be encoded in this type. Clojure's mutability breaks the typing guarantees used to make such an assertion and thus allows it. If I want to embed taking into this type I'll need to introduce some kind of local state and generalize the whole thing to be "larger" than just monoid homomorphisms.
 
 My intent isn't to claim that *this* is the reason why `Transducer` is
 a poor model for Clojure's transducers---indeed, a completely correct
