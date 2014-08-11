@@ -143,11 +143,11 @@ newtype MealyM i o = MealyM (forall r. ((i -> r) -> (i -> o) -> r) -> r)
 data MooreF i o = MooreF o (i -> MooreF i o)
 data MealyF i o = MealyF (i -> (o, MealyF i o))
 
-mooreNF :: MooreN i o -> MooreF i o
-mooreNF (MooreN ro rir r) = MooreF (ro r) (\i -> mooreNF (MooreN ro rir (rir r i)))
+upN :: MooreN () Int
+upN = MooreN id (\i () -> i + 1) 0
 
-mooreFM :: MooreF i o -> MooreM i o
-mooreFM (MooreF o ix) = MooreM (\iror -> iror (\i -> let MooreM z = mooreFM (ix i) in z iror) o)
+ana :: MooreF i o -> ((i -> r) -> o -> r) -> r
+ana (MooreF o im) z = 
 
-mooreMN :: MooreM i o -> MooreN i o
-mooreMN (MooreM z) = MooreN _ _ _
+upM :: MooreM () Int
+upM = MooreM (\z -> z undefined 0)
