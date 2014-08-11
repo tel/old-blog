@@ -6,12 +6,14 @@
 
 module Transducers where
 
-import Control.Applicative
-import Control.Category
-import Control.Comonad
-import Data.List
-import Data.Profunctor
-import Prelude hiding (id, (.))
+import           Control.Applicative
+import           Control.Category
+import           Control.Comonad
+import           Data.List
+import           Data.Profunctor
+import           Data.Set            (Set)
+import qualified Data.Set            as Set
+import           Prelude             hiding (id, (.))
 
 -- [Last time][last-time] I encoded Clojure transducers as functions
 -- like `forall r . (b -> r -> r) -> (a -> r -> r)` and then explored
@@ -88,7 +90,7 @@ instance Applicative (Red i) where
         (P x0 y0)
 
 fold :: Red i o -> [i] -> o
-fold (Red xo xix x) = xo . foldr (flip xix) x
+fold (Red xo xix x) = xo . foldl' xix x
 
 newtype (~>) a b =
   Transducer (forall o . Red b o -> Red a o)
@@ -97,8 +99,13 @@ instance Category (~>) where
   id = Transducer id
   Transducer f . Transducer g = Transducer (g . f)
 
+-- | Uses the Cayley/difference list representation to build the list
+-- via appends
 tseq :: (a ~> b) -> ([a] -> [b])
-tseq (Transducer f) as = fold (f (Red id (flip (:)) [])) as
+tseq (Transducer f) = fold (f (Red ($ []) (\x a -> x . (a:)) id))
+
+tset :: Ord b => (a ~> b) -> ([a] -> Set b)
+tset (Transducer f) = fold (f (Red id (flip Set.insert) Set.empty))
 
 tmap :: (a -> b) -> (a ~> b)
 tmap f = Transducer (dimap f id)
@@ -113,9 +120,9 @@ tflatMap f = Transducer $ \(Red xr xbx x) ->
 
 ttake :: Int -> (a ~> a)
 ttake n = Transducer $ \(Red xr xax x) ->
-  let xanx x a n | n > 0     = xax (x (n-1)) a
-                 | otherwise =  x n
-  in Red (\x -> xr (x n)) xanx (const x)
+  Red (\(P x _) -> xr x)
+      (\(P x n) a -> if n > 0 then P (xax x a) (n-1) else P x n)
+      (P x n)
 
 -- In other words, we think of a reducing function as being a
 -- combination of three pieces: (1) an internal state value of type
@@ -126,3 +133,21 @@ ttake n = Transducer $ \(Red xr xax x) ->
 
 -- This is notably a good bit more complex than reducers are usually
 -- considered to be, but it provides a very important notion! In p
+
+data MooreN i o where MooreN :: (r      -> o) -> (r -> i -> r) -> r -> MooreN i o
+data MealyN i o where MealyN :: (r -> i -> o) -> (r -> i -> r) -> r -> MealyN i o
+
+newtype MooreM i o = MooreM (forall r. ((i -> r)       -> o  -> r) -> r)
+newtype MealyM i o = MealyM (forall r. ((i -> r) -> (i -> o) -> r) -> r)
+
+data MooreF i o = MooreF o (i -> MooreF i o)
+data MealyF i o = MealyF (i -> (o, MealyF i o))
+
+mooreNF :: MooreN i o -> MooreF i o
+mooreNF (MooreN ro rir r) = MooreF (ro r) (\i -> mooreNF (MooreN ro rir (rir r i)))
+
+mooreFM :: MooreF i o -> MooreM i o
+mooreFM (MooreF o ix) = MooreM (\iror -> iror (\i -> let MooreM z = mooreFM (ix i) in z iror) o)
+
+mooreMN :: MooreM i o -> MooreN i o
+mooreMN (MooreM z) = MooreN _ _ _
