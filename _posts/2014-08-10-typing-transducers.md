@@ -87,12 +87,15 @@ from a type `forall r . (x -> r -> r) -> r -> r`.
 
 This derivation suggests that values of type `a ~> b` are exactly the
 same as functions of type `a -> [b]`. These functions are called
-["Kleisli arrows of the List Monad"][kleisli] which is a long name that does
-little more than recognize that they can be composed just like
-functions `a -> b` by [using the monad structure of list][kleisli-source].
+["Kleisli arrows of the List Monad"][kleisli][^what-is-kleisli] which
+is a long name that does little more than recognize that they can be
+composed just like functions `a -> b` by
+[using the monad structure of list][kleisli-source].
 
 [kleisli]:http://hackage.haskell.org/package/base-4.7.0.1/docs/Control-Arrow.html#t:Kleisli
 [kleisli-source]:http://hackage.haskell.org/package/base-4.7.0.1/docs/src/Control-Arrow.html#Kleisli
+
+[^what-is-kleisli]: A Kleisli arrow is any type in the form `a -> m b` for some `Monad` `m`. Just like we instantiated `Category` for `a ~> b` we can instantiate `Category` for `Kleisli m a b = a -> m b`. Composition uses monadic bind `(>>=)` to sequence the layers of `m` which form.
 
 If we write out the back and forward transformations between `a ~> b`
 and `a -> [b]`:
