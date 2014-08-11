@@ -46,6 +46,17 @@ Transducers are nice for being representation independent---only
 properties and allows transformation between containers of various
 types.
 
+~~~
+import qualified Data.Set
+import           Data.Set (Set)
+
+tset :: (a ~> b) -> [a] -> Set b
+tset (Transducer f) as = go as where
+  go []     = Set.empty
+  go (a:as) = f Set.insert a (go as)
+~~~
+{: .language-haskell}
+
 Given that reducers operate a bit like functions on lists and
 transducers are mappings between reducers, it sort of feels like `a ~>
 b` ought to be a bit like `[a] -> [b]` as evidenced by `tseq`.
