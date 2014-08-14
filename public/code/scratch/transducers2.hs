@@ -144,7 +144,7 @@ newtype MealyM i o = MealyM (forall r. ((i -> r) -> (i -> o) -> r) -> r)
 data MooreF i o = MooreF o (i -> MooreF i o)
 data MealyF i o = MealyF (i -> (o, MealyF i o))
 
---------------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 rmap :: (a -> b) -> Reducer a r -> Reducer b r
 rmap f (R s xf) = R s (xf . mapping f) where
@@ -169,3 +169,29 @@ reduce (R s xf) f x0 = F.foldl' (xf f) x0 s
 
 reduceList :: Reducer a ([a] -> [a]) -> [a]
 reduceList (R s xf) = F.foldl' (xf (\f a -> f . (a:))) id s []
+
+------------------------------------------------------------------------
+
+data (<) a b = Elaborates !(a -> b) !(b -> a)
+
+inject :: a < b -> (a -> b)
+inject (Elaborates f _) = f
+
+retract :: a < b -> (b -> a)
+retract (Elaborates _ g) = g
+
+instance Category (<) where
+  id = Elaborates id id
+  Elaborates f g . Elaborates h j = Elaborates (f . h) (j . g)
+
+type Redu a r = r -> a -> r
+
+data T a b where
+  T :: (forall q . q -> Redu b q -> (q < s, Redu a s)) -> T a b
+
+t :: T a b -> (a ~> b)
+t (T z) = Transducer $ \(Red so sis s) ->
+  let (elab, red) = z s sis
+  in Red (so . retract elab) red (inject elab s)
+       
+       

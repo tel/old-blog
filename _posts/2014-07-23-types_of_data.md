@@ -153,7 +153,7 @@ constant which cannot be constructed. It is infinitely useful.
 As a side note, notice that `Void` has exactly zero inhabitants. This
 is why it's called "0" and why it behaves like the number 0.
 
-### Aside: Whispers of duality
+### *Aside:* Whispers of duality
 
 After having now introduced $$1$$ and $$0$$ I can spend a moment
 talking about an important component of the nature of the types of
@@ -309,7 +309,7 @@ equal to the number of inhabitants of `a` times the number of
 inhabitants of `b`. This is why it's called "product" and how it
 behaves like algebraic multiplication.
 
-### Aside: Further duality
+### *Aside:* Further duality
 
 It should be clear by this point that products and sums are dual along
 the construction v. use axis just like $$1$$ and $$0$$ were, but let's
@@ -328,7 +328,7 @@ a property like "uses of products are sums of uses" and "uses of sums
 are products of uses" showing that the two types of data *fit*
 together very nicely.
 
-### Aside: Multi-way products and sums
+### *Aside:* Multi-way products and sums
 
 It might feel restrictive that products and sums as introduced only
 allow two "arguments" each. Of course, we can extend these notions by
@@ -434,7 +434,7 @@ $$2^3 = 8$$ options.
 This is why $$a \rightarrow b$$ is sometimes called an "exponential"
 and is sometimes written $$b^a$$.
 
-### Aside: Formalizing *use* and *construction*
+### *Aside:* Formalizing *use* and *construction*
 
 Now that we have function spaces we can bring to fruition an idea from
 the previous aside. If we decide that our goal is to produce a value
@@ -462,7 +462,7 @@ to completely formalize how products and sums eliminate one another.
 This is a bit less pretty to write down, but emphasizes the duality
 between construction and use.
 
-### Aside: Explosions, negations, and *ex falso quodlibet*
+### *Aside:* Explosions, negations, and *ex falso quodlibet*
 
 Now that we have exponentials we can talk more concretely about what
 the meaning of `Void` is. As stated previously, if we have a value of
