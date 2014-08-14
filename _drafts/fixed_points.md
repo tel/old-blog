@@ -110,6 +110,21 @@ principled much like the basic types of data were.
 
 [^primal]: By "primal" here I mean that the left-hand side of each equation is purely a type variable and not a more complex expression containing variables. Reduction of more general systems of equations to primal ones is not necessarily obviously possible (in high-school algebra we make use of *subtraction* and *division* to do so, but those don't appear to make much sense in types) and so we'll just ignore it!
 
+The general trick we use to become more principled is to weaken
+equality in those equations. For instance, consider the follow
+equation (equivalent to the previous example, actually)
+
+$$
+\begin{align}
+  a &= 1 + a
+\end{align}
+$$
+
+Instead of positing that some type $$A$$ exists which is equal to
+$$1 + A$$, we'll posit that a type $$A$$ exists along with a function
+of type $$A -> 1 + A$$ or that a type $$A$$ exists along with a
+function of type $$1 + A -> A$$.
+
 ---
 
 ## Recursive and Corecursive Types of Data

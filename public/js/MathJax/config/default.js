@@ -693,7 +693,7 @@ MathJax.Hub.Config({
     //  will be required to to download and install either the STIX fonts or the
     //  MathJax TeX fonts.
     //
-    imageFont: "TeX",
+    imageFont: null,
     
     //
     //  This is the font-family CSS value used for characters that are not
