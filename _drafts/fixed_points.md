@@ -4,6 +4,15 @@ title: Towering Data
 comments_enabled: true
 ---
 
+$$
+\newcommand{inl}[1]{\textrm{inl}[#1]}
+\newcommand{inr}[1]{\textrm{inr}[#1]}
+\newcommand{fold}[1]{\textrm{fold}[#1]}
+\newcommand{recur}[1]{\textrm{recur}[#1]}
+\newcommand{generate}[1]{\textrm{generate}[#1]}
+\newcommand{unfold}[1]{\textrm{unfold}[#1]}
+$$
+
 Previous, I stated the [*types of data*][types-of-data]---the
 products, sums, and exponentials. These types of data are already
 powerful enough to describe many concepts. For instance
@@ -57,33 +66,46 @@ At this point, the analogy with high school algebra breaks down. Using
 these types we will be able to study many shades of grey of
 infinities, but high school only teaches one.
 
-### *Aside:* Type schema
+### *Aside:* Type schemata
 
 Previously, I described type connectives like $$\_ + \_$$ as being a
 *type schema* with two holes. We *instantiate* the schema by providing
 types to fill the holes in with.
 
-The types considered below look similar, like $$\mu \_$$. This is a
-weakness in notation however because *this* hole must be instantiated
-with a *type schema of a single hole*, not a type.
-
-Thus the following are valid, instantiated types:
+In order to describe the types below better we'll need a better syntax
+for refering to type schemata. The standard mechanism is to write $$x
+. E$$: the $$x$$ is a fresh, local type variable which is available in
+any type expression $$E$$. For instance, all of these refer to the
+same type schema:
 
 $$
 \begin{align}
-  \mu (1 + \_) && \nu (A \times \_)
+&1 + \_ \\
+x . &1 + x \\
+y . &1 + y
 \end{align}
 $$
 
-This notation has another weakness as well. While the type $$\mu (\_ +
-\mu (A \times \_))$$ happens to be clear, nested use of type schema
-can be ambiguous in this notation. For instance, $$\mu (A + \mu (\_
-\times \_))$$ does not make much sense---there are two ways to
-interpret it. In practice, better notation is used, but for the
-purposes of this article there will never be any need to write
-ambiguous types.[^type-exponentials]
+In particular, the name of the type variable is immaterial, though it
+should be chosen carefully as to avoid confusion.[^type-exponentials]
 
-[^type-exponentials]: You might think at this point that these type schema are nothing more than "exponentials" at the type level. Indeed, if they were then we'd have nice notation to avoid this ambiguity at least. For now, however, I will avoid trying to formalize that. In particular, before we can have type level lambdas we would need to (a) formulate a notion of "types of types", (b) formulate the rules that allow for their construction, and (c) formulate the rules that allow for their use. It will turn out to be a *very* hairy endeavor. So we'll just suffice with schemata and bad notation for now.
+Types like $$\mu \_$$ and $$\nu \_$$ are not instantiated by filling
+the holes with types but instead with type schemata. Some examples of
+this syntax follow:
+
+$$
+\begin{align}
+\mu x &. 1 + x \\
+\nu y &. 1 + y \\
+\mu x &. \nu y . x + y \\
+\mu x &. (\nu y . x + y) \\
+\end{align}
+$$
+
+Note that the latter two are identical; the parentheses merely clarify
+the syntax.
+
+[^type-exponentials]: You might think at this point that these type schema are nothing more than "exponentials" at the type level. Indeed, if they were then we'd have nice notation to avoid this ambiguity at least. For now, however, I will avoid trying to formalize that. In particular, before we can have type level lambdas we would need to (a) formulate a notion of "types of types", (b) formulate the rules that allow for their construction, and (c) formulate the rules that allow for their use. It will turn out to be a *very* hairy endeavor.
 
 ### *Aside:* Type Equations and Fixed Points
 
@@ -122,8 +144,9 @@ $$
 
 Instead of positing that some type $$A$$ exists which is equal to
 $$1 + A$$, we'll posit that a type $$A$$ exists along with a function
-of type $$A -> 1 + A$$ or that a type $$A$$ exists along with a
-function of type $$1 + A -> A$$.
+of type $$A \rightarrow 1 + A$$ or that a type $$A$$ exists along with
+a function of type $$1 + A \rightarrow A$$. You might, at this point,
+be unsurprised when I say that those two tricks are dual.
 
 ---
 
@@ -136,7 +159,37 @@ higher-order type connectives.
 
 The higher-order type connective $$\mu \_$$ is called "mu". It cannot
 be represented precisely in Haskell nor is it implemented by default.
-The type $$\mu S$$ forms the "least-defined fixed point" of the
-equation
+Its type is constructed by filling the hole with a type
+schema[^strictly-positive] which we'll refer to by a variable, $$S$$.
+
+[^strictly-positive]: Technically not any schema will do---it must be "strictly positive" which means that every type hole is in "positive position". Informally, every type hole must be on the right side of exponentials or, more generally, in construction not use. So, $$1 + \_$$ is strictly positive, so is $$A \rightarrow _$$, but $$\_ \rightarrow A$$ is not. Interestingly $$(\_ -> A) -> A$$ *is* strictly positive. Can you see why?
+
+In order to construct $$\mu S$$ you must have a value, say $$e$$, of
+$$S \mu S$$. Then, $$\fold{e}$$[^nomenclature] is a value of `Mu s`. This
+seems a little circular, surely, and it is. It reflects the fact that
+`s` must have a *base case*.
+
+[^nomenclature]: This nomenclature is happily taken from [Practical Foundations for Programming Languages](http://www.amazon.com/Practical-Foundations-Programming-Languages-Professor/dp/1107029570), though the technique is hardly novel to that book. That said, if you are interested in types like this then I recommend PFPL.
+
+For instance, if $$S = x . 1 + x$$ then $$S \mu S = 1 + \mu S$$ and as
+$$\inl{\top}$$[^mathy-notation] is a value of $$1 + \mu
+S$$[^parametricity] then $$\fold{\inl{\top}}$$ is a value of $$\mu
+S$$. Indeed, if we name $$z = \fold{\inl{\top}}$$ and produce a lambda
+form $$s = \lambda n \rightarrow \fold{\inr{n}}$$ which has the type
+$$\mu S \rightarrow \mu S$$ then we can see that $$\mu x . 1 + x$$ is
+the type of Peano Naturals:
+
+$$
+\begin{align}
+0 &= z \\
+1 &= s z \\
+2 &= s s z \\
+&\dots
+\end{align}
+$$
+
+[^mathy-notation]: Sorry about introducing things like $$\inl{\_}$$ and $$\top$$ despite not using them in the previous article. We can't yet refer to actual Haskell notation, but hopefully these values are easy to follow.
+
+[^parametricity]: Indeed, it's a value of $$1 + A$$ for *any* $$A$$.
 
 ## Footnotes
