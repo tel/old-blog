@@ -4,6 +4,13 @@ title: Calkin-Wilf in Swift
 comments_enabled: true
 ---
 
+*Thanks to some nice comments on new features in XCode-Beta5 I've
+ updated the code in this post to (a) actually compile, (b) be much
+ more idiomatic, and (c) be a bit nicer.
+ [The new code is available here.][available-here]*
+
+[available-here]:https://github.com/tel/tel.github.io/blob/ccdc3b8ccf7b1feca3ede5ee83f7f5f16df85a30/public/code/Swift/CalkinWilf.swift
+
 Previously [I wrote][0] at length about the
 [Calkin-Wilf enumeration][1] of rationals. It's an interesting example
 of how an anamorphism and catamorphism fuse together to form an
