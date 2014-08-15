@@ -363,13 +363,13 @@ reimplement it here.
 We construct values of `a -> b` by showing that we can *use* `a` to
 *construct* `b`. Function spaces are thus *very important* as they
 link use to construction. We demonstrate this construction with
-*lambda forms* or anonymous functions with syntax like $$\lambda x
-\rightarrow E$$. In this case, $$x$$ names a value of type `a` which
-we are assuming we can construct. Then $$E$$ is a expression
-demonstrating our method of using $$x$$ to construct a value of type
-`b`. Thus, we can read $$\lambda x \rightarrow E$$ as "assuming a
-value of type `a` named $$x$$ we can construct a value of type `b` in
-the way described by $$E$$.
+*lambda forms* or anonymous functions with syntax like $$\lambda x .
+E$$. In this case, $$x$$ names a value of type `a` which we are
+assuming we can construct. Then $$E$$ is a expression demonstrating
+our method of using $$x$$ to construct a value of type `b`. Thus, we
+can read $$\lambda x . E$$ as "assuming a value of type `a` named
+$$x$$ we can construct a value of type `b` in the way described by
+$$E$$.
 
 An interactive example would be `Unit -> Unit`, i.e. constructing
 `Unit` from `Unit`
