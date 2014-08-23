@@ -162,7 +162,7 @@ be represented precisely in Haskell nor is it implemented by default.
 Its type is constructed by filling the hole with a type
 schema[^strictly-positive] which we'll refer to by a variable, $$S$$.
 
-[^strictly-positive]: Technically not any schema will do---it must be "strictly positive" which means that every type hole is in "positive position". Informally, every type hole must be on the right side of exponentials or, more generally, in construction not use. So, $$1 + \_$$ is strictly positive, so is $$A \rightarrow _$$, but $$\_ \rightarrow A$$ is not. Interestingly $$(\_ -> A) -> A$$ *is* strictly positive. Can you see why?
+[^strictly-positive]: Technically not any schema will do---it must be "strictly positive" which means that every type hole is in "positive position". Informally, every type hole must be on the right side of exponentials or, more generally, in construction not use. So, $$x . 1 + x$$ is strictly positive, so is $$x . A \rightarrow x$$, but $$x . x \rightarrow A$$ is not. Interestingly $$x . (x \rightarrow A) \rightarrow A$$ *is* strictly positive. Can you see why?
 
 In order to construct $$\mu S$$ you must have a value, say $$e$$, of
 $$S \mu S$$. Then, $$\fold{e}$$[^nomenclature] is a value of `Mu s`. This
@@ -188,7 +188,11 @@ $$
 \end{align}
 $$
 
-[^mathy-notation]: Sorry about introducing things like $$\inl{\_}$$ and $$\top$$ despite not using them in the previous article. We can't yet refer to actual Haskell notation, but hopefully these values are easy to follow.
+Thus, because $$1 + \mu S$$ has values which can be constructed
+without first constructing $$\mu S$$, we find our needed base case
+$$z$$.
+
+[^mathy-notation]: Sorry about introducing things like $$\inl{\_}$$ and $$\top$$ despite not using them in the previous article. We can't yet refer to actual Haskell notation, but hopefully these values are easy to follow. Breifly: $$1$$ has the value $$\top$$, $$1 \times 1$$ has the value $$\langle \top, \top \rangle$$, $$1 + 1$$ has values $$\inl{\top}$$ and $$\inr{\top}$$, while $$1 \rightarrow 1$$ has the value $$\lambda x . \top$$.
 
 [^parametricity]: Indeed, it's a value of $$1 + A$$ for *any* $$A$$.
 
