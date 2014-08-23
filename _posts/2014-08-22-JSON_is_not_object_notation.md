@@ -140,7 +140,10 @@ and temper their disadvantages.
 ---
 
 And in the mean time, don't steal the "-ON" part of JSON and attach it
-wherever. You probably aren't making an object notation and you
-probably aren't making a "JavaScript Object" notation.
+wherever. You probably aren't making an object
+notation[^so-what-is-an-object-notation] and you probably aren't
+making a "JavaScript Object" notation.
+
+[^so-what-is-an-object-notation]: After batting around the bush this long, *what is an object notation*? There are many, but a particularly relevant one for this post is, well, *Javascript*. This probably clarifies what makes JSON and other not-object-notations so great---you don't have to `eval` them.
 
 ## Footnotes
