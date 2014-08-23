@@ -8,6 +8,19 @@ This is a silly nit to pick, but here goes.
 
 ---
 
+*Hi, future reader! If you are at this point rolling your eyes
+ because, yes, of course, (a) notation and objects are different or
+ (b) it's all just a name anyway---sorry about that.*
+
+*This post is secretly about the expression problem, or, better, the
+ differences between initial and final data, between data and codata.
+ It was just inspired by a name.*
+
+*If that latter topic sounds interesting, I encourage you to keep
+ reading. I get there soon enough.*
+
+---
+
 JSON, the universally known and loved interchange medium of the 21st
 century, stands for JavaScript Object Notation. This is due to the
 fact that JavaScript Objects have a literal syntax which mostly
