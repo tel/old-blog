@@ -25,7 +25,7 @@ This is all fine and good.
 [LCON](https://github.com/ar-nelson/lcon) is a new project I'm going
 to pick on[^to-be-clear]. It's roughly the same idea as JSON but with
 a different concrete syntax that's supposed to be more human
-writeable. It stands for "Ludicrously Compact Object Notation".
+writable. It stands for "Ludicrously Compact Object Notation".
 
 Except this *really* isn't an "object notation". And that's a *good*
 thing.
