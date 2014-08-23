@@ -23,12 +23,14 @@ This is all fine and good.
 ---
 
 [LCON](https://github.com/ar-nelson/lcon) is a new project I'm going
-to pick on. It's roughly the same idea as JSON but with a different
-concrete syntax that's supposed to be more human writeable. It stands
-for "Ludicrously Compact Object Notation".
+to pick on[^to-be-clear]. It's roughly the same idea as JSON but with
+a different concrete syntax that's supposed to be more human
+writeable. It stands for "Ludicrously Compact Object Notation".
 
 Except this *really* isn't an "object notation". And that's a *good*
 thing.
+
+[^to-be-clear]: To be totally clear: LCON maintainers, should you read this, keep the name. Actually changing it for such technical reasons is sillier than this post.
 
 ---
 
@@ -140,3 +142,5 @@ and temper their disadvantages.
 And in the mean time, don't steal the "-ON" part of JSON and attach it
 wherever. You probably aren't making an object notation and you
 probably aren't making a "JavaScript Object" notation.
+
+## Footnotes
