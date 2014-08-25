@@ -3,3 +3,4 @@ vendor
 _site
 .cabal-sandbox
 cabal.sandbox.config
+.DS_Store
