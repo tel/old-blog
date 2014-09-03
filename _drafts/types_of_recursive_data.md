@@ -1,6 +1,6 @@
 ---
 layout: post
-title: All Kinds of Freedom
+title: Types of <em>Recursive</em> Data
 comments_enabled: true
 ---
 
