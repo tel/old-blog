@@ -6,6 +6,7 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE RankNTypes #-}
 
 module M1_3.A1 where
 
@@ -129,67 +130,68 @@ Now we must actually form polynomials.
 
 -}
 
-newtype Poly a v =
-  Poly (Map (Ab v) a)
+newtype Vect a v =
+  Vect (Map v a)
   deriving ( Eq, Ord, Show )
 
-instance (Num a, Eq a, Ord v) => Wrapped (Poly a v) where
-  type Unwrapped (Poly a v) = Map (Ab v) a
-  _Wrapped' = iso (\(Poly m) -> m) (Poly . normMap)
-instance (Num a, Eq a, Ord v, Poly a' v' ~ t) => Rewrapped (Poly a v) t
+instance (Num a, Eq a, Ord v) => Wrapped (Vect a v) where
+  type Unwrapped (Vect a v) = Map v a
+  _Wrapped' = iso (\(Vect m) -> m) (Vect . normMap)
+instance (Num a, Eq a, Ord v, Vect a' v' ~ t) => Rewrapped (Vect a v) t
 
-instance (Num a, Ord v, Eq a) => Monoid (Poly a v) where
-  mempty      = Poly mempty
-  mappend a b = Poly . normMap $ (Map.unionWith (+) `on` op Poly) a b
+instance (Num a, Ord v, Eq a) => Monoid (Vect a v) where
+  mempty      = Vect mempty
+  mappend a b = Vect . normMap $ (Map.unionWith (+) `on` op Vect) a b
 
-instance (Num a, Ord v, Eq a) => Group (Poly a v) where
+instance (Num a, Ord v, Eq a) => Group (Vect a v) where
   inv = _Wrapped %~ fmap negate
 
-instance (Num a, Eq a, Pr a, Pr v, Ord v) => Pr (Poly a v) where
+instance (Num a, Eq a, Pr a, Pr v, Ord v) => Pr (Vect a v) where
   pr = mconcat
      . intersperse " + "
      . map (\(m, i) -> pr i <> "(" <> pr m <> ")")
      . Map.toList
-     . op Poly
+     . op Vect
 
-instance (Ord v, Arbitrary v, Num a, Eq a, Arbitrary a) => Arbitrary (Poly a v) where
-  arbitrary = Poly . normMap . Map.fromList <$> arbitrary
+instance (Ord v, Arbitrary v, Num a, Eq a, Arbitrary a) => Arbitrary (Vect a v) where
+  arbitrary = Vect . normMap . Map.fromList <$> arbitrary
 
-instance (Num a, Eq a, Ord v) => Num (Poly a v) where
+instance (Num a, Eq a, Ord v, Monoid v) => Num (Vect a v) where
   (+)    = (<>)
   negate = inv
-  (*)    = on2 (iso (op Poly) (Poly . normMap)) mix where
-    mix :: (Num a, Eq a, Ord v) => Map (Ab v) a -> Map (Ab v) a -> Map (Ab v) a
+  (*)    = on2 (iso (op Vect) (Vect . normMap)) mix where
     mix m1 m2 = Map.fromListWith (+) $ do
       (k1, v1) <- Map.toList m1
       (k2, v2) <- Map.toList m2
       return (k1 <> k2, v1*v2)
-  fromInteger = polyConstant . fromInteger
-  abs    = error "Poly has no abs"
-  signum = error "Poly has no signum"
+  fromInteger = vectConstant . fromInteger
+  abs    = error "Vect has no abs"
+  signum = error "Vect has no signum"
 
-polyConstant :: (Ord v, Num a) => a -> Poly a v
-polyConstant = Poly . Map.singleton mempty 
+vectConstant :: (Ord v, Monoid v, Num a) => a -> Vect a v
+vectConstant = Vect . Map.singleton mempty 
     
-polyInj0 :: Num a => v -> Poly a v
-polyInj0 v = Poly (Map.singleton (abInj v) 1)
+vectInj :: Num a => v -> Vect a v
+vectInj a = Vect (Map.singleton a 1)
 
-polyInj :: Num a => Ab v -> Poly a v
-polyInj a = Poly (Map.singleton a 1)
+vectMap :: (Num a, Eq a, Ord v, Ord v') => (v -> v') -> (Vect a v -> Vect a v')
+vectMap f = _Wrapped %~ normMap . Map.mapKeysWith (+) f
 
-polyMap :: (Num a, Eq a, Ord v, Ord v') => (Ab v -> Ab v') -> (Poly a v -> Poly a v')
-polyMap f = _Wrapped %~ normMap . Map.mapKeysWith (+) f
-
-polyBind :: (Num a, Eq a, Ord v, Ord v') => (Ab v -> Poly a v') -> (Poly a v -> Poly a v')
-polyBind f = _Wrapped . mapList %~ flatMap (Map.toList . op Poly . f) where
-  flatMap :: Num a => (Ab v -> [(Ab v', a)]) -> ([(Ab v, a)] -> [(Ab v', a)])
+vectBind :: (Num a, Eq a, Ord v, Ord v') => (v -> Vect a v') -> (Vect a v -> Vect a v')
+vectBind f = _Wrapped . mapList %~ flatMap (Map.toList . op Vect . f) where
+  flatMap :: Num a => (v -> [(v', a)]) -> ([(v, a)] -> [(v', a)])
   flatMap f vi = vi >>= (\(v, i) -> map (over _2 (*i)) (f v))
 
-polyComp :: (Num x, Eq x, Ord c, Ord b) => (a -> Poly x b) -> (Ab b -> Poly x c) -> (a -> Poly x c)
-polyComp f g a = polyBind g (f a)
+type VectA x a b = a -> Vect x b
 
-polyCoef :: (Num a, Eq a) => Poly a Void -> a
-polyCoef = maybe 0 id . preview (_Wrapped . ix mempty)
+vectComp :: (Ord c, Ord b, Num x, Eq x) => VectA x a b -> VectA x b c -> VectA x a c
+vectComp f g a = vectBind g (f a)
+
+vectCoef :: (Num a, Eq a) => Vect a () -> a
+vectCoef = maybe 0 id . preview (_Wrapped . ix mempty)
+
+-- | Polynomials are vectors over free abelian groups
+type Poly a v = Vect a (Ab v)
 
 {-
 
