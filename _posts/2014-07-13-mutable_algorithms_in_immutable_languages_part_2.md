@@ -2,6 +2,7 @@
 layout: post
 title: Mutable Algorithms in Immutable Languages, Part 2
 comments_enabled: true
+excerpt: The bridging of the Mutable Algorithms in Immutable Languages exploration series. Here we implement types satisfying the interfaces to <code>Mem</code> and identify an inherent weakness!
 ---
 
 *See also [part 1][part 1]. All of the code in this post

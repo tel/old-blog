@@ -2,6 +2,7 @@
 layout: post
 title: Typing Transducers (as Kleisli arrows)
 comments_enabled: true
+excerpt: There's been a little flurry of activity around analyzing Clojure's upcoming <em>transducers</em> using Haskell types. This post outlines an isomorphism between one such representation and list "binding functions" <code>a -> [b]</code>. This suggests that <code>flatMap</code> is central to the idea of transduction.
 ---
 
 *The code relating to this post is available [here][here].*

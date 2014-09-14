@@ -2,6 +2,7 @@
 layout: post
 title: Mutable Algorithms in Immutable Languages, Part 1
 comments_enabled: true
+excerpt: Mutable Algorithms are readily representable in "immutable languages", though they must be treated with greater care. Here we show how to model mutable memory <em>purely</em> and kick off the Mutable Algorithms in Immutable Languages exploration series.
 ---
 
 *All code for this post  [is available in the blog repository on Github](https://github.com/tel/tel.github.io/tree/master/public/code/MutableImmutable/Part1).*

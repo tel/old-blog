@@ -2,6 +2,7 @@
 layout: post
 title: Immutable Enumeration in Swift
 comments_enabled: true
+excerpt: Enumeration of container types is a very important programming technique. In immutable languages, one mechanism for this is to have a generic "left view" interface. This interface corresponds exactly to <code>Stream</code> codata and Swift is powerful enough to (almost) implement all of the above directly.
 ---
 
 *Most of the code of this article

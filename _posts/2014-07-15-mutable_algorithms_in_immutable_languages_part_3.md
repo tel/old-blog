@@ -2,6 +2,7 @@
 layout: post
 title: Mutable Algorithms in Immutable Languages, Part 3
 comments_enabled: true
+excerpt: The final post in the Mutable Algorithms in Immutable Languages exploration series. We discover how to use the type system to stop "border crossing" and, accidentally, reimplement a powerful Haskell feature, <code>ST</code>.
 ---
 
 *Or: a love song to rank-2 types and phantom variables.*

@@ -2,6 +2,7 @@
 layout: post
 title: Codata Diagonalization
 comments_enabled: true
+excerpt: Modern programming has something that was often talked about but never formalized throughout much of modern mathematics, <em>codata</em>. This post sketches a constructive proof of diagonalization using codata in Haskell notation.
 ---
 
 A [recent post by Dr. Richard Lipton][post] mentioned Gauss'

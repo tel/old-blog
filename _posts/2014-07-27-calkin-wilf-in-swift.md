@@ -2,6 +2,7 @@
 layout: post
 title: Calkin-Wilf in Swift
 comments_enabled: true
+excerpt: A reimplementation of my lazy, infinite Calkin-Wilf enumeration of rationals post in Swift. Some commentary here talks about how to make heavily self-recursive data types compile in early betas of Swift.
 ---
 
 *Thanks to some nice comments on new features in XCode-Beta5 I've

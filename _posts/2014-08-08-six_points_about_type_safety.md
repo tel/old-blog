@@ -2,6 +2,7 @@
 layout: post
 title: Some Points About Type Safety
 comments_enabled: true
+excerpt: The technical concept "type safety", and even the underlying technical concept "type", is often misunderstood due to being conflated with marketing terms or given undue technical weight. This post enumerates some useful intuition pumps for better understanding, talking about, and consuming material related to type safety.
 ---
 
 Many programmers are currently interested in the notion of "type

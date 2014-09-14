@@ -1,7 +1,8 @@
 ---
 layout: post
-title: The types of data
+title: The Types of Data
 comments_enabled: true
+excerpt: If you think of programming as arising as something natural from the structure of our world—and there's good reason to do so—then we can see the types of data which correspond to basic, universal logic as fundamental. This post describes these types and hints heavily at why they are so basic and universal.
 ---
 
 Let me tell you about the types of data. This may be a different

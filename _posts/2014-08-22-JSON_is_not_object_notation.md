@@ -2,6 +2,7 @@
 layout: post
 title: JSON is not Object Notation
 comments_enabled: true
+excerpt: This is a silly nit to pick, but here goes. JSON doesn't denote objects, it denotes finite, initial state which is exactly why it's useful. So, JSON isn't an "object notation", only JavaScript itself is.
 ---
 
 This is a silly nit to pick, but here goes.

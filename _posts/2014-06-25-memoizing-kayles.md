@@ -2,6 +2,7 @@
 layout: page
 title: Memoizing Kayles
 comments_enabled: true
+excerpt: A discussion of how to mathematically reduce and then memoize game trees in kayles.
 ---
 
 [Consider a two-player game called Kayles](https://www.hackerrank.com/contests/lambda-calculi-may14/challenges/game-of-kyles).

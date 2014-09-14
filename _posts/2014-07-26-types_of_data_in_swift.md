@@ -2,6 +2,7 @@
 layout: post
 title: The Types of Data (in Swift)
 comments_enabled: true
+excerpt: Swift is a new functional language developed by Apple. It has sufficiently nice types to directly represent most of what I discussed in <em>The Types of Data</em>. Let's see what they look like!
 ---
 
 One of the most exciting parts about Apple's new language Swift is

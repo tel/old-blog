@@ -2,6 +2,7 @@
 layout: post
 title: Calkin-Wilf for Early(-ish) Haskellers
 comments_enabled: true
+excerpt: An extension to a Hacker News comment I left—a relatively simple Haskell program which achieves a relatively non-obvious algorithm, <em>the enumeration of the infinite Calkin-Wilf tree</em>. I demonstrate fold/unfold fusion to convert the "obvious" algorithm into one in which nearly all structure has been fused away.
 ---
 
 *This post was inspired by
