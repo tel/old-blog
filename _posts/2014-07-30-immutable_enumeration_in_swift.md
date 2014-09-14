@@ -198,7 +198,7 @@ func scott<S:Viewl, R>(zero: R, combine: (S.El, S) -> R)(subject: S) -> R {
 ~~~
 {: .langauge-swift} 
 
-[^obvious]: What is obvious about the Scott encoding, at least if you read the previous posts on The [Types of Data](http://tel.github.io/2014/07/23/types_of_data/) and [The Types of Data in Swift](http://tel.github.io/2014/07/26/types_of_data_in_swift/) is that if we see optional types as `A? ~ 1 + A` then we know we need to use this optional pair `1 + (A * S)` with a product of the uses: `1 + (A * S) -> R` is the same as `R * (A * S -> R)` which, combined with `uncons` produces `scott`.
+[^obvious]: What is obvious about the Scott encoding, at least if you read the previous posts on The [Types of Data]({{ site.url }}/posts/types_of_data/) and [The Types of Data in Swift]({{ site.url }}/posts/types_of_data_in_swift/) is that if we see optional types as `A? ~ 1 + A` then we know we need to use this optional pair `1 + (A * S)` with a product of the uses: `1 + (A * S) -> R` is the same as `R * (A * S -> R)` which, combined with `uncons` produces `scott`.
 
 Again, ignoring the type and name, this function is nothing more than
 the exact template I wrote above but replacing the `...` bits with

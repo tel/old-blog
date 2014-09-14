@@ -6,7 +6,7 @@ comments_enabled: true
 
 One of the most exciting parts about Apple's new language Swift is
 that is has great representation of the
-[Types of Data](http://tel.github.io/2014/07/23/types_of_data/). Let's
+[Types of Data]({{ site.url }}/posts/types_of_data/). Let's
 see what they look like.
 
 ### Unit, the useless type

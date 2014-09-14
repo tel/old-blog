@@ -19,7 +19,7 @@ mathematics. These types encode many of the basic structures and
 actions available to the computer programmer, logician, or high school
 student.
 
-[types-of-data]:http://tel.github.io/2014/07/23/types_of_data/
+[types-of-data]:{{ site.url }}/posts/types_of_data
 
 The logician and the programmer should both quickly get bored,
 however. The types introduced so far are clearly fundamental but also

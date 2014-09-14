@@ -16,7 +16,7 @@ Previously [I wrote][0] at length about the
 of how an anamorphism and catamorphism fuse together to form an
 efficient, cute hylomorphism.
 
-[0]:http://tel.github.io/2014/07/09/calkin_wilf_for_early-ish_haskellers/
+[0]:{{ site.url }}/posts/calkin_wilf_for_early-ish_haskellers/
 [1]:http://en.wikipedia.org/wiki/Calkin%E2%80%93Wilf_tree
 
 Or, if you don't speak *X-ism* it's a way of inlining a generator and

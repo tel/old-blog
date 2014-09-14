@@ -17,7 +17,7 @@ Previous, I stated the [*types of data*][types-of-data]---the
 products, sums, and exponentials. These types of data are already
 powerful enough to describe many concepts. For instance
 
-[types-of-data]:http://tel.github.io/2014/07/23/types_of_data/
+[types-of-data]:{{ site.url }}/posts/types_of_data/
 
 * For any type $$A$$, $$A + 1$$ indicates $$A$$ or its absence---a
   notion of failure

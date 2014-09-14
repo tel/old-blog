@@ -37,7 +37,7 @@ For comparison, here's an equivalent Python 2.7 implementation using
 generators (and [here's an implementation in Swift][0], Beta 4,
 although at the time of writing it seg faulted the Swift compiler)
 
-[0]:http://tel.github.io/2014/07/27/calkin-wilf-in-swift/
+[0]:{{ site.url }}/posts/calkin-wilf-in-swift/
 
 ~~~
 from fractions import Fraction

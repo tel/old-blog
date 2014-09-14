@@ -16,7 +16,7 @@ this is not a big problem since you can use Clojure's ambient
 mutability to regain state via `atom`s. In Haskell this isn't an
 option and we have to seek out other avenues.
 
-[typing-transducers-1]:http://tel.github.io/2014/08/10/typing-transducers/
+[typing-transducers-1]:{{ site.url }}/posts/typing-transducers/
 
 So how can we fix that?
 
@@ -76,7 +76,7 @@ represents impossibility.
 
 So `forall r . Red i r` is right out.
 
-[types-of-data]:http://tel.github.io/2014/07/23/types_of_data/
+[types-of-data]:{{ site.url }}/posts/types_of_data/
 
 Instead, let's bring back the transducers framework and consider
 *functions* on `Red`

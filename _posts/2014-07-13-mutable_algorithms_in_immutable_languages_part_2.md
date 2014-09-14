@@ -7,7 +7,7 @@ comments_enabled: true
 *See also [part 1][part 1]. All of the code in this post
  [is available in the blog repository on Github][repo].*
 
-[part 1]:http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/
+[part 1]:{{ site.url }}/posts/mutable_algorithms_in_immutable_languges_part_1/
 [repo]:https://github.com/tel/tel.github.io/tree/master/public/code/MutableImmutable/Part2/
 
 Last time we saw a way to implement Union/Find, an algorithm which

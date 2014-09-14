@@ -6,13 +6,13 @@ highlighter:      pygments
 # Basics
 pygments:         true
 lsi:              false
-permalink:        pretty
+permalink:        /posts/:title
   
 # Setup
-title:            <strong>j</strong>o<strong>s</strong>e<strong>ph</strong> <strong>a</strong>brahamson/prose
+title:            <strong>j</strong>o<strong>s</strong>e<strong>ph</strong> <strong>a</strong>brahamson <strong>:</strong> posts
 # tagline:          '$'
 # description:      '$'
-url:              http://tel.github.io
+url:              http://jspha.com
 paginate:         10
 baseurl:          /
 

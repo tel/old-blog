@@ -21,7 +21,7 @@ better use through greater richness, how they hold more meaning and
 provide [a better UX][ux].
 
 [ux]:https://lobste.rs/s/h9vu5h/what_to_know_before_debating_type_systems/comments/oinwwc#c_oinwwc
-[words]:http://tel.github.io/2014/07/08/all_you_wanted_to_know_about_types_but_were_afraid_to_ask/
+[words]:{{ site.url }}/posts/all_you_wanted_to_know_about_types_but_were_afraid_to_ask/
 
 ---
 
@@ -93,7 +93,7 @@ how the *type language* describes each of those operations. In other
 words, they create a justification for each well-typed program to
 exist and then outlaw the rest.
 
-[types-of-data]:http://tel.github.io/2014/07/23/types_of_data/
+[types-of-data]:{{ site.url }}/posts/types_of_data/
 
 These justifications concern only the construction of valid language
 *syntax*. Then, type safety ensures that runtime dynamics respect

@@ -10,8 +10,8 @@ comments_enabled: true
  this post [is available in the blog repository on Github][repo].*
 
 [repo]:https://github.com/tel/tel.github.io/tree/master/public/code/MutableImmutable/Part3
-[part 1]:http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/
-[part 2]:http://tel.github.io/2014/07/13/mutable_algorithms_in_immutable_languages_part_2/
+[part 1]:{{ site.url }}/posts/mutable_algorithms_in_immutable_languges_part_1/
+[part 2]:{{ site.url }}/posts/mutable_algorithms_in_immutable_languages_part_2/
 
 In [part 1][part 1] we demonstrated that we can write algorithms which
 require mutable references by embedding them in an abstract monad,
