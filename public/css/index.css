@@ -1,3 +1,17 @@
 .MathJax .math, .MathJax .mo, .MathJax .mi {
     color: #448;
 }
+
+.right {
+    float: right;
+    font-family: "Sanchez", Georgia, "Times New Roman", serif;
+    font-weight: 600;
+    letter-spacing: -.025rem;
+    margin-bottom: .5rem;
+    font-weight: bold;
+    line-height: 1.25;
+    color: #313131;
+    text-rendering: optimizeLegibility;
+    margin-top: -1.5rem;
+    font-size: 1.25rem;
+}
