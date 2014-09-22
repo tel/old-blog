@@ -1,0 +1,14 @@
+{
+  "name": "miniLens",
+  "version": "0.0.0",
+  "description": "A small tutorial-sized lens library for Javascript",
+  "main": "miniLens.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lens"
+  ],
+  "author": "Joseph Abrahamson",
+  "license": "BSD3"
+}
