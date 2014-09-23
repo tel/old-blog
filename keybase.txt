@@ -1,0 +1,65 @@
+==================================================================
+https://keybase.io/tel
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://jspha.com
+  * I am tel (https://keybase.io/tel) on keybase.
+  * I have a public key with fingerprint C8D6 8612 BD85 2998 F35E  5339 0675 90FD 6502 8C09
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "c8d68612bd852998f35e5339067590fd65028c09",
+            "host": "keybase.io",
+            "key_id": "067590fd65028c09",
+            "uid": "61a99152ee9bdc910d9411f5be745700",
+            "username": "tel"
+        },
+        "service": {
+            "hostname": "jspha.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1411496471,
+    "expire_in": 157680000,
+    "prev": "d3744a1dc7be02a4ee47628ea7781e604b55e2fa46a8e0fe33d96ac80c02159e",
+    "seqno": 5,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v1.0.5
+Comment: https://keybase.io/crypto
+
+yMHlAnicO8LLzMDFaC/vd6Z3ntkjxtMHXpYyhCjuEq9WSspPqVSyqlbKTgVTaZl5
+6alFBUWZeSVKVkrJFilmFmaGRkkpFqZGlpYWacamqabGxpYGZuamlgZpKWamBkYW
+yQaWSjpKGfnFIB1AY5ISi1P1MvOBYkBOfGYKUBSL+lKwhJlhoqWloalRaqplUkqy
+paFBiqWJoWGaaVKquYmpuYEBSGFxalFeYm4qUHVJao5SrY4SUKAsMzkV5FyQrVDJ
+rOKCjES95PxcoJ6CovyS/OT8HKBwRklJgRVIV0llAUhZeWpSPNSA+KTMvBSgf4Ea
+ylKLijPz85SsDIEqk0syQSYaAl1iYmlmYm6oo5RaUZBZlBqfCVJham5mYQAEIGtS
+y4BGphibm5gkGqYkmyelGhglmqSmmpibGVmkJpqbWximmhmYJJmaphqlJZqYJVqk
+GqSlGhunWJolJlsYJBsYGZpapiqBvFSYl69kZQp0ZmI60MjizPS8xJLSolSl2kMH
+YlgYGLkY2FiZQDHGwMUpAIvHu7rs/2wLX8vlKQp/vxCxxLX2afq8o0ttXossvS0V
+FFxnqrhQsKi1xmXKUZYjyaEFit+f+Gk4hBid+N5Sy3L6mOuz3ufCj/bW8ztGHQj4
+yauoJcFsXZuufJNvZ5BB7bKevS1J7m2+HNvmdPmJPO9Q+ngpVlwz+uw6+TmXu281
+3UoLv3u+5Z3g9PlVYR8r38rJbJM3/XCXuWiCyLddvU/FVS9sf7/wo/ye9GNysjfS
+Szfd52mN5T47cUtfrNGx/Ps3Lvn+Oq4SXSh9Wz3LWEQxs+aa/txXs5Y8dZD7mmzK
+tC2L90fG/pMze266u8S57fCwXuDQ41/9Kcb9R9sBTokzrRwM5Z+1Xl2pSn0T8MBC
+rCkKAA5FC4E=
+=HqH+
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/tel
+
+==================================================================
