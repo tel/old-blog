@@ -1,9 +1,5 @@
 var Le = (function () {
     "use strict"
-
-    
-    var 
-    
     
     var X = {};
 
