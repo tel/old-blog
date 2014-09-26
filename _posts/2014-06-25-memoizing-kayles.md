@@ -187,7 +187,7 @@ A final representation of $$\text{win}$$ is that of a predicate on
 binary strings, like $$2^\star \to 2$$. This is particularly
 interesting from a computational point of view due to the idea of lazy
 trie memoization. In particular, we'd like to convert function spaces
-like $$B^A$$ to lazy data structures $$A \rhd B$$ such that those two
+like $$B^A$$ to lazy data structures $$A \triangleright B$$ such that those two
 spaces are isomorphic (at least so long as $$A$$ and $$B$$ are
 finite).
 
@@ -195,17 +195,17 @@ finite).
 
 The standard source on this is Ralf Hinze's
 [*Memo Functions, Polytypically!*](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.43.3272) 
-Briefly, we consider a recursive definition of $$A \rhd B$$ over
-generic ADTs. We can then define something like $$2^\star \rhd 2$$ in
+Briefly, we consider a recursive definition of $$A \triangleright B$$ over
+generic ADTs. We can then define something like $$2^\star \triangleright 2$$ in
 steps:
 
 $$
 \begin{align*}
-    T =& 2^\star \rhd 2 \\
-      =& 1 + 2 \times 2^\star \rhd 2 && \text{unfolding the list pattern functor}\\
-      =& (1 \rhd 2) \times (2 \times 2^\star \rhd 2) && \text{to continue "$A$ or $B$" we use "$f$ and $g$"} \\
-      =& 2 \times (2 \rhd 2^\star \rhd 2) && \text{constant functions are constants} \\
-      =& 2 \times (2^\star \rhd 2) \times (2^\star \rhd 2) && \text{booleans are sums} \\
+    T =& 2^\star \triangleright 2 \\
+      =& 1 + 2 \times 2^\star \triangleright 2 && \text{unfolding the list pattern functor}\\
+      =& (1 \triangleright 2) \times (2 \times 2^\star \triangleright 2) && \text{to continue "$A$ or $B$" we use "$f$ and $g$"} \\
+      =& 2 \times (2 \triangleright 2^\star \triangleright 2) && \text{constant functions are constants} \\
+      =& 2 \times (2^\star \triangleright 2) \times (2^\star \triangleright 2) && \text{booleans are sums} \\
     T =& 2 \times T \times T \\
 \end{align*}
 $$
