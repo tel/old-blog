@@ -45,5 +45,5 @@ Thanks to correspondance, some errors have been discovered.
   Thanks, Tom!
 
   For completeness, here is a proof term for $$p : \neg\neg\neg A \to
-  \negA$$, $$p\ (k : \neg\neg\neg A)\ (a : A) = k\ (\lambda (p : \neg A)\ .\ p a)$$
+  \neg A$$, $$p\ (k : \neg\neg\neg A)\ (a : A) = k\ (\lambda (p : \neg A)\ .\ p a)$$
 
