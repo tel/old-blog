@@ -10,7 +10,7 @@ for
 on the 18th where I discussed Martin-Löf type theory from a historical
 and programming context. The goal was to motivate and inspire reading
 the (notably long) 1983 Martin-Löf lectures
-[*On the Meanings of the Logical Constants and the Justifications of the Logical Laws*](https://github.com/michaelt/martin-lof/blob/master/pdfs/Meanings-of-the-Logical-Constants-1983.pdf?raw=true). [The video](https://www.youtube.com/watch?v=xRUPr322COQ&feature=youtu.be) was just posted.
+[*On the Meanings of the Logical Constants and the Justifications of the Logical Laws*](https://github.com/michaelt/martin-lof/blob/master/pdfs/Meanings-of-the-Logical-Constants-1983.pdf?raw=true). [The video](https://www.youtube.com/watch?v=xRUPr322COQ&feature=youtu.be) was just posted and the slides [are available here](http://jspha.com/public/slides/PapersWeLoveBOS_Sept19th_MartinLof_Intuitionism_Programming.pdf).
 
 The hosts, [Ashley Williams](https://twitter.com/ag_dubs) and
 [Bob Holt](https://twitter.com/bobholt) from
