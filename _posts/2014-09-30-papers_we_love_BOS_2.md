@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Papers We Love BOS #2: "Foundations of Logic and Functional Programming via Martin-Löf"
+title: Papers We Love BOS No. 2, "Foundations of Logic and Functional Programming via Martin-Löf"
 comments_enabled: true
 ---
 
