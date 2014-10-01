@@ -24,3 +24,26 @@ Love, and, most of all, everyone who attended, asked questions, and
 continued after the talk with great conversation.
 
 Thanks so much!
+
+---
+
+Thanks to correspondance, some errors have been discovered.
+
+* [Tom Crockett](https://twitter.com/pelotom) pointed out that my
+  example described
+  [at minute 46](http://www.youtube.com/watch?v=xRUPr322COQ&t=46m0s)
+  *is* actually the intuitionistically valid form of proof by
+  contradiction of "reductio ad absurdum". I explored the idea of
+  proving $$\neg A$$ from the premise $$\neg\neg\neg A$$, which is
+  intuitionistically valid, but spoke as though I was considering
+  proving $$A$$ from $$\neg\neg A$$ which isn't. In other words, we
+  can manufacture counterexamples using contradiction, but not
+  demonstrate proofs. So, my example there is totally wrong and should
+  be talking about trying to prove something by assumption that it
+  can't be incorrect.
+
+  Thanks, Tom!
+
+  For completeness, here is a proof term for $$p : \neg\neg\neg A \to
+  \negA$$, $$p\ (k : \neg\neg\neg A)\ (a : A) = k\ (\lambda (p : \neg A)\ .\ p a)$$
+
