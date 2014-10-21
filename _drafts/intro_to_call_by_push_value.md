@@ -75,3 +75,11 @@ $$
 So forcing lets us turn values of computations into computations and
 computation binding lets us link computations producing values to
 computations expecting values.
+
+## Notes
+
+* Note that functions are not values, but thunks of functions are.
+* Values correspond to sets, computations to algebras (thus F is Free
+  and U is forget, adjunction)
+* http://semantic-domain.blogspot.com/2014/10/focusing-is-not-call-by-push-value.html
+* http://requestforlogic.blogspot.com/2012/03/what-does-focusing-tell-us-about.html
