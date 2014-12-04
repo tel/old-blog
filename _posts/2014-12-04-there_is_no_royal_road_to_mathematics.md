@@ -5,6 +5,11 @@ comments_enabled: true
 excerpt: There is no royal road to mathematics, but instead an enormous shining underground city. Here, I hope to give a little tour to its districts and customs for the new traveler.
 ---
 
+*This is a copy of
+ [a comment I wrote on Hacker News](https://news.ycombinator.com/item?id=8699424)
+ that I wanted to preserve. It's in response to a question about how
+ to learn mathematics from first principles.*
+
 There is no royal road to math.
 
 There are instead, roughly, between 4 and 50 branches of mathematics
