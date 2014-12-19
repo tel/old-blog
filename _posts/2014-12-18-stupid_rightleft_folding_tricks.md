@@ -1,6 +1,6 @@
 ---
 layout: post
-title: A trick in the folds
+title: Stupid right/left folding tricks
 comments_enabled: true
 excerpt: There's a folk-wisdom trick for converting a right fold on lists into a left fold. This may not appear to be terrifically useful at first but if you look a bit beneath the surface then it reveals a practical tool in any functional programmer's toolbelt.
 ---
